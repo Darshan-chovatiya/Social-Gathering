@@ -43,7 +43,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             </div>
             <div className='align-middle'>
               <div className="text-lg sm:text-xl font-bold text-white font-sans" style={{ lineHeight: '20px' }}>
-                Easy Tickets
+                Social Gathering
               </div>
               <div className="text-gray-400 dark:text-gray-500 text-xs font-medium">Customer Panel</div>
             </div>
@@ -74,7 +74,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-sans group ${
                     isActive
-                      ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold shadow-lg shadow-primary-600/30 transform scale-[1.02]'
+                      ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-gray-900 font-semibold shadow-lg shadow-primary-500/30 transform scale-[1.02]'
                       : 'text-gray-300 dark:text-gray-400 hover:bg-gray-800/50 dark:hover:bg-gray-800/50 hover:text-white hover:translate-x-1'
                   }`
                 }
@@ -97,7 +97,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-sans group ${
                 isActive
-                  ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold shadow-lg shadow-primary-600/30'
+                  ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-gray-900 font-semibold shadow-lg shadow-primary-500/30'
                   : 'text-gray-300 dark:text-gray-400 hover:bg-gray-800/50 dark:hover:bg-gray-800/50 hover:text-white hover:translate-x-1'
               }`
             }
@@ -108,7 +108,7 @@ const Sidebar = ({ isOpen, onClose }) => {
           
           <button
             onClick={() => setShowLogoutConfirm(true)}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-sans group text-gray-300 dark:text-gray-400 hover:bg-[#f84464]/30 dark:hover:bg-[#f84464]/50 hover:text-[#fde4e6] dark:hover:text-[#fde4e6] hover:translate-x-1 active:scale-95"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-sans group text-gray-300 dark:text-gray-400 hover:bg-red-900/30 dark:hover:bg-red-900/40 hover:text-red-200 dark:hover:text-red-200 hover:translate-x-1 active:scale-95"
           >
             <LogOut className="w-5 h-5" />
             <span className="text-sm sm:text-base">Logout</span>

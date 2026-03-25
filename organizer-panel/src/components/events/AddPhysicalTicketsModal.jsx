@@ -158,7 +158,7 @@ const AddPhysicalTicketsModal = ({ isOpen, onClose, eventId, onSuccess }) => {
           </button>
           <button
             onClick={handleSubmit}
-            className="px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-primary-500 hover:bg-primary-600 text-gray-900 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={loading}
           >
             {loading ? 'Adding...' : 'Add Physical Tickets'}

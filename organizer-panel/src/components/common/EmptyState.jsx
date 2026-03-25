@@ -18,7 +18,7 @@ const EmptyState = ({
           {typeof action === 'object' && action.label ? (
             <button
               onClick={action.onClick}
-              className="px-6 py-2 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all shadow-lg shadow-primary-600/20 active:scale-95"
+              className="px-6 py-2 bg-primary-500 text-gray-900 font-semibold rounded-xl hover:bg-primary-600 transition-all shadow-lg shadow-primary-500/20 active:scale-95"
             >
               {action.label}
             </button>

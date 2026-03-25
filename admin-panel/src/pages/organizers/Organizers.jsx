@@ -522,7 +522,7 @@ const Organizers = () => {
                         onClick={() => setPage(pageNum)}
                         className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors font-sans ${
                           page === pageNum
-                            ? 'bg-primary-600 text-white border border-primary-600'
+                            ? 'bg-primary-500 text-gray-900 border border-primary-600'
                             : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50'
                         }`}
                       >

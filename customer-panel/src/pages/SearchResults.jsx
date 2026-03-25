@@ -95,7 +95,7 @@ const SearchResults = () => {
             <div className="mt-8 flex justify-center gap-4">
               <button
                 onClick={() => navigate('/dashboard')}
-                className="bg-primary-600 text-white px-8 py-3 rounded-xl font-black text-sm transition-all hover:bg-primary-700 shadow-lg active:scale-95"
+              className="bg-primary-500 text-gray-900 px-8 py-3 rounded-xl font-black text-sm transition-all hover:bg-primary-600 shadow-lg active:scale-95"
               >
                 Back to Home
               </button>

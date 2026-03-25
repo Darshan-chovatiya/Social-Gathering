@@ -20,7 +20,7 @@ const Toast = ({ toast, onClose }) => {
 
   const colors = {
     success: 'bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200',
-    error: 'bg-[#fef2f3] dark:bg-[#f84464]/30 border-[#fccdd2] dark:border-[#f84464]/50 text-[#f84464] dark:text-[#fde4e6]',
+    error: 'bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200',
     warning: 'bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-200',
     info: 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200',
   }
@@ -35,13 +35,13 @@ const Toast = ({ toast, onClose }) => {
       <div className="flex-shrink-0">
         <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
           toast.type === 'success' ? 'bg-emerald-100 dark:bg-emerald-800' :
-          toast.type === 'error' ? 'bg-[#fef2f3] dark:bg-[#f84464]/50' :
+          toast.type === 'error' ? 'bg-red-100 dark:bg-red-800' :
           toast.type === 'warning' ? 'bg-amber-100 dark:bg-amber-800' :
           'bg-blue-100 dark:bg-blue-800'
         }`}>
           <Icon className={`w-5 h-5 ${
             toast.type === 'success' ? 'text-emerald-600 dark:text-emerald-300' :
-            toast.type === 'error' ? 'text-[#f84464] dark:text-[#fde4e6]' :
+            toast.type === 'error' ? 'text-red-600 dark:text-red-300' :
             toast.type === 'warning' ? 'text-amber-600 dark:text-amber-300' :
             'text-blue-600 dark:text-blue-300'
           }`} />

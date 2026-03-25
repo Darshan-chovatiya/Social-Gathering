@@ -12,18 +12,18 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* BookMyShow signature red color scheme */
-  --color-primary-50: #fef2f3;
-  --color-primary-100: #fde4e6;
-  --color-primary-200: #fccdd2;
-  --color-primary-300: #faa5ae;
-  --color-primary-400: #f77284;
-  --color-primary-500: #f84464;
-  --color-primary-600: #f84464;
-  --color-primary-700: #e62d4d;
-  --color-primary-800: #c91e3d;
-  --color-primary-900: #a81a32;
-  --color-primary-950: #8b1528;
+  /* Primary theme: #FEDF6B */
+  --color-primary-50: #fffeef;
+  --color-primary-100: #fff9d6;
+  --color-primary-200: #fff0a8;
+  --color-primary-300: #ffe57a;
+  --color-primary-400: #ffe07a;
+  --color-primary-500: #FEDF6B;
+  --color-primary-600: #e7c94e;
+  --color-primary-700: #b69d33;
+  --color-primary-800: #866f22;
+  --color-primary-900: #5a4a14;
+  --color-primary-950: #3b310d;
   
   --font-sans: 'Inter', system-ui, sans-serif;
 }
@@ -73,7 +73,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 active:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-600 dark:active:bg-primary-500 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:shadow-sm transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md;
+    @apply bg-primary-500 hover:bg-primary-600 active:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 dark:active:bg-primary-700 text-gray-900 font-medium py-2.5 px-5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:shadow-sm transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md;
   }
   
   .btn-secondary {
@@ -81,7 +81,7 @@
   }
   
   .btn-danger {
-    @apply bg-[#f84464] hover:bg-[#e62d4d] active:bg-[#c91e3d] dark:bg-[#e62d4d] dark:hover:bg-[#f84464] dark:active:bg-[#f84464] text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:shadow-sm transform hover:-translate-y-0.5 active:translate-y-0;
+    @apply bg-red-600 hover:bg-red-700 active:bg-red-800 dark:bg-red-600 dark:hover:bg-red-700 dark:active:bg-red-800 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:shadow-sm transform hover:-translate-y-0.5 active:translate-y-0;
   }
   
   .input-field {
@@ -113,7 +113,7 @@
   }
   
   .badge-danger {
-    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[#fef2f3] dark:bg-[#f84464]/30 text-[#f84464] dark:text-[#fde4e6];
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-200;
   }
   
   .badge-info {

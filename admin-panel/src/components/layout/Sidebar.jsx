@@ -50,11 +50,11 @@ const Sidebar = ({ isOpen, onClose }) => {
         <div className="h-16 px-4 sm:px-6 border-b border-gray-800/50 flex items-center justify-between bg-gray-900/50 backdrop-blur-sm">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary-500/30">
-              <Ticket className="w-5 h-5 text-white" />
+              <Ticket className="w-5 h-5 text-gray-900" />
             </div>
             <div className='align-middle'>
               <div className="text-lg sm:text-xl font-bold text-white font-sans" style={{ lineHeight: '20px' }}>
-                Easy Tickets
+                Social Gathering
               </div>
               <div className="text-gray-400 text-xs font-medium">Admin Panel</div>
             </div>
@@ -87,7 +87,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-sans group ${
                     isActive
-                      ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold shadow-lg shadow-primary-600/30 transform scale-[1.02]'
+                      ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-gray-900 font-semibold shadow-lg shadow-primary-500/30 transform scale-[1.02]'
                       : 'text-gray-300 hover:bg-gray-800/50 hover:text-white hover:translate-x-1'
                   }`
                 }
@@ -110,7 +110,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-sans group ${
                 isActive
-                  ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold shadow-lg shadow-primary-600/30'
+                  ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-gray-900 font-semibold shadow-lg shadow-primary-500/30'
                   : 'text-gray-300 hover:bg-gray-800/50 hover:text-white hover:translate-x-1'
               }`
             }

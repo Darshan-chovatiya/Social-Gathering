@@ -91,7 +91,7 @@ const PaymentVerify = () => {
             </p>
             <button
               onClick={() => navigate('/')}
-              className="px-6 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-semibold transition-colors shadow-md"
+              className="px-6 py-2 bg-primary-500 hover:bg-primary-600 text-gray-900 rounded-lg font-semibold transition-colors shadow-md"
             >
               Go to Home
             </button>

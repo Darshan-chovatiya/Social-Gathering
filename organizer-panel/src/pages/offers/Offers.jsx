@@ -150,7 +150,7 @@ const Offers = () => {
         </div>
         <button
           onClick={handleCreateOffer}
-          className="flex items-center gap-2 px-4 py-2.5 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-all shadow-lg shadow-primary-600/20"
+          className="flex items-center gap-2 px-4 py-2.5 bg-primary-500 text-gray-900 font-semibold rounded-xl hover:bg-primary-600 transition-all shadow-lg shadow-primary-500/20"
         >
           <Plus className="w-5 h-5" />
           <span>Add Offer</span>

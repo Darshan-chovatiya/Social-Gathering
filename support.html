@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Support Center - Easy Ticket</title>
+    <title>Support Center - Social Gathering</title>
 
     <!-- Bootstrap CSS -->
     <link
@@ -27,8 +27,9 @@
 
     <style>
       :root {
-        --primary-color: #eb4e62;
-        --secondary-color: #d93d52;
+        --primary-color: #b69d33;
+        --secondary-color: #e7c94e;
+        --primary-accent: #FEDF6B;
         --bg-light: #f8fafc;
         --bg-section: #f1f5f9;
       }
@@ -95,7 +96,7 @@
           135deg,
           #3b82f6 0%,
           #8b5cf6 50%,
-          var(--primary-color) 100%
+          var(--primary-accent) 100%
         );
         display: flex;
         align-items: center;
@@ -135,7 +136,7 @@
       }
 
       html.dark .logo-text span {
-        color: #f47f9a;
+        color: var(--primary-accent);
       }
 
       .theme-toggle {
@@ -170,8 +171,8 @@
         background:
           linear-gradient(
             135deg,
-            rgba(235, 78, 98, 0.92) 0%,
-            rgba(217, 61, 82, 0.92) 100%
+            rgba(90, 74, 20, 0.9) 0%,
+            rgba(254, 223, 107, 0.55) 100%
           ),
           url("https://images.unsplash.com/photo-1484807352052-23338990c6c6?auto=format&fit=crop&w=1200&q=80")
             center/cover no-repeat;
@@ -179,7 +180,7 @@
         padding: 80px 0 70px 0;
         margin-bottom: 40px;
         border-radius: 0 0 32px 32px;
-        box-shadow: 0 8px 32px rgba(235, 78, 98, 0.1);
+        box-shadow: 0 8px 32px rgba(254, 223, 107, 0.22);
         position: relative;
       }
 
@@ -233,7 +234,7 @@
 
       .support-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 12px 24px rgba(235, 78, 98, 0.1);
+        box-shadow: 0 12px 24px rgba(254, 223, 107, 0.22);
         border-color: var(--primary-color);
       }
 
@@ -245,7 +246,7 @@
       }
 
       html.dark .support-card i {
-        color: #f47f9a;
+        color: var(--primary-accent);
       }
 
       .support-card h3 {
@@ -296,13 +297,13 @@
       }
 
       .accordion-button:not(.collapsed) {
-        background-color: #fef2f4;
+        background-color: #fff9d6;
         color: var(--primary-color);
       }
 
       html.dark .accordion-button:not(.collapsed) {
-        background-color: rgba(235, 78, 98, 0.1);
-        color: #f47f9a;
+        background-color: rgba(254, 223, 107, 0.14);
+        color: var(--primary-accent);
       }
 
       .accordion-body {
@@ -335,7 +336,7 @@
       }
 
       footer a:hover {
-        color: #f47f9a;
+        color: var(--primary-accent);
         text-decoration: underline;
       }
 
@@ -360,14 +361,14 @@
       <div class="container">
         <a class="navbar-brand" href="/">
           <div class="logo-icon">
-            <img src="/Logo Icon.png" alt="Easy Ticket Logo" class="logo-image" onerror="this.style.display = 'none'; this.nextElementSibling.style.display = 'flex';" />
+            <img src="/Logo Icon.png" alt="Social Gathering Logo" class="logo-image" onerror="this.style.display = 'none'; this.nextElementSibling.style.display = 'flex';" />
             <svg class="logo-fallback" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4v-3a2 2 0 00-2-2H5z" />
             </svg>
           </div>
           <div class="logo-text">
-            <span>Easy</span>
-            <span>Ticket</span>
+            <span>Social</span>
+            <span>Gathering</span>
           </div>
         </a>
 
@@ -382,7 +383,7 @@
     <!-- Hero Section -->
     <section class="hero-section text-center">
       <div class="container">
-        <h1>Easy Ticket Support</h1>
+        <h1>Social Gathering Support</h1>
         <p>Your one-stop destination for help, FAQs, and contact information</p>
       </div>
     </section>
@@ -427,7 +428,7 @@
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                  How do I book a ticket on Easy Ticket?
+                  How do I book a ticket on Social Gathering?
                 </button>
               </h2>
               <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#supportAccordion">
@@ -469,7 +470,7 @@
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                  Is it safe to pay on Easy Ticket?
+                  Is it safe to pay on Social Gathering?
                 </button>
               </h2>
               <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#supportAccordion">
@@ -517,7 +518,7 @@
     <footer>
       <div class="container text-center">
         <div class="text-white-50">
-          <p class="mb-0">&copy; 2025 ITFuturz - Easy Ticket. All rights reserved.</p>
+          <p class="mb-0">&copy; 2025 ITFuturz - Social Gathering. All rights reserved.</p>
           <p class="mt-2 mb-0">
             <a href="/privacy-policy.html">Privacy Policy</a> |
             <a href="/terms-of-service.html">Terms of Service</a> |

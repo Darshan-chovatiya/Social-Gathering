@@ -297,7 +297,7 @@ const BookingSummary = () => {
           key: keyId,
           amount: orderData.amount,
           currency: orderData.currency,
-          name: 'Easy Tickets',
+          name: 'Social Gathering',
           description: `Payment for ${event.title}`,
           order_id: orderData.id,
           handler: async function (response) {
@@ -680,7 +680,7 @@ const BookingSummary = () => {
               <button 
                 onClick={handleProceedToPay}
                 disabled={processingPayment || finalAmount <= 0}
-                className={`w-full py-3 sm:py-3.5 px-4 bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white font-bold text-sm sm:text-base rounded-lg transition-all duration-200 uppercase disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl ${showStickyButton ? 'hidden lg:flex' : 'flex'}`}
+                className={`w-full py-3 sm:py-3.5 px-4 bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 font-bold text-sm sm:text-base rounded-lg transition-all duration-200 uppercase disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl ${showStickyButton ? 'hidden lg:flex' : 'flex'}`}
               >
                 {processingPayment ? (
                   <>
@@ -724,7 +724,7 @@ const BookingSummary = () => {
               <button 
                 onClick={handleProceedToPay}
                 disabled={processingPayment || finalAmount <= 0}
-                className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white font-bold py-2.5 px-6 rounded-lg transition-colors uppercase disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 whitespace-nowrap flex-shrink-0 text-sm sm:text-base"
+                className="bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 font-bold py-2.5 px-6 rounded-lg transition-colors uppercase disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 whitespace-nowrap flex-shrink-0 text-sm sm:text-base"
               >
                 {processingPayment ? (
                   <>
@@ -797,7 +797,7 @@ const BookingSummary = () => {
                         }
                       })
                     }}
-                    className="px-6 py-3 bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold rounded-lg transition-colors"
+                    className="px-6 py-3 bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 font-semibold rounded-lg transition-colors"
                   >
                     Login Now
                   </button>

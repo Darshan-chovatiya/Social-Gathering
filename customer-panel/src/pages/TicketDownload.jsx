@@ -276,7 +276,7 @@ const TicketDownload = () => {
           <body>
             <div class="ticket">
               <div class="header">
-                <h1>Easy Tickets</h1>
+                <h1>Social Gathering</h1>
                 <h2>${event?.title || 'Event Ticket'}</h2>
               </div>
               <div class="qr-code">
@@ -555,7 +555,7 @@ const TicketDownload = () => {
         {/* Download Button */}
         <button
           onClick={handleDownloadTicket}
-          className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold rounded-lg transition-colors shadow-lg"
+          className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 font-semibold rounded-lg transition-colors shadow-lg"
         >
           <Download className="w-5 h-5" />
           Download Ticket

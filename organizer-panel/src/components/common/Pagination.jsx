@@ -67,7 +67,7 @@ const Pagination = ({
               onClick={() => onPageChange(page)}
               className={`min-w-[36px] h-9 px-3 rounded-lg text-sm font-medium transition-colors ${
                 currentPage === page
-                  ? 'bg-primary-600 text-white border border-primary-600'
+                  ? 'bg-primary-500 text-gray-900 border border-primary-600'
                   : 'text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-primary-300'
               }`}
             >

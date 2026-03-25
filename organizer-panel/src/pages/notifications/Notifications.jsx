@@ -268,7 +268,7 @@ const Notifications = () => {
               disabled={sending || selectedEventId === 'all'}
               className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-white transition-all transform active:scale-95 shadow-lg ${sending || selectedEventId === 'all'
                   ? 'bg-gray-400 cursor-not-allowed shadow-none'
-                  : 'bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 shadow-primary-600/20 hover:shadow-primary-600/30'
+                  : 'bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-600 hover:to-primary-700 shadow-primary-500/20 hover:shadow-primary-500/30'
                 }`}
             >
               {sending ? (

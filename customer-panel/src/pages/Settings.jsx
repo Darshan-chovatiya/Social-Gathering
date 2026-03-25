@@ -209,7 +209,7 @@ const Settings = () => {
         {/* Profile Update Section - Centered */}
         <div className="bg-white dark:bg-gray-800 rounded border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
           {/* Header */}
-          <div className="bg-primary-600 dark:bg-primary-700 px-6 py-4">
+          <div className="bg-primary-500 dark:bg-primary-500 px-6 py-4">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
                 <User className="w-5 h-5 text-white" />
@@ -256,7 +256,7 @@ const Settings = () => {
                       <button
                         type="button"
                         onClick={removeProfilePicture}
-                        className="absolute -top-2 -right-2 w-7 h-7 bg-primary-600 hover:bg-primary-700 text-white rounded-full flex items-center justify-center shadow-md transition-colors z-10"
+                        className="absolute -top-2 -right-2 w-7 h-7 bg-primary-500 hover:bg-primary-600 text-gray-900 rounded-full flex items-center justify-center shadow-md transition-colors z-10"
                       >
                         <X className="w-4 h-4" />
                       </button>
@@ -370,7 +370,7 @@ const Settings = () => {
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white text-sm font-semibold rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 text-sm font-semibold rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
               >
                 {saving ? (
                   <>

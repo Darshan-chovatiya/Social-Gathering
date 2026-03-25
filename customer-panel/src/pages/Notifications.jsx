@@ -155,7 +155,7 @@ const Notifications = () => {
                   
                   {!notif.isRead && (
                     <div className="flex items-center gap-2 text-primary-600 text-xs font-bold uppercase tracking-wider">
-                      <span className="w-2 h-2 rounded-full bg-primary-600 animate-pulse" />
+                      <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
                       New Notification
                     </div>
                   )}

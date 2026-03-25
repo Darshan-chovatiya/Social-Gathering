@@ -605,7 +605,7 @@ const EventDetail = () => {
                                             {/* Book Now Button */}
                                             <button
                                                 onClick={handleBookNow}
-                                                className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-2.5 px-8 rounded text-sm transition-all duration-200"
+                                                className="bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 font-semibold py-2.5 px-8 rounded text-sm transition-all duration-200"
                                             >
                                                 Book Tickets
                                             </button>
@@ -1197,7 +1197,7 @@ const EventDetail = () => {
                                 {/* Book Now Button */}
                                 <button
                                     onClick={handleBookNow}
-                                    className="w-full bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-3 px-4 rounded transition-all duration-200"
+                                    className="w-full bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 font-semibold py-3 px-4 rounded transition-all duration-200"
                                 >
                                     Book Now
                                 </button>
@@ -1249,7 +1249,7 @@ const EventDetail = () => {
                         {/* Book Now Button */}
                         <button
                             onClick={handleBookNow}
-                            className="bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-2.5 px-6 rounded transition-all duration-200 whitespace-nowrap flex-shrink-0"
+                            className="bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 font-semibold py-2.5 px-6 rounded transition-all duration-200 whitespace-nowrap flex-shrink-0"
                         >
                             Book Now
                         </button>

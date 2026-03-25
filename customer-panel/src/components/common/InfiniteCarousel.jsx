@@ -142,7 +142,7 @@ const InfiniteCarousel = ({ items, navigate }) => {
                   }`}
                 >
                   <button 
-                    className="group/btn relative px-8 md:px-12 py-3 md:py-4 bg-white text-black font-black uppercase tracking-widest text-xs md:text-sm overflow-hidden transition-all hover:bg-primary-600 hover:text-white"
+                    className="group/btn relative px-8 md:px-12 py-3 md:py-4 bg-white text-black font-black uppercase tracking-widest text-xs md:text-sm overflow-hidden transition-all hover:bg-primary-500 hover:text-gray-900"
                   >
                     <span className="relative z-10 flex items-center gap-3">
                       View Details

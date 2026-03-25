@@ -14,9 +14,9 @@ const ConfirmDialog = ({
   if (!isOpen) return null
 
   const variants = {
-    danger: 'bg-[#f84464] hover:bg-[#e62d4d] active:bg-[#c91e3d] shadow-md hover:shadow-lg dark:bg-[#e62d4d] dark:hover:bg-[#f84464]',
+    danger: 'bg-red-600 hover:bg-red-700 active:bg-red-800 shadow-md hover:shadow-lg dark:bg-red-600 dark:hover:bg-red-700',
     warning: 'bg-amber-600 hover:bg-amber-700 active:bg-amber-800 shadow-md hover:shadow-lg dark:bg-amber-700 dark:hover:bg-amber-600',
-    primary: 'bg-primary-600 hover:bg-primary-700 active:bg-primary-800 shadow-md hover:shadow-lg dark:bg-primary-700 dark:hover:bg-primary-600',
+    primary: 'bg-primary-500 hover:bg-primary-600 active:bg-primary-700 shadow-md hover:shadow-lg dark:bg-primary-500 dark:hover:bg-primary-600',
   }
 
   return (
@@ -24,10 +24,10 @@ const ConfirmDialog = ({
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full p-6 animate-scale-in border border-gray-200/60 dark:border-gray-700/60">
         <div className="flex items-start gap-4">
           <div className={`flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center shadow-lg ${
-            variant === 'danger' ? 'bg-[#fef2f3] dark:bg-[#f84464]/30' : variant === 'warning' ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-primary-100 dark:bg-primary-900/30'
+            variant === 'danger' ? 'bg-red-50 dark:bg-red-900/30' : variant === 'warning' ? 'bg-amber-100 dark:bg-amber-900/30' : 'bg-primary-100 dark:bg-primary-900/30'
           }`}>
             <AlertTriangle className={`w-6 h-6 ${
-              variant === 'danger' ? 'text-[#f84464] dark:text-[#f84464]' : variant === 'warning' ? 'text-amber-600 dark:text-amber-400' : 'text-primary-600 dark:text-primary-400'
+              variant === 'danger' ? 'text-red-600 dark:text-red-300' : variant === 'warning' ? 'text-amber-600 dark:text-amber-400' : 'text-primary-600 dark:text-primary-400'
             }`} />
           </div>
           <div className="flex-1">
@@ -42,7 +42,7 @@ const ConfirmDialog = ({
               </button>
               <button
                 onClick={onConfirm}
-                className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-all duration-150 active:scale-95 ${variants[variant]}`}
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-150 active:scale-95 ${variant === 'primary' ? 'text-gray-900' : 'text-white'} ${variants[variant]}`}
               >
                 {confirmText}
               </button>

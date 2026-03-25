@@ -208,7 +208,7 @@ const AffiliateLinks = () => {
                         {/* Copy Link Button */}
                         <button
                           onClick={() => copyToClipboard(link.affiliateUrl, link._id)}
-                          className="flex items-center justify-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white rounded-lg text-sm font-semibold transition-colors"
+                          className="flex items-center justify-center gap-2 px-4 py-2 bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 rounded-lg text-sm font-semibold transition-colors"
                         >
                           {isCopied ? (
                             <>
@@ -325,7 +325,7 @@ const AffiliateLinks = () => {
               <div className="flex-shrink-0 px-4 py-3 border-t border-gray-200 dark:border-gray-700">
                 <button
                   onClick={handleCloseReferralsModal}
-                  className="w-full bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-200"
+                  className="w-full bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 font-semibold py-2.5 px-4 rounded-lg transition-all duration-200"
                 >
                   Okay, Got It
                 </button>

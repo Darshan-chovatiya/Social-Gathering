@@ -33,7 +33,7 @@ class Mailer {
     <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Welcome to Easy Tickets</title>
+      <title>Welcome to Social Gathering</title>
       <style>
         body {
           font-family: 'Segoe UI', Inter, Helvetica, Arial, sans-serif;
@@ -55,7 +55,7 @@ class Mailer {
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
         .header {
-          background: linear-gradient(135deg, #d11e4f, #9a1637);
+          background: linear-gradient(135deg, #FEDF6B, #b69d33);
           padding: 30px 20px;
           text-align: center;
         }
@@ -126,7 +126,7 @@ class Mailer {
         }
         .credential-label {
           font-weight: bold;
-          color: #9a1637;
+          color: #5a4a14;
           font-size: 12px;
           text-transform: uppercase;
           display: block;
@@ -142,8 +142,8 @@ class Mailer {
           margin-top: 30px;
         }
         .btn {
-          background: #d11e4f;
-          color: #ffffff;
+          background: #FEDF6B;
+          color: #1e293b;
           padding: 12px 30px;
           text-decoration: none;
           border-radius: 5px;
@@ -152,7 +152,7 @@ class Mailer {
           transition: background 0.3s ease;
         }
         .btn:hover {
-          background: #b81a42;
+          background: #e7c94e;
         }
         .footer {
           background-color: #f8fafc;
@@ -176,13 +176,13 @@ class Mailer {
       <div class="container">
         <div class="header">
           <div class="header-content">
-            <img src="cid:logo" alt="Easy Tickets Logo">
-            <h1>Welcome to Easy Tickets!</h1>
+            <img src="cid:logo" alt="Social Gathering Logo">
+            <h1>Welcome to Social Gathering!</h1>
           </div>
         </div>
         <div class="content">
           <p class="welcome-msg">Hi ${organizer.name},</p>
-          <p>Congratulations! Your organizer account has been successfully created. You can now start managing your events, tracking bookings, and growing your audience through the Easy Tickets Organizer Panel.</p>
+          <p>Congratulations! Your organizer account has been successfully created. You can now start managing your events, tracking bookings, and growing your audience through the Social Gathering Organizer Panel.</p>
           
           <div class="credentials-box">
             <div class="credential-item">
@@ -206,7 +206,7 @@ class Mailer {
           </div>
         </div>
         <div class="footer">
-          <p>&copy; ${new Date().getFullYear()} Easy Tickets. All rights reserved.</p>
+          <p>&copy; ${new Date().getFullYear()} Social Gathering. All rights reserved.</p>
           <p>If you have any questions, feel free to contact our support team.</p>
           <div class="social-links">
             <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Support</a>
@@ -218,9 +218,9 @@ class Mailer {
     `;
 
     const mailOptions = {
-      from: `"Easy Tickets" <${config.EMAIL_USER}>`,
+      from: `"Social Gathering" <${config.EMAIL_USER}>`,
       to: organizer.email,
-      subject: 'Welcome to Easy Tickets - Your Organizer Account is Ready!',
+      subject: 'Welcome to Social Gathering - Your Organizer Account is Ready!',
       html: htmlContent,
       attachments: [
         {

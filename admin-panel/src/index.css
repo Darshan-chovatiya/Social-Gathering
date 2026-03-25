@@ -2,17 +2,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary-50: #fef2f4;
-  --color-primary-100: #fde6ea;
-  --color-primary-200: #fbd1d9;
-  --color-primary-300: #f8b0be;
-  --color-primary-400: #f47f9a;
-  --color-primary-500: #d11e4f;
-  --color-primary-600: #b81a42;
-  --color-primary-700: #9a1637;
-  --color-primary-800: #7c122c;
-  --color-primary-900: #5e0e21;
-  --color-primary-950: #400a16;
+  --color-primary-50: #fffeef;
+  --color-primary-100: #fff9d6;
+  --color-primary-200: #fff0a8;
+  --color-primary-300: #ffe57a;
+  --color-primary-400: #ffe07a;
+  --color-primary-500: #FEDF6B;
+  --color-primary-600: #e7c94e;
+  --color-primary-700: #b69d33;
+  --color-primary-800: #866f22;
+  --color-primary-900: #5a4a14;
+  --color-primary-950: #3b310d;
   
   --font-sans: 'Inter', system-ui, sans-serif;
 }
@@ -39,7 +39,7 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-medium py-2.5 px-5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:shadow-sm transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md;
+    @apply bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-gray-900 font-medium py-2.5 px-5 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:shadow-sm transform hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-md;
   }
   
   .btn-secondary {

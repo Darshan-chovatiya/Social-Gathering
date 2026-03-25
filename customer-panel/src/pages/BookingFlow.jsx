@@ -617,7 +617,7 @@ const BookingFlow = () => {
               {/* Step 1: Venue */}
               <div className="flex items-center gap-2">
                 <div className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full flex-shrink-0 ${
-                  currentStep >= 1 ? 'bg-primary-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                  currentStep >= 1 ? 'bg-primary-500 text-gray-900' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                 }`}>
                   <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
@@ -629,12 +629,12 @@ const BookingFlow = () => {
               {/* Show Date & Time step only if multiple slots exist */}
               {!hasOnlyOneSlot && (
                 <>
-                  <div className={`w-8 sm:w-12 h-0.5 ${currentStep >= 2 ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'}`}></div>
+                  <div className={`w-8 sm:w-12 h-0.5 ${currentStep >= 2 ? 'bg-primary-500' : 'bg-gray-200 dark:bg-gray-700'}`}></div>
 
                   {/* Step 2: Date & Time */}
                   <div className="flex items-center gap-2">
                     <div className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full flex-shrink-0 ${
-                      currentStep >= 2 ? 'bg-primary-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                      currentStep >= 2 ? 'bg-primary-500 text-gray-900' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                     }`}>
                       <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </div>
@@ -645,12 +645,12 @@ const BookingFlow = () => {
                 </>
               )}
 
-              <div className={`w-8 sm:w-12 h-0.5 ${currentStep >= 3 ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'}`}></div>
+              <div className={`w-8 sm:w-12 h-0.5 ${currentStep >= 3 ? 'bg-primary-500' : 'bg-gray-200 dark:bg-gray-700'}`}></div>
 
               {/* Step 3: Tickets */}
               <div className="flex items-center gap-2">
                 <div className={`flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full flex-shrink-0 ${
-                  currentStep >= 3 ? 'bg-primary-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
+                  currentStep >= 3 ? 'bg-primary-500 text-gray-900' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'
                 }`}>
                   <Ticket className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
@@ -715,7 +715,7 @@ const BookingFlow = () => {
                     onClick={() => handleDateSelect(date)}
                     className={`py-2.5 px-3 rounded-lg border-2 transition-all text-sm font-semibold ${
                       selectedDate?.toISOString().split('T')[0] === date.toISOString().split('T')[0]
-                        ? 'bg-primary-600 border-primary-600 text-white'
+                        ? 'bg-primary-500 border-primary-600 text-gray-900'
                         : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:border-primary-500'
                     }`}
                   >
@@ -738,7 +738,7 @@ const BookingFlow = () => {
                       onClick={() => setSelectedTime(slot)}
                       className={`py-2.5 px-3 rounded-lg border-2 transition-all text-sm font-semibold ${
                         selectedTime?._id === slot._id
-                          ? 'bg-primary-600 border-primary-600 text-white'
+                          ? 'bg-primary-500 border-primary-600 text-gray-900'
                           : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:border-primary-500'
                       }`}
                     >
@@ -882,7 +882,7 @@ const BookingFlow = () => {
                         <button
                           onClick={() => handleTicketQuantity(ticket._id, 1)}
                           disabled={isSoldOut || isFreeTicketDisabled || (ticket.price === 0 && (selectedTickets[ticket._id] || 0) >= 1)}
-                          className="px-5 py-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white text-sm font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          className="px-5 py-2 bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 text-sm font-semibold rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           {isSoldOut ? 'Sold Out' : isFreeTicketDisabled ? 'Already Booked' : 'Add'}
                         </button>
@@ -945,7 +945,7 @@ const BookingFlow = () => {
                 (currentStep === 2 && (!selectedDate || !selectedTime)) ||
                 (currentStep === 3 && (totalTickets === 0 || checkingAvailability || processingFreeBooking))
               }
-              className="flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-2.5 bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white rounded-lg text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 min-w-[80px] sm:min-w-[100px]"
+              className="flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2.5 sm:py-2.5 bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 rounded-lg text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 min-w-[80px] sm:min-w-[100px]"
             >
               {checkingAvailability || processingFreeBooking ? (
                 <>
@@ -990,7 +990,7 @@ const BookingFlow = () => {
                 (currentStep === 2 && (!selectedDate || !selectedTime)) ||
                 (currentStep === 3 && (totalTickets === 0 || checkingAvailability || processingFreeBooking))
               }
-              className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white rounded-lg text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 min-w-[80px]"
+              className="flex items-center justify-center gap-1.5 px-4 py-2.5 bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 rounded-lg text-xs sm:text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 min-w-[80px]"
             >
               {checkingAvailability || processingFreeBooking ? (
                 <>

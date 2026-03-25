@@ -55,7 +55,7 @@ const Sidebar = ({ isOpen, onClose }) => {
               ) : (
                 <img
                   src={logoIcon}
-                  alt="Easy Tickets Logo"
+                  alt="Social Gathering Logo"
                   className="w-full h-full object-contain"
                   onError={() => setLogoError(true)}
                 />
@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             </div>
             <div className='align-middle'>
               <div className="text-lg sm:text-xl font-bold text-white font-sans" style={{ lineHeight: '20px' }}>
-                Easy Tickets
+                Social Gathering
               </div>
               <div className="text-gray-400 text-xs font-medium">Organizer Panel</div>
             </div>
@@ -93,7 +93,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 }}
                 className={({ isActive }) =>
                   `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-sans group ${isActive
-                    ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold shadow-lg shadow-primary-600/30 transform scale-[1.02]'
+                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-gray-900 font-semibold shadow-lg shadow-primary-500/30 transform scale-[1.02]'
                     : 'text-gray-300 hover:bg-gray-800/50 hover:text-white hover:translate-x-1'
                   }`
                 }
@@ -115,7 +115,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             }}
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-sans group ${isActive
-                ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold shadow-lg shadow-primary-600/30'
+                ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-gray-900 font-semibold shadow-lg shadow-primary-500/30'
                 : 'text-gray-300 hover:bg-gray-800/50 hover:text-white hover:translate-x-1'
               }`
             }

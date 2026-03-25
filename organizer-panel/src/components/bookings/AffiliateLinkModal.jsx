@@ -302,7 +302,7 @@ const AffiliateLinkModal = ({ isOpen, onClose, booking, onSuccess }) => {
                   />
                   <button
                     onClick={handleCopyLink}
-                    className="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors flex items-center justify-center gap-2 whitespace-nowrap text-xs sm:text-sm"
+                    className="px-4 py-2 bg-primary-500 text-gray-900 rounded-lg hover:bg-primary-600 transition-colors flex items-center justify-center gap-2 whitespace-nowrap text-xs sm:text-sm"
                   >
                     {copied ? (
                       <>

@@ -71,7 +71,7 @@ const Header = ({ onMenuClick }) => {
                       {user?.name || 'Admin'}
                     </p>
                     <p className="text-xs text-gray-500 font-sans">
-                      {user?.email || user?.mobile || 'admin@easytickets.com'}
+                      {user?.email || user?.mobile || 'admin@socialgathering.com'}
                     </p>
                   </div>
                 </div>
@@ -95,7 +95,7 @@ const Header = ({ onMenuClick }) => {
                       {user?.name || 'Admin'}
                     </p>
                     <p className="text-xs text-gray-500 font-sans mt-0.5">
-                      {user?.email || user?.mobile || 'admin@easytickets.com'}
+                      {user?.email || user?.mobile || 'admin@socialgathering.com'}
                     </p>
                   </div>
                   

@@ -123,7 +123,7 @@ const NotificationTray = () => {
                             {notif.title}
                           </p>
                           {!notif.isRead && (
-                            <span className="h-2 w-2 rounded-full bg-primary-600" />
+                            <span className="h-2 w-2 rounded-full bg-primary-500" />
                           )}
                         </div>
                         <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">

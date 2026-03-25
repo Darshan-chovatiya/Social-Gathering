@@ -135,7 +135,7 @@ const Header = () => {
                   ) : (
                     <img
                       src={logoIcon}
-                      alt="Easy Tickets Logo"
+                      alt="Social Gathering Logo"
                       className="w-full h-full object-contain"
                       onError={() => setLogoError(true)}
                     />
@@ -143,10 +143,10 @@ const Header = () => {
                 </div>
                 <div className="flex flex-col">
                   <div className="flex items-baseline gap-0.5">
-                    <span className="text-2xl font-extrabold text-primary-600 dark:text-primary-400 tracking-tight">Easy</span>
-                    <span className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">Tickets</span>
+                    <span className="text-2xl font-extrabold text-primary-600 dark:text-primary-400 tracking-tight">Social</span>
+                    <span className="text-2xl font-extrabold text-gray-900 dark:text-white tracking-tight">Gathering</span>
                   </div>
-                  <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400 -mt-0.5 tracking-wide">Easy Booking</span>
+                  <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400 -mt-0.5 tracking-wide">Social Gathering</span>
                 </div>
               </NavLink>
 
@@ -334,7 +334,7 @@ const Header = () => {
                             setShowLogoutConfirm(true)
                             setDropdownOpen(false)
                           }}
-                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-[#f84464] dark:text-[#f84464] hover:bg-[#fef2f3] dark:hover:bg-[#f84464]/30 transition-all text-left"
+                          className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/30 transition-all text-left"
                         >
                           <LogOut className="w-4 h-4" />
                           <span>Logout</span>
@@ -345,7 +345,7 @@ const Header = () => {
                 ) : (
                   <button
                     onClick={() => navigate('/login')}
-                    className="px-4 py-2 rounded-md bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white text-sm font-semibold transition-all shadow-md hover:shadow-md"
+                    className="px-4 py-2 rounded-md bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 text-sm font-semibold transition-all shadow-md hover:shadow-md"
                   >
                     Sign in
                   </button>
@@ -384,7 +384,7 @@ const Header = () => {
                       ) : (
                         <img
                           src={logoIcon}
-                          alt="Easy Tickets Logo"
+                          alt="Social Gathering Logo"
                           className="w-full h-full object-contain"
                           onError={() => setLogoError(true)}
                         />
@@ -392,10 +392,10 @@ const Header = () => {
                     </div>
                     <div className="flex flex-col">
                       <div className="flex items-baseline gap-0.5">
-                        <span className="text-xl font-extrabold text-primary-600 dark:text-primary-400 tracking-tight">Easy</span>
-                        <span className="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">Tickets</span>
+                        <span className="text-xl font-extrabold text-primary-600 dark:text-primary-400 tracking-tight">Social</span>
+                        <span className="text-xl font-extrabold text-gray-900 dark:text-white tracking-tight">Gathering</span>
                       </div>
-                      <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400 -mt-0.5 tracking-wide">Easy Booking</span>
+                      <span className="text-[10px] font-medium text-gray-500 dark:text-gray-400 -mt-0.5 tracking-wide">Social Gathering</span>
                     </div>
                   </div>
                   <button
@@ -591,7 +591,7 @@ const Header = () => {
                         setShowLogoutConfirm(true)
                         setMobileMenuOpen(false)
                       }}
-                      className="flex items-center gap-2 px-3 py-2.5 rounded-md text-sm font-medium text-[#f84464] dark:text-[#f84464] hover:bg-[#fef2f3] dark:hover:bg-[#f84464]/30 transition-all w-full text-left"
+                      className="flex items-center gap-2 px-3 py-2.5 rounded-md text-sm font-medium text-red-600 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/30 transition-all w-full text-left"
                     >
                       <LogOut className="w-4 h-4" />
                       <span>Logout</span>

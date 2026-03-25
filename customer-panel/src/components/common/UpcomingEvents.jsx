@@ -75,7 +75,7 @@ const UpcomingEvents = ({ limit = 8, showViewMore = true }) => {
   if (error) {
     return (
       <div className="text-center py-12">
-        <p className="text-[#f84464] dark:text-[#f84464]">{error}</p>
+        <p className="text-red-600 dark:text-red-300">{error}</p>
       </div>
     )
   }
@@ -104,7 +104,7 @@ const UpcomingEvents = ({ limit = 8, showViewMore = true }) => {
         <div className="mt-8 text-center">
           <button
             onClick={() => navigate('/explore')}
-            className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 dark:bg-primary-700 dark:hover:bg-primary-600 text-white font-semibold px-8 py-3 rounded-md transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-600 dark:bg-primary-500 dark:hover:bg-primary-600 text-gray-900 font-semibold px-8 py-3 rounded-md transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
           >
             <span>View All Events</span>
             <ArrowRight className="w-5 h-5" />

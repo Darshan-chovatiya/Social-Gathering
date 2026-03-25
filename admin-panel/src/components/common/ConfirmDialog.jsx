@@ -15,7 +15,7 @@ const ConfirmDialog = ({
   const variants = {
     danger: 'bg-red-600 hover:bg-red-700 active:bg-red-800 shadow-md hover:shadow-lg',
     warning: 'bg-amber-600 hover:bg-amber-700 active:bg-amber-800 shadow-md hover:shadow-lg',
-    primary: 'bg-primary-600 hover:bg-primary-700 active:bg-primary-800 shadow-md hover:shadow-lg',
+    primary: 'bg-primary-500 hover:bg-primary-600 active:bg-primary-700 shadow-md hover:shadow-lg',
   }
 
   return (
@@ -41,7 +41,7 @@ const ConfirmDialog = ({
               </button>
               <button
                 onClick={onConfirm}
-                className={`px-4 py-2 text-sm font-medium text-white rounded-lg transition-all duration-150 active:scale-95 ${variants[variant]}`}
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-150 active:scale-95 ${variant === 'primary' ? 'text-gray-900' : 'text-white'} ${variants[variant]}`}
               >
                 {confirmText}
               </button>

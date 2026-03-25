@@ -34,7 +34,7 @@ const AboutUs = () => {
               What should we do this weekend?
             </h1>
             <p className="text-lg md:text-xl text-white/90 mb-4">
-              Let Easy Tickets handle it.....
+              Let Social Gathering handle it.....
             </p>
             <div className="flex items-center justify-center gap-2 text-white/80">
               <div className="w-2 h-2 rounded-full bg-white/60 animate-pulse"></div>
@@ -59,7 +59,7 @@ const AboutUs = () => {
             
             <div className="relative z-10">
               <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                <span className="text-primary-600 dark:text-primary-400 font-bold">At Easy Tickets,</span> we're not just a ticketing platform - we're your gateway to extraordinary events and unforgettable moments. Whether you're an event organizer looking for advanced tools to drive ticket sales or a customer searching for exclusive perks, we bring the best of both worlds together.
+                <span className="text-primary-600 dark:text-primary-400 font-bold">At Social Gathering,</span> we're not just a ticketing platform - we're your gateway to extraordinary events and unforgettable moments. Whether you're an event organizer looking for advanced tools to drive ticket sales or a customer searching for exclusive perks, we bring the best of both worlds together.
               </p>
             </div>
           </div>
@@ -75,10 +75,10 @@ const AboutUs = () => {
             </div>
             <div>
               <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                What is Included in Easy Tickets?
+                What is Included in Social Gathering?
               </h2>
               <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
-                From live music concerts and sports events to workshops, festivals, and beyond, Easy Tickets is here to connect you with the experiences you love or ones you'll fall in love with.
+                From live music concerts and sports events to workshops, festivals, and beyond, Social Gathering is here to connect you with the experiences you love or ones you'll fall in love with.
               </p>
             </div>
           </div>
@@ -256,10 +256,10 @@ const AboutUs = () => {
       <section className="py-16 md:py-20 bg-gradient-to-br from-primary-600 to-primary-700 dark:from-primary-800 dark:to-primary-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
           <h2 className="text-2xl md:text-3xl font-bold mb-3">
-            So, whether you're looking to plan your event or just plan your weekend, Easy Tickets has your back.
+            So, whether you're looking to plan your event or just plan your weekend, Social Gathering has your back.
           </h2>
           <p className="text-lg text-white/90 mb-8">
-            Let's create moments & memories. Let's Easy Tickets.
+            Let's create moments & memories. Let's Social Gathering.
           </p>
         </div>
       </section>

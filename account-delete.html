@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Delete Account - Easy Ticket</title>
+    <title>Delete Account - Social Gathering</title>
 
     <!-- Bootstrap CSS -->
     <link
@@ -27,8 +27,9 @@
 
     <style>
       :root {
-        --primary-color: #eb4e62;
-        --secondary-color: #d93d52;
+        --primary-color: #b69d33;
+        --secondary-color: #e7c94e;
+        --primary-accent: #FEDF6B;
         --bg-light: #f8fafc;
         --bg-section: #f1f5f9;
       }
@@ -119,7 +120,7 @@
           135deg,
           #3b82f6 0%,
           #8b5cf6 50%,
-          var(--primary-color) 100%
+          var(--primary-accent) 100%
         );
         display: flex;
         align-items: center;
@@ -146,7 +147,7 @@
       }
 
       html.dark .logo-text span {
-        color: #f47f9a;
+        color: var(--primary-accent);
       }
 
       .theme-toggle {
@@ -190,8 +191,8 @@
         background:
           linear-gradient(
             135deg,
-            rgba(235, 78, 98, 0.92) 0%,
-            rgba(217, 61, 82, 0.92) 100%
+            rgba(90, 74, 20, 0.9) 0%,
+            rgba(254, 223, 107, 0.55) 100%
           ),
           url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80")
             center/cover no-repeat;
@@ -199,7 +200,7 @@
         padding: 80px 0 70px 0;
         margin-bottom: 40px;
         border-radius: 0 0 32px 32px;
-        box-shadow: 0 8px 32px rgba(235, 78, 98, 0.1);
+        box-shadow: 0 8px 32px rgba(254, 223, 107, 0.22);
         position: relative;
       }
 
@@ -264,7 +265,7 @@
       }
 
       .contact-card:hover {
-        box-shadow: 0 12px 32px rgba(235, 78, 98, 0.1);
+        box-shadow: 0 12px 32px rgba(254, 223, 107, 0.22);
         transform: translateY(-4px) scale(1.02);
         border-color: var(--primary-color);
       }
@@ -277,7 +278,7 @@
       }
 
       html.dark .contact-card i {
-        color: #f47f9a;
+        color: var(--primary-accent);
       }
 
       .contact-card:hover i {
@@ -302,7 +303,7 @@
       }
 
       html.dark .contact-card p.text-primary {
-        color: #f47f9a !important;
+        color: var(--primary-accent) !important;
       }
 
       /* Footer */
@@ -327,7 +328,7 @@
       }
 
       footer a:hover {
-        color: #f47f9a;
+        color: var(--primary-accent);
         text-decoration: underline;
       }
 
@@ -354,13 +355,13 @@
 
       .form-control:focus {
         border-color: var(--primary-color);
-        box-shadow: 0 0 0 0.25rem rgba(235, 78, 98, 0.25);
+        box-shadow: 0 0 0 0.25rem rgba(254, 223, 107, 0.25);
       }
 
       .btn-primary:hover {
         background: var(--secondary-color) !important;
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(235, 78, 98, 0.25);
+        box-shadow: 0 8px 20px rgba(254, 223, 107, 0.25);
       }
 
       /* Fix card backgrounds for dark mode */
@@ -481,7 +482,7 @@
           <div class="logo-icon">
             <img
               src="/Logo Icon.png"
-              alt="Easy Ticket Logo"
+              alt="Social Gathering Logo"
               class="logo-image"
               onerror="
                 this.style.display = 'none';
@@ -504,8 +505,8 @@
             </svg>
           </div>
           <div class="logo-text">
-            <span>Easy</span>
-            <span>Ticket</span>
+            <span>Social</span>
+            <span>Gathering</span>
           </div>
         </a>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
@@ -625,7 +626,7 @@
                   </div>
                 </div>
 
-                <input type="hidden" name="_subject" value="Account Deletion Request - Easy Ticket" />
+                <input type="hidden" name="_subject" value="Account Deletion Request - Social Gathering" />
                 <input type="hidden" name="_captcha" value="false" />
 
                 <button type="submit" class="btn btn-primary btn-lg w-100 mt-3 fw-bold" style="background: var(--primary-color); border: none; padding: 12px; font-size: 1.1rem; transition: all 0.3s;">
@@ -647,7 +648,7 @@
     <footer>
       <div class="container">
         <div class="text-center text-white-50">
-          <p class="mb-0">&copy; 2025 ITFuturz - Easy Ticket. All rights reserved.</p>
+          <p class="mb-0">&copy; 2025 ITFuturz - Social Gathering. All rights reserved.</p>
           <p class="mt-2 mb-0">
             <a href="/privacy-policy.html">Privacy Policy</a> |
             <a href="/terms-of-service.html">Terms of Service</a> |

@@ -19,7 +19,7 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 
-const COLORS = ['#d11e4f', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316']
+const COLORS = ['#FEDF6B', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4', '#f97316']
 
 // Enhanced Tooltip Component
 const CustomTooltip = ({ active, payload, label }) => {
@@ -31,7 +31,7 @@ const CustomTooltip = ({ active, payload, label }) => {
           <div key={index} className="flex items-center gap-2">
             <div 
               className="w-2 h-2 rounded-full" 
-              style={{ backgroundColor: entry.color || '#d11e4f' }}
+              style={{ backgroundColor: entry.color || '#FEDF6B' }}
             />
             <p className="text-sm font-medium text-gray-700">
               ₹{entry.value?.toLocaleString() || 0}
@@ -56,8 +56,8 @@ const TopEventsBarChart = ({ data }) => {
       >
         <defs>
           <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#d11e4f" stopOpacity={1} />
-            <stop offset="100%" stopColor="#f47f9a" stopOpacity={0.9} />
+            <stop offset="0%" stopColor="#FEDF6B" stopOpacity={1} />
+            <stop offset="100%" stopColor="#e7c94e" stopOpacity={0.95} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="#f5f5f5" vertical={false} />
@@ -87,7 +87,7 @@ const TopEventsBarChart = ({ data }) => {
                     <div key={index} className="flex items-center gap-2">
                       <div 
                         className="w-2 h-2 rounded-full" 
-                        style={{ backgroundColor: '#d11e4f' }}
+                        style={{ backgroundColor: '#FEDF6B' }}
                       />
                       <p className="text-sm font-medium text-gray-700">
                         ₹{entry.value?.toLocaleString() || 0}
@@ -99,7 +99,7 @@ const TopEventsBarChart = ({ data }) => {
             }
             return null
           }}
-          cursor={{ fill: 'rgba(209, 30, 79, 0.1)' }}
+          cursor={{ fill: 'rgba(254, 223, 107, 0.18)' }}
         />
         <Bar
           dataKey="revenue"
@@ -351,8 +351,8 @@ const Dashboard = () => {
               <AreaChart data={dailyRevenue} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
                 <defs>
                   <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#d11e4f" stopOpacity={0.2} />
-                    <stop offset="100%" stopColor="#d11e4f" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#FEDF6B" stopOpacity={0.22} />
+                    <stop offset="100%" stopColor="#FEDF6B" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f5f5f5" vertical={false} />
@@ -368,15 +368,15 @@ const Dashboard = () => {
                   tick={{ fontSize: 10, fill: '#6b7280', fontWeight: 500 }}
                   tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
                 />
-                <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#d11e4f', strokeWidth: 1, strokeDasharray: '5 5' }} />
+                <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#FEDF6B', strokeWidth: 1, strokeDasharray: '5 5' }} />
                 <Area
                   type="monotone"
                   dataKey="revenue"
                   fill="url(#revenueGradient)"
-                  stroke="#d11e4f"
+                  stroke="#FEDF6B"
                   strokeWidth={2.5}
                   dot={false}
-                  activeDot={{ r: 5, fill: '#d11e4f', stroke: '#fff', strokeWidth: 2 }}
+                  activeDot={{ r: 5, fill: '#FEDF6B', stroke: '#fff', strokeWidth: 2 }}
                 />
               </AreaChart>
             </ResponsiveContainer>
@@ -445,7 +445,7 @@ const Dashboard = () => {
                       }
                       return null
                     }}
-                    cursor={{ fill: 'rgba(209, 30, 79, 0.1)' }}
+                    cursor={{ fill: 'rgba(254, 223, 107, 0.18)' }}
                   />
                   <Bar
                     dataKey="value"

@@ -274,7 +274,7 @@ const ScanTickets = () => {
               <button
                 onClick={() => fetchScannedTickets(pagination.page)}
                 disabled={loadingTickets}
-                className="flex items-center gap-2 px-3 py-1.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-3 py-1.5 bg-primary-500 hover:bg-primary-600 text-gray-900 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <RefreshCw className={`w-4 h-4 ${loadingTickets ? 'animate-spin' : ''}`} />
                 Refresh
@@ -411,7 +411,7 @@ const ScanTickets = () => {
                     <button
                       onClick={startScanning}
                       disabled={scanCooldown > 0}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg text-xs sm:text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-1 sm:flex-initial min-w-[120px] sm:min-w-0"
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-500 hover:bg-primary-600 text-gray-900 rounded-lg text-xs sm:text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex-1 sm:flex-initial min-w-[120px] sm:min-w-0"
                     >
                       <Camera className="w-4 h-4" />
                       <span className="whitespace-nowrap">{scanCooldown > 0 ? `Wait ${scanCooldown}s` : 'Start Scanning'}</span>
@@ -454,7 +454,7 @@ const ScanTickets = () => {
                     />
                     <button
                       type="submit"
-                      className="px-4 py-2 sm:py-1.5 text-sm bg-primary-600 hover:bg-primary-700 text-white rounded-lg font-medium transition-colors whitespace-nowrap"
+                      className="px-4 py-2 sm:py-1.5 text-sm bg-primary-500 hover:bg-primary-600 text-gray-900 rounded-lg font-medium transition-colors whitespace-nowrap"
                     >
                       Submit
                     </button>
@@ -754,7 +754,7 @@ const ScanTickets = () => {
                     setShowTicketDetails(false)
                     setSelectedTicket(null)
                   }}
-                  className="w-full py-2.5 px-4 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-lg transition-colors"
+                  className="w-full py-2.5 px-4 bg-primary-500 hover:bg-primary-600 text-gray-900 font-medium rounded-lg transition-colors"
                 >
                   Close
                 </button>

@@ -27,7 +27,7 @@ const getMyAffiliateLinks = async (req, res) => {
         const totalRevenue = referrals.reduce((sum, booking) => sum + (booking.totalAmount || 0), 0);
 
         const eventIdForUrl = (link.eventId && typeof link.eventId === 'object') ? link.eventId._id : link.eventId;
-        const affiliateUrl = eventIdForUrl ? `${process.env.FRONTEND_URL || 'https://easytickets.in'}/#/events/${eventIdForUrl}?ref=${link.affiliateCode}` : null;
+        const affiliateUrl = eventIdForUrl ? `${process.env.FRONTEND_URL || 'https://socialgathering.in'}/#/events/${eventIdForUrl}?ref=${link.affiliateCode}` : null;
 
         return {
           ...link.toObject(),
@@ -88,7 +88,7 @@ const getAffiliateLinkDetails = async (req, res) => {
     const totalRevenue = referrals.reduce((sum, booking) => sum + (booking.totalAmount || 0), 0);
 
     const eventIdForUrl = (affiliateLink.eventId && typeof affiliateLink.eventId === 'object') ? affiliateLink.eventId._id : affiliateLink.eventId;
-    const affiliateUrl = eventIdForUrl ? `${process.env.FRONTEND_URL || 'https://easytickets.in'}/#/events/${eventIdForUrl}?ref=${affiliateLink.affiliateCode}` : null;
+    const affiliateUrl = eventIdForUrl ? `${process.env.FRONTEND_URL || 'https://socialgathering.in'}/#/events/${eventIdForUrl}?ref=${affiliateLink.affiliateCode}` : null;
 
     return sendSuccess(res, 'Affiliate link details fetched successfully', {
       affiliateLink: {

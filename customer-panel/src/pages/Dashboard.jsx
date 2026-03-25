@@ -260,7 +260,7 @@ const Dashboard = () => {
               </div>
               <button 
                 type="submit"
-                className="bg-primary-600 hover:bg-primary-700 text-white px-8 py-3.5 rounded-xl font-black text-base transition-all shadow-lg active:scale-95 flex items-center gap-2"
+                className="bg-primary-500 hover:bg-primary-600 text-gray-900 px-8 py-3.5 rounded-xl font-black text-base transition-all shadow-lg active:scale-95 flex items-center gap-2"
               >
                 Find Now
               </button>
@@ -276,7 +276,7 @@ const Dashboard = () => {
                   onClick={() => navigate(item.path)}
                   className="group/btn flex items-center gap-2 text-[11px] font-black text-gray-400 hover:text-primary-600 transition-all uppercase tracking-widest"
                 >
-                  <div className="w-1 h-1 rounded-full bg-gray-300 group-hover/btn:bg-primary-600 transition-all" />
+                  <div className="w-1 h-1 rounded-full bg-gray-300 group-hover/btn:bg-primary-500 transition-all" />
                   {item.label}
                 </button>
               ))}
@@ -404,7 +404,7 @@ const Dashboard = () => {
                 <div 
                   key={idx}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    activeIdx === idx ? 'w-6 bg-primary-600' : 'w-1.5 bg-gray-300 dark:bg-gray-700'
+                    activeIdx === idx ? 'w-6 bg-primary-500' : 'w-1.5 bg-gray-300 dark:bg-gray-700'
                   }`}
                 />
               );
@@ -428,7 +428,7 @@ const Dashboard = () => {
             <div className="flex items-center gap-3">
               <img src={logoIcon} alt="Logo" className="w-10 h-10 md:w-14 md:h-14 object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]" />
               <div className="flex flex-col leading-none">
-                <span className="text-white text-xl md:text-2xl font-black tracking-tighter uppercase whitespace-nowrap">Easy Tickets</span>
+                <span className="text-white text-xl md:text-2xl font-black tracking-tighter uppercase whitespace-nowrap">Social Gathering</span>
                 <span className="text-gray-400 text-[10px] md:text-[12px] font-black uppercase tracking-[0.2em] ml-0.5">Stream • Book • Enjoy</span>
               </div>
             </div>
@@ -507,7 +507,7 @@ const Dashboard = () => {
                   <div 
                     key={idx}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      activeIdx === idx ? 'w-6 bg-primary-600' : 'w-1.5 bg-gray-300 dark:bg-gray-700/50'
+                      activeIdx === idx ? 'w-6 bg-primary-500' : 'w-1.5 bg-gray-300 dark:bg-gray-700/50'
                     }`}
                   />
                 );
@@ -528,7 +528,7 @@ const Dashboard = () => {
             <Ticket className="w-64 h-64" />
           </div>
           <div className="relative z-10 reveal">
-            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">Experience the Best Easy Tickets Booking System</h2>
+            <h2 className="text-3xl md:text-5xl font-black text-white mb-6">Experience the Best Social Gathering Booking System</h2>
             <p className="reveal reveal-delay-200 text-lg text-primary-100 mb-10 max-w-2xl mx-auto font-medium">
               Join thousands of users who trust us for their entertainment booking needs. Fast, secure, and hassle-free.
             </p>
