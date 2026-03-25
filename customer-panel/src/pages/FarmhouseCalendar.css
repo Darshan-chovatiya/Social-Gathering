@@ -1,0 +1,127 @@
+/* Custom Styling for React Date Range */
+
+.rdrCalendarWrapper {
+    color: inherit;
+    font-family: inherit;
+    background: transparent;
+    width: 100%;
+}
+
+.rdrMonth {
+    width: 100%;
+    padding: 0 0.5rem;
+}
+
+.rdrDateRangeWrapper {
+    background: transparent;
+}
+
+.rdrMonthAndYearWrapper {
+    padding-top: 10px;
+    height: 50px;
+}
+
+.rdrMonthAndYearPickers select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.dark .rdrMonthAndYearPickers select {
+    color: white;
+}
+
+.rdrNextPrevButton {
+    background: #f3f4f6;
+    border-radius: 12px;
+}
+
+.dark .rdrNextPrevButton {
+    background: #1f2937;
+}
+
+.rdrNextPrevButton:hover {
+    background: #e5e7eb;
+}
+
+.rdrDay {
+    height: 3.5rem;
+}
+
+.rdrDayNumber {
+    font-weight: 600;
+}
+
+.dark .rdrDayNumber span {
+    color: #e5e7eb;
+}
+
+.rdrDayDisabled {
+    background-color: transparent;
+}
+
+.rdrDayDisabled .rdrDayNumber span {
+    color: #d1d5db !important;
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.dark .rdrDayDisabled .rdrDayNumber span {
+    color: #4b5563 !important;
+}
+
+/* Range Colors */
+.rdrStartEdge, .rdrEndEdge, .rdrInRange {
+    border-radius: 12px !important;
+}
+
+.rdrDayToday .rdrDayNumber span:after {
+    background: #e11d48;
+}
+
+/* Festival Highlight Dot */
+.festival-dot {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 6px;
+    height: 6px;
+    background-color: #f43f5e;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.dark .festival-dot {
+    border-color: #1f2937;
+}
+
+/* Day content wrapper */
+.rdrDayNumber {
+    z-index: 1;
+}
+
+/* Selection background */
+.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge {
+    background: currentColor;
+    top: 4px;
+    bottom: 4px;
+}
+
+.rdrInRange {
+    opacity: 0.1;
+}
+
+/* Premium rounding for selection */
+.rdrDayStartOfMonth .rdrInRange, .rdrDayStartOfWeek .rdrInRange, .rdrStartEdge {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.rdrDayEndOfMonth .rdrInRange, .rdrDayEndOfWeek .rdrInRange, .rdrEndEdge {
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}

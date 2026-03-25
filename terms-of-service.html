@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terms of Service - Easy Ticket</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-color: #eb4e62;
+        --secondary-color: #d93d52;
+        --bg-light: #f8fafc;
+        --bg-section: #f1f5f9;
+      }
+
+      html {
+        color-scheme: light;
+        scroll-behavior: smooth;
+      }
+
+      html.dark {
+        color-scheme: dark;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--bg-light);
+        color: #111827;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease;
+      }
+
+      html.dark body {
+        background: #111827;
+        color: #f9fafb;
+      }
+
+      /* Navbar */
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.98) !important;
+        box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+        transition: box-shadow 0.2s;
+      }
+
+      html.dark .navbar {
+        background: rgba(17, 24, 39, 0.98) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+
+      .navbar-brand:hover {
+        opacity: 0.8;
+      }
+
+      .logo-icon {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Logo image */
+      .logo-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 0.5rem;
+        display: block;
+      }
+
+      /* Fallback icon */
+      .logo-fallback {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: white;
+        display: none; /* shown only if image fails */
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        background: linear-gradient(
+          135deg,
+          #3b82f6 0%,
+          #8b5cf6 50%,
+          var(--primary-color) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo-icon svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: white;
+      }
+
+      .logo-text {
+        display: flex;
+        align-items: baseline;
+        gap: 0.25rem;
+      }
+
+      .logo-text span {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      html.dark .logo-text span {
+        color: #f47f9a;
+      }
+
+      .theme-toggle {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: #f3f4f6;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        color: #374151;
+      }
+
+      html.dark .theme-toggle {
+        background-color: #1f2937;
+        color: #d1d5db;
+      }
+
+      .theme-toggle:hover {
+        background-color: #e5e7eb;
+        transform: scale(1.05);
+      }
+
+      html.dark .theme-toggle:hover {
+        background-color: #374151;
+      }
+
+      .theme-toggle:active {
+        transform: scale(0.95);
+      }
+
+      .theme-toggle svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        background:
+          linear-gradient(
+            135deg,
+            rgba(235, 78, 98, 0.92) 0%,
+            rgba(217, 61, 82, 0.92) 100%
+          ),
+          url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80")
+            center/cover no-repeat;
+        color: white;
+        padding: 80px 0 70px 0;
+        margin-bottom: 40px;
+        border-radius: 0 0 32px 32px;
+        box-shadow: 0 8px 32px rgba(235, 78, 98, 0.1);
+        position: relative;
+      }
+
+      .hero-section h1 {
+        font-size: 2.7rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-section p {
+        font-size: 1.25rem;
+        opacity: 0.97;
+        font-weight: 400;
+      }
+
+      /* Section backgrounds */
+      section.container {
+        background: var(--bg-section);
+        border-radius: 18px;
+        box-shadow: 0 2px 12px rgba(30, 41, 59, 0.04);
+        padding: 36px 24px;
+        margin-bottom: 40px;
+      }
+
+      html.dark section.container {
+        background: #1f2937;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .section-title {
+        font-size: 2.1rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #1e293b;
+        letter-spacing: -0.5px;
+      }
+
+      html.dark .section-title {
+        color: #f9fafb;
+      }
+
+      /* Accordion */
+      .accordion-button:not(.collapsed) {
+        background-color: #fef2f4;
+        color: var(--primary-color);
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(235, 78, 98, 0.08);
+      }
+
+      html.dark .accordion-button:not(.collapsed) {
+        background-color: rgba(235, 78, 98, 0.1);
+        color: #f47f9a;
+      }
+
+      .accordion-button {
+        transition:
+          background 0.2s,
+          color 0.2s;
+        color: #1e293b;
+      }
+
+      html.dark .accordion-button {
+        background-color: #1f2937;
+        color: #f9fafb;
+      }
+
+      .accordion-button:hover {
+        background: #fef2f4;
+        color: var(--secondary-color);
+      }
+
+      html.dark .accordion-button:hover {
+        background: rgba(235, 78, 98, 0.1);
+        color: #f47f9a;
+      }
+
+      .accordion-item {
+        border-radius: 12px !important;
+        margin-bottom: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+        background: #fff;
+        border: 1px solid #e2e8f0;
+      }
+
+      html.dark .accordion-item {
+        background: #111827;
+        border-color: #374151;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .accordion-body {
+        color: #475569;
+      }
+
+      html.dark .accordion-body {
+        color: #d1d5db;
+      }
+
+      /* Contact Card */
+      .contact-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 24px 20px;
+        text-align: center;
+        transition:
+          box-shadow 0.3s,
+          transform 0.3s,
+          border-color 0.2s;
+        height: 100%;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+      }
+
+      html.dark .contact-card {
+        background: #111827;
+        border-color: #374151;
+      }
+
+      .contact-card:hover {
+        box-shadow: 0 12px 32px rgba(235, 78, 98, 0.1);
+        transform: translateY(-6px) scale(1.02);
+        border-color: var(--primary-color);
+      }
+
+      .contact-card i {
+        font-size: 3.2rem;
+        color: var(--primary-color);
+        margin-bottom: 18px;
+        transition: color 0.2s;
+      }
+
+      html.dark .contact-card i {
+        color: #f47f9a;
+      }
+
+      .contact-card:hover i {
+        color: var(--secondary-color);
+      }
+
+      .contact-card h4 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #1e293b;
+      }
+
+      html.dark .contact-card h4 {
+        color: #f9fafb;
+      }
+
+      .contact-card p.text-primary {
+        color: var(--primary-color) !important;
+        font-weight: 600;
+      }
+
+      html.dark .contact-card p.text-primary {
+        color: #f47f9a !important;
+      }
+
+      /* Alerts */
+      .alert-primary {
+        background: linear-gradient(90deg, #fef2f4 0%, #f0f9ff 100%);
+        border: none;
+        color: var(--primary-700);
+        font-weight: 500;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(235, 78, 98, 0.04);
+      }
+
+      html.dark .alert-primary {
+        background: linear-gradient(
+          90deg,
+          rgba(235, 78, 98, 0.1) 0%,
+          rgba(235, 78, 98, 0.05) 100%
+        );
+        color: #f8b0be;
+      }
+
+      .alert-info {
+        border-radius: 12px;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #1e293b;
+        color: white;
+        padding: 36px 0 24px 0;
+        margin-top: 60px;
+        border-radius: 32px 32px 0 0;
+        box-shadow: 0 -2px 16px rgba(30, 41, 59, 0.08);
+      }
+
+      html.dark footer {
+        background-color: #0f172a;
+      }
+
+      footer h5 {
+        font-size: 1.5rem;
+        color: white;
+        letter-spacing: -0.5px;
+      }
+
+      footer a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      footer a:hover {
+        color: #f47f9a;
+        text-decoration: underline;
+      }
+
+      .text-muted {
+        color: #64748b !important;
+      }
+
+      html.dark .text-muted {
+        color: #9ca3af !important;
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
+        .hero-section {
+          padding: 60px 0 40px 0;
+        }
+        section.container {
+          padding: 24px 8px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-section h1 {
+          font-size: 2rem;
+        }
+        .section-title {
+          font-size: 1.3rem;
+        }
+        .contact-card {
+          margin-bottom: 20px;
+          padding: 24px 10px;
+        }
+        section.container {
+          padding: 16px 2px;
+        }
+        .hero-section {
+          padding: 40px 0 24px 0;
+          border-radius: 0 0 18px 18px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .hero-section {
+          border-radius: 0 0 12px 12px;
+          padding: 28px 0 16px 0;
+        }
+        section.container {
+          border-radius: 8px;
+          margin-bottom: 16px;
+          padding: 6px 0;
+        }
+        .contact-card {
+          padding: 12px 2px;
+        }
+        footer {
+          border-radius: 12px 12px 0 0;
+          padding: 10px 0 4px 0;
+        }
+        .section-title {
+          font-size: 1.1rem;
+        }
+        .hero-section h1 {
+          font-size: 1.2rem;
+        }
+        .hero-section p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <div class="logo-icon">
+            <!-- Logo Image -->
+            <img
+              src="/Logo Icon.png"
+              alt="Easy Ticket Logo"
+              class="logo-image"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+
+            <!-- Fallback Icon (shown only if image fails) -->
+            <svg
+              class="logo-fallback"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4v-3a2 2 0 00-2-2H5z"
+              />
+            </svg>
+          </div>
+
+          <div class="logo-text">
+            <span>Easy</span>
+            <span>Ticket</span>
+          </div>
+        </a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg
+            id="themeIcon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container text-center">
+        <h1>Terms of Service</h1>
+        <p>Please read these terms carefully before using our platform</p>
+      </div>
+    </section>
+
+    <!-- Short Description Section -->
+    <section class="container mb-5">
+      <div class="text-center mb-4">
+        <h2 class="section-title">Terms and Conditions</h2>
+        <p class="text-muted">
+          Welcome to Easy Ticket (operated by ITFuturz). These Terms of Service
+          govern your access to and use of our event ticketing platform and
+          services. By using our platform, you agree to be bound by these terms.
+        </p>
+      </div>
+    </section>
+
+    <!-- Terms of Service Sections -->
+    <section class="container mb-5" id="terms">
+      <h2 class="section-title text-center">Terms of Service Details</h2>
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="accordion" id="termsAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms1"
+                >
+                  1. Acceptance of Terms
+                </button>
+              </h2>
+              <div
+                id="terms1"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    By accessing or using Easy Ticket, you acknowledge that you
+                    have read, understood, and agree to be bound by these Terms
+                    of Service and our Privacy Policy. If you do not agree to
+                    these terms, you must not use our platform.
+                  </p>
+                  <p>
+                    We reserve the right to modify these terms at any time. Your
+                    continued use of the platform after changes are posted
+                    constitutes your acceptance of the modified terms.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms2"
+                >
+                  2. Account Registration and Security
+                </button>
+              </h2>
+              <div
+                id="terms2"
+                class="accordion-collapse collapse"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    To use certain features of our platform, you must create an
+                    account. You agree to:
+                  </p>
+                  <ul>
+                    <li>
+                      Provide accurate, current, and complete information during
+                      registration
+                    </li>
+                    <li>
+                      Maintain and update your account information to keep it
+                      accurate
+                    </li>
+                    <li>Maintain the security of your account credentials</li>
+                    <li>
+                      Accept responsibility for all activities that occur under
+                      your account
+                    </li>
+                    <li>
+                      Notify us immediately of any unauthorized use of your
+                      account
+                    </li>
+                  </ul>
+                  <p>
+                    You are responsible for maintaining the confidentiality of
+                    your account password and for all activities that occur
+                    under your account.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms3"
+                >
+                  3. Ticket Booking and Purchase
+                </button>
+              </h2>
+              <div
+                id="terms3"
+                class="accordion-collapse collapse"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    <strong>Booking Process:</strong> When you book tickets
+                    through our platform, you enter into a contract with the
+                    event organizer. Easy Ticket acts as a ticketing agent and
+                    is not responsible for the event itself.
+                  </p>
+                  <p>
+                    <strong>Payment:</strong> All ticket purchases are final
+                    unless otherwise stated. Payment must be made in full at the
+                    time of booking. We accept various payment methods as
+                    displayed during checkout.
+                  </p>
+                  <p>
+                    <strong>Pricing:</strong> Ticket prices are set by event
+                    organizers and may include service fees. All prices are
+                    displayed in the currency specified and are subject to
+                    change without notice until purchase is completed.
+                  </p>
+                  <p>
+                    <strong>Confirmation:</strong> You will receive a booking
+                    confirmation via email. Please ensure your email address is
+                    correct and check your spam folder.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms4"
+                >
+                  4. Cancellation and Refund Policy
+                </button>
+              </h2>
+              <div
+                id="terms4"
+                class="accordion-collapse collapse"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    <strong>Event Cancellation:</strong> If an event is
+                    cancelled by the organizer, you will be entitled to a full
+                    refund of the ticket price. Service fees may be
+                    non-refundable as per our refund policy.
+                  </p>
+                  <p>
+                    <strong>Refund Requests:</strong> Refund requests must be
+                    submitted within the timeframe specified by the event
+                    organizer. Refunds are processed according to the
+                    organizer's refund policy.
+                  </p>
+                  <p>
+                    <strong>No-Show Policy:</strong> If you fail to attend an
+                    event, you are not entitled to a refund unless otherwise
+                    stated by the event organizer.
+                  </p>
+                  <p>
+                    <strong>Processing Time:</strong> Refunds, when approved,
+                    will be processed within 7-14 business days to the original
+                    payment method.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms5"
+                >
+                  5. User Conduct and Prohibited Activities
+                </button>
+              </h2>
+              <div
+                id="terms5"
+                class="accordion-collapse collapse"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>You agree not to:</p>
+                  <ul>
+                    <li>
+                      Use the platform for any illegal or unauthorized purpose
+                    </li>
+                    <li>
+                      Violate any laws, regulations, or third-party rights
+                    </li>
+                    <li>
+                      Interfere with or disrupt the platform's operation or
+                      security
+                    </li>
+                    <li>
+                      Attempt to gain unauthorized access to any part of the
+                      platform
+                    </li>
+                    <li>
+                      Use automated systems to access the platform without
+                      permission
+                    </li>
+                    <li>
+                      Resell tickets in violation of applicable laws or event
+                      terms
+                    </li>
+                    <li>
+                      Impersonate any person or entity or misrepresent your
+                      affiliation
+                    </li>
+                    <li>Upload malicious code, viruses, or harmful content</li>
+                  </ul>
+                  <p>
+                    Violation of these terms may result in immediate termination
+                    of your account and legal action.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms6"
+                >
+                  6. Intellectual Property Rights
+                </button>
+              </h2>
+              <div
+                id="terms6"
+                class="accordion-collapse collapse"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    <strong>Platform Content:</strong> All content on the Easy
+                    Ticket platform, including text, graphics, logos, images,
+                    and software, is the property of ITFuturz or its licensors
+                    and is protected by copyright and other intellectual
+                    property laws.
+                  </p>
+                  <p>
+                    <strong>Limited License:</strong> We grant you a limited,
+                    non-exclusive, non-transferable license to access and use
+                    the platform for personal, non-commercial purposes in
+                    accordance with these terms.
+                  </p>
+                  <p>
+                    <strong>Restrictions:</strong> You may not copy, modify,
+                    distribute, sell, or lease any part of our platform or its
+                    content without our prior written consent.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms7"
+                >
+                  7. Limitation of Liability
+                </button>
+              </h2>
+              <div
+                id="terms7"
+                class="accordion-collapse collapse"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    <strong>Platform Availability:</strong> We strive to ensure
+                    the platform is available 24/7, but we do not guarantee
+                    uninterrupted access. The platform may be unavailable due to
+                    maintenance, technical issues, or circumstances beyond our
+                    control.
+                  </p>
+                  <p>
+                    <strong>Event Responsibility:</strong> Easy Ticket is not
+                    responsible for the quality, safety, or content of events.
+                    Event organizers are solely responsible for their events,
+                    including venue, performers, and event execution.
+                  </p>
+                  <p>
+                    <strong>Limitation:</strong> To the maximum extent permitted
+                    by law, Easy Ticket and ITFuturz shall not be liable for any
+                    indirect, incidental, special, consequential, or punitive
+                    damages arising from your use of the platform.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms8"
+                >
+                  8. Dispute Resolution
+                </button>
+              </h2>
+              <div
+                id="terms8"
+                class="accordion-collapse collapse"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    <strong>Governing Law:</strong> These Terms of Service are
+                    governed by the laws of India, without regard to its
+                    conflict of law provisions.
+                  </p>
+                  <p>
+                    <strong>Dispute Resolution:</strong> Any disputes arising
+                    from these terms or your use of the platform shall be
+                    resolved through good faith negotiation. If negotiation
+                    fails, disputes shall be subject to the exclusive
+                    jurisdiction of the courts in [Your City], India.
+                  </p>
+                  <p>
+                    <strong>Class Action Waiver:</strong> You agree that any
+                    disputes will be resolved individually and not as part of a
+                    class action lawsuit.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms9"
+                >
+                  9. Termination
+                </button>
+              </h2>
+              <div
+                id="terms9"
+                class="accordion-collapse collapse"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    <strong>Termination by You:</strong> You may terminate your
+                    account at any time by contacting us or using the account
+                    deletion feature in your settings.
+                  </p>
+                  <p>
+                    <strong>Termination by Us:</strong> We reserve the right to
+                    suspend or terminate your account immediately, without
+                    notice, if you violate these terms or engage in fraudulent
+                    or illegal activities.
+                  </p>
+                  <p>
+                    <strong>Effect of Termination:</strong> Upon termination,
+                    your right to use the platform will cease immediately. Any
+                    outstanding bookings will be handled according to our
+                    cancellation policy.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#terms10"
+                >
+                  10. Changes to Terms
+                </button>
+              </h2>
+              <div
+                id="terms10"
+                class="accordion-collapse collapse"
+                data-bs-parent="#termsAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    We reserve the right to modify these Terms of Service at any
+                    time. We will notify users of material changes by:
+                  </p>
+                  <ul>
+                    <li>Posting the updated terms on this page</li>
+                    <li>Updating the "Last Updated" date</li>
+                    <li>
+                      Sending email notifications for significant changes (when
+                      applicable)
+                    </li>
+                  </ul>
+                  <p>
+                    Your continued use of the platform after changes are posted
+                    constitutes your acceptance of the modified terms. If you do
+                    not agree to the changes, you must stop using the platform.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Options Section -->
+    <section class="container mb-5">
+      <h2 class="section-title text-center">Contact Us</h2>
+      <p class="text-center text-muted mb-4">
+        Have questions about our Terms of Service? Get in touch:
+      </p>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="contact-card">
+            <i class="bi bi-envelope-fill"></i>
+            <h4>Email Support</h4>
+            <p class="fw-bold text-primary mb-1">info@itfuturz.com</p>
+            <small class="text-muted">Response time: Within 24 hours</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-card">
+            <i class="bi bi-telephone-fill"></i>
+            <h4>Phone Support</h4>
+            <p class="fw-bold text-primary mb-1">+91 6354390540</p>
+            <small class="text-muted">Available during business hours</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-card">
+            <i class="bi bi-geo-alt-fill"></i>
+            <h4>Company Address</h4>
+            <p class="fw-bold text-primary mb-1" style="font-size: 1rem">
+              ITFuturz<br />
+              310-311, Raghuvir Symphony Shoppers, Althan Canal Road, Opp. Green
+              Victory Society, Apcha Nagar, Surat, Gujarat-395007.
+            </p>
+            <small class="text-muted">Visit us during office hours</small>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-lg-8 mx-auto">
+          <div class="alert alert-primary text-center">
+            <i class="bi bi-file-text fs-4 me-2"></i>
+            <strong>Important Notice!</strong> By using Easy Ticket, you
+            acknowledge that you have read, understood, and agree to be bound by
+            these Terms of Service.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <!-- <div class="row">
+                <div class="col-md-6">
+                    <h5>Easy Ticket</h5>
+                    <p class="text-white-50 mt-3">Your trusted event ticketing platform operated by ITFuturz</p>
+                </div>
+            </div>
+            <hr class="border-white-50 my-4"> -->
+        <div class="text-center text-white-50">
+          <p class="mb-0">
+            &copy; 2025 ITFuturz - Easy Ticket. All rights reserved.
+          </p>
+          <p class="mt-2 mb-0">
+            <a href="/privacy-policy.html">Privacy Policy</a> |
+            <a href="/terms-of-service.html">Terms of Service</a> |
+            <a href="/about-us.html">About Us</a> |
+            <a href="/contact-us.html">Contact Us</a> |
+            <a href="/support.html">Support</a> |
+            <a href="/account-delete.html">Delete Account</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Theme Toggle Functionality
+      (function () {
+        function getInitialTheme() {
+          try {
+            const stored = localStorage.getItem("theme-storage");
+            if (stored) {
+              const parsed = JSON.parse(stored);
+              const theme = parsed.state?.theme;
+              if (theme === "dark" || theme === "light") {
+                return theme;
+              }
+            }
+          } catch (e) {
+            console.error("Error reading theme from storage:", e);
+          }
+          return "light";
+        }
+
+        function applyTheme(theme) {
+          const root = document.documentElement;
+          root.classList.remove("dark", "light");
+
+          if (theme === "dark") {
+            root.classList.add("dark");
+            root.style.colorScheme = "dark";
+          } else {
+            root.classList.remove("dark");
+            root.style.colorScheme = "light";
+          }
+
+          const themeIcon = document.getElementById("themeIcon");
+          if (themeIcon) {
+            if (theme === "dark") {
+              themeIcon.innerHTML =
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
+            } else {
+              themeIcon.innerHTML =
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+            }
+          }
+        }
+
+        let currentTheme = getInitialTheme();
+        applyTheme(currentTheme);
+
+        const themeToggle = document.getElementById("themeToggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", function () {
+            currentTheme = currentTheme === "light" ? "dark" : "light";
+            applyTheme(currentTheme);
+
+            try {
+              const themeStorage = {
+                state: { theme: currentTheme },
+                version: 0,
+              };
+              localStorage.setItem(
+                "theme-storage",
+                JSON.stringify(themeStorage),
+              );
+            } catch (e) {
+              console.error("Error saving theme to storage:", e);
+            }
+          });
+        }
+
+        applyTheme(currentTheme);
+      })();
+    </script>
+  </body>
+</html>

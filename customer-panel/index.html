@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Easy Tickets</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <script>
+      // Apply theme immediately before React renders to prevent flash
+      (function() {
+        try {
+          const stored = localStorage.getItem('theme-storage');
+          let theme = 'dark'; // Default to dark mode
+          
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            const storedTheme = parsed.state?.theme;
+            if (storedTheme === 'dark' || storedTheme === 'light') {
+              theme = storedTheme;
+            }
+          }
+          
+          const root = document.documentElement;
+          if (theme === 'dark') {
+            root.classList.add('dark');
+            root.style.colorScheme = 'dark';
+            root.setAttribute('data-theme', 'dark');
+          } else {
+            root.classList.remove('dark');
+            root.style.colorScheme = 'light';
+            root.setAttribute('data-theme', 'light');
+          }
+        } catch (e) {
+          console.error('Error applying initial theme:', e);
+          // Fallback to dark mode on error
+          const root = document.documentElement;
+          root.classList.add('dark');
+          root.style.colorScheme = 'dark';
+          root.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

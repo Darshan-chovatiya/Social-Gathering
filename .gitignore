@@ -1,0 +1,15 @@
+node_modules/
+*/node_modules/
+***/node_modules/
+
+organizer-panel/node_modules/
+organizer-panel/dist/
+
+admin-panel/node_modules/
+admin-panel/dist/
+
+mobile-app/node_modules/
+mobile-app/build/
+
+backend/node_modules/
+

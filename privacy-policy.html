@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy - Easy Ticket</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-color: #eb4e62;
+        --secondary-color: #d93d52;
+        --bg-light: #f8fafc;
+        --bg-section: #f1f5f9;
+      }
+
+      html {
+        color-scheme: light;
+        scroll-behavior: smooth;
+      }
+
+      html.dark {
+        color-scheme: dark;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--bg-light);
+        color: #111827;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease;
+      }
+
+      html.dark body {
+        background: #111827;
+        color: #f9fafb;
+      }
+
+      /* Navbar */
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.98) !important;
+        box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+        transition: box-shadow 0.2s;
+      }
+
+      html.dark .navbar {
+        background: rgba(17, 24, 39, 0.98) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+
+      .navbar-brand:hover {
+        opacity: 0.8;
+      }
+      .logo-icon {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Logo image */
+      .logo-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 0.5rem;
+        display: block;
+      }
+
+      /* Fallback icon */
+      .logo-fallback {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: white;
+        display: none; /* shown only if image fails */
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        background: linear-gradient(
+          135deg,
+          #3b82f6 0%,
+          #8b5cf6 50%,
+          var(--primary-color) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo-icon svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: white;
+      }
+
+      .logo-text {
+        display: flex;
+        align-items: baseline;
+        gap: 0.25rem;
+      }
+
+      .logo-text span {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      html.dark .logo-text span {
+        color: #f47f9a;
+      }
+
+      .theme-toggle {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: #f3f4f6;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        color: #374151;
+      }
+
+      html.dark .theme-toggle {
+        background-color: #1f2937;
+        color: #d1d5db;
+      }
+
+      .theme-toggle:hover {
+        background-color: #e5e7eb;
+        transform: scale(1.05);
+      }
+
+      html.dark .theme-toggle:hover {
+        background-color: #374151;
+      }
+
+      .theme-toggle:active {
+        transform: scale(0.95);
+      }
+
+      .theme-toggle svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        background:
+          linear-gradient(
+            135deg,
+            rgba(235, 78, 98, 0.92) 0%,
+            rgba(217, 61, 82, 0.92) 100%
+          ),
+          url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80")
+            center/cover no-repeat;
+        color: white;
+        padding: 80px 0 70px 0;
+        margin-bottom: 40px;
+        border-radius: 0 0 32px 32px;
+        box-shadow: 0 8px 32px rgba(235, 78, 98, 0.1);
+        position: relative;
+      }
+
+      .hero-section h1 {
+        font-size: 2.7rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-section p {
+        font-size: 1.25rem;
+        opacity: 0.97;
+        font-weight: 400;
+      }
+
+      /* Section backgrounds */
+      section.container {
+        background: var(--bg-section);
+        border-radius: 18px;
+        box-shadow: 0 2px 12px rgba(30, 41, 59, 0.04);
+        padding: 36px 24px;
+        margin-bottom: 40px;
+      }
+
+      html.dark section.container {
+        background: #1f2937;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .section-title {
+        font-size: 2.1rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #1e293b;
+        letter-spacing: -0.5px;
+      }
+
+      html.dark .section-title {
+        color: #f9fafb;
+      }
+
+      /* Accordion */
+      .accordion-button:not(.collapsed) {
+        background-color: #fef2f4;
+        color: var(--primary-color);
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(235, 78, 98, 0.08);
+      }
+
+      html.dark .accordion-button:not(.collapsed) {
+        background-color: rgba(235, 78, 98, 0.1);
+        color: #f47f9a;
+      }
+
+      .accordion-button {
+        transition:
+          background 0.2s,
+          color 0.2s;
+        color: #1e293b;
+      }
+
+      html.dark .accordion-button {
+        background-color: #1f2937;
+        color: #f9fafb;
+      }
+
+      .accordion-button:hover {
+        background: #fef2f4;
+        color: var(--secondary-color);
+      }
+
+      html.dark .accordion-button:hover {
+        background: rgba(235, 78, 98, 0.1);
+        color: #f47f9a;
+      }
+
+      .accordion-item {
+        border-radius: 12px !important;
+        margin-bottom: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+        background: #fff;
+        border: 1px solid #e2e8f0;
+      }
+
+      html.dark .accordion-item {
+        background: #111827;
+        border-color: #374151;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .accordion-body {
+        color: #475569;
+      }
+
+      html.dark .accordion-body {
+        color: #d1d5db;
+      }
+
+      /* Contact Card */
+      .contact-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 24px 20px;
+        text-align: center;
+        transition:
+          box-shadow 0.3s,
+          transform 0.3s,
+          border-color 0.2s;
+        height: 100%;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+      }
+
+      html.dark .contact-card {
+        background: #111827;
+        border-color: #374151;
+      }
+
+      .contact-card:hover {
+        box-shadow: 0 12px 32px rgba(235, 78, 98, 0.1);
+        transform: translateY(-6px) scale(1.02);
+        border-color: var(--primary-color);
+      }
+
+      .contact-card i {
+        font-size: 3.2rem;
+        color: var(--primary-color);
+        margin-bottom: 18px;
+        transition: color 0.2s;
+      }
+
+      html.dark .contact-card i {
+        color: #f47f9a;
+      }
+
+      .contact-card:hover i {
+        color: var(--secondary-color);
+      }
+
+      .contact-card h4 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #1e293b;
+      }
+
+      html.dark .contact-card h4 {
+        color: #f9fafb;
+      }
+
+      .contact-card p.text-primary {
+        color: var(--primary-color) !important;
+        font-weight: 600;
+      }
+
+      html.dark .contact-card p.text-primary {
+        color: #f47f9a !important;
+      }
+
+      /* Alerts */
+      .alert-primary {
+        background: linear-gradient(90deg, #fef2f4 0%, #f0f9ff 100%);
+        border: none;
+        color: var(--primary-700);
+        font-weight: 500;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(235, 78, 98, 0.04);
+      }
+
+      html.dark .alert-primary {
+        background: linear-gradient(
+          90deg,
+          rgba(235, 78, 98, 0.1) 0%,
+          rgba(235, 78, 98, 0.05) 100%
+        );
+        color: #f8b0be;
+      }
+
+      .alert-info {
+        border-radius: 12px;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #1e293b;
+        color: white;
+        padding: 36px 0 24px 0;
+        margin-top: 60px;
+        border-radius: 32px 32px 0 0;
+        box-shadow: 0 -2px 16px rgba(30, 41, 59, 0.08);
+      }
+
+      html.dark footer {
+        background-color: #0f172a;
+      }
+
+      footer h5 {
+        font-size: 1.5rem;
+        color: white;
+        letter-spacing: -0.5px;
+      }
+
+      footer a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      footer a:hover {
+        color: #f47f9a;
+        text-decoration: underline;
+      }
+
+      .text-muted {
+        color: #64748b !important;
+      }
+
+      html.dark .text-muted {
+        color: #9ca3af !important;
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
+        .hero-section {
+          padding: 60px 0 40px 0;
+        }
+        section.container {
+          padding: 24px 8px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-section h1 {
+          font-size: 2rem;
+        }
+        .section-title {
+          font-size: 1.3rem;
+        }
+        .contact-card {
+          margin-bottom: 20px;
+          padding: 24px 10px;
+        }
+        section.container {
+          padding: 16px 2px;
+        }
+        .hero-section {
+          padding: 40px 0 24px 0;
+          border-radius: 0 0 18px 18px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .hero-section {
+          border-radius: 0 0 12px 12px;
+          padding: 28px 0 16px 0;
+        }
+        section.container {
+          border-radius: 8px;
+          margin-bottom: 16px;
+          padding: 6px 0;
+        }
+        .contact-card {
+          padding: 12px 2px;
+        }
+        footer {
+          border-radius: 12px 12px 0 0;
+          padding: 10px 0 4px 0;
+        }
+        .section-title {
+          font-size: 1.1rem;
+        }
+        .hero-section h1 {
+          font-size: 1.2rem;
+        }
+        .hero-section p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <div class="logo-icon">
+            <!-- Logo Image -->
+            <img
+              src="/Logo Icon.png"
+              alt="Easy Ticket Logo"
+              class="logo-image"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+
+            <!-- Fallback Icon (shown only if image fails) -->
+            <svg
+              class="logo-fallback"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4v-3a2 2 0 00-2-2H5z"
+              />
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span>Easy</span>
+            <span>Ticket</span>
+          </div>
+        </a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg
+            id="themeIcon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container text-center">
+        <h1>Privacy Policy</h1>
+        <p>Your privacy and data security are our top priorities</p>
+      </div>
+    </section>
+
+    <!-- Short Description Section -->
+    <section class="container mb-5">
+      <div class="text-center mb-4">
+        <h2 class="section-title">Our Commitment to Privacy</h2>
+        <p class="text-muted">
+          At Easy Ticket (operated by ITFuturz), we are committed to protecting
+          your privacy and ensuring the security of your personal information.
+          This Privacy Policy explains how we collect, use, disclose, and
+          safeguard your information when you use our event ticketing platform
+          and services.
+        </p>
+      </div>
+    </section>
+
+    <!-- Privacy Policy FAQ Section -->
+    <section class="container mb-5" id="privacy">
+      <h2 class="section-title text-center">Privacy Policy Details</h2>
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="accordion" id="privacyAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#privacy1"
+                >
+                  1. Information We Collect
+                </button>
+              </h2>
+              <div
+                id="privacy1"
+                class="accordion-collapse collapse show"
+                data-bs-parent="#privacyAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    <strong>Personal Information:</strong> We collect your name,
+                    email address, phone number, mailing address, and account
+                    credentials when you create an account or make a booking.
+                  </p>
+                  <p>
+                    <strong>Payment Information:</strong> We collect credit card
+                    details, billing address, and transaction history for ticket
+                    purchases through secure payment gateways.
+                  </p>
+                  <p>
+                    <strong>Event Preferences:</strong> We collect information
+                    about your interests, past bookings, event history, and
+                    preferences to provide personalized recommendations.
+                  </p>
+                  <p>
+                    <strong>Technical Data:</strong> We automatically collect IP
+                    address, device information, browser type, pages visited,
+                    and cookies when you visit our website.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#privacy2"
+                >
+                  2. How We Use Your Information
+                </button>
+              </h2>
+              <div
+                id="privacy2"
+                class="accordion-collapse collapse"
+                data-bs-parent="#privacyAccordion"
+              >
+                <div class="accordion-body">
+                  <p>We use your information to:</p>
+                  <ul>
+                    <li>Process and manage your event ticket bookings</li>
+                    <li>
+                      Communicate with you about your bookings, events, and
+                      account
+                    </li>
+                    <li>
+                      Send you promotional materials and event recommendations
+                      (with your consent)
+                    </li>
+                    <li>Improve our services and user experience</li>
+                    <li>
+                      Detect and prevent fraud, abuse, and security issues
+                    </li>
+                    <li>
+                      Comply with legal obligations and enforce our terms of
+                      service
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#privacy3"
+                >
+                  3. Information Sharing and Disclosure
+                </button>
+              </h2>
+              <div
+                id="privacy3"
+                class="accordion-collapse collapse"
+                data-bs-parent="#privacyAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    We do not sell your personal information. We may share your
+                    information with:
+                  </p>
+                  <ul>
+                    <li>
+                      <strong>Event Organizers:</strong> To facilitate ticket
+                      delivery and event management
+                    </li>
+                    <li>
+                      <strong>Service Providers:</strong> Third-party providers
+                      for payment processing, email delivery, and customer
+                      support
+                    </li>
+                    <li>
+                      <strong>Legal Requirements:</strong> When required by law,
+                      court order, or government regulation
+                    </li>
+                  </ul>
+                  <p>
+                    We require all third parties to respect the security of your
+                    personal information and to treat it in accordance with the
+                    law.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#privacy4"
+                >
+                  4. Data Security
+                </button>
+              </h2>
+              <div
+                id="privacy4"
+                class="accordion-collapse collapse"
+                data-bs-parent="#privacyAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    We implement appropriate technical and organizational
+                    security measures to protect your personal information:
+                  </p>
+                  <ul>
+                    <li>Encryption of sensitive data in transit and at rest</li>
+                    <li>Regular security assessments and updates</li>
+                    <li>Access controls and authentication mechanisms</li>
+                    <li>
+                      Secure payment processing through certified payment
+                      gateways
+                    </li>
+                  </ul>
+                  <p>
+                    However, no method of transmission over the Internet is 100%
+                    secure. While we strive to use commercially acceptable means
+                    to protect your information, we cannot guarantee absolute
+                    security.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#privacy5"
+                >
+                  5. Cookies and Tracking Technologies
+                </button>
+              </h2>
+              <div
+                id="privacy5"
+                class="accordion-collapse collapse"
+                data-bs-parent="#privacyAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    We use cookies and similar tracking technologies to enhance
+                    your experience:
+                  </p>
+                  <ul>
+                    <li>Remember your preferences and settings</li>
+                    <li>Analyze website traffic and usage patterns</li>
+                    <li>Provide personalized content and advertisements</li>
+                    <li>Improve website functionality and performance</li>
+                  </ul>
+                  <p>
+                    You can control cookies through your browser settings.
+                    However, disabling cookies may limit your ability to use
+                    certain features of our platform.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#privacy6"
+                >
+                  6. Your Rights and Choices
+                </button>
+              </h2>
+              <div
+                id="privacy6"
+                class="accordion-collapse collapse"
+                data-bs-parent="#privacyAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    You have the following rights regarding your personal
+                    information:
+                  </p>
+                  <ul>
+                    <li>
+                      <strong>Access:</strong> Request access to your personal
+                      information
+                    </li>
+                    <li>
+                      <strong>Correction:</strong> Request correction of
+                      inaccurate or incomplete information
+                    </li>
+                    <li>
+                      <strong>Deletion:</strong> Request deletion of your
+                      personal information
+                    </li>
+                    <li>
+                      <strong>Opt-out:</strong> Unsubscribe from marketing
+                      communications
+                    </li>
+                    <li>
+                      <strong>Data Portability:</strong> Request a copy of your
+                      data in a portable format
+                    </li>
+                    <li>
+                      <strong>Withdraw Consent:</strong> Withdraw consent for
+                      data processing where applicable
+                    </li>
+                  </ul>
+                  <p>
+                    To exercise these rights, please contact us using the
+                    information provided in the "Contact Us" section below.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#privacy7"
+                >
+                  7. Children's Privacy
+                </button>
+              </h2>
+              <div
+                id="privacy7"
+                class="accordion-collapse collapse"
+                data-bs-parent="#privacyAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    Our services are not intended for individuals under the age
+                    of 18. We do not knowingly collect personal information from
+                    children. If we become aware that we have collected
+                    information from a child without parental consent, we will
+                    take steps to delete that information promptly.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#privacy8"
+                >
+                  8. Changes to This Privacy Policy
+                </button>
+              </h2>
+              <div
+                id="privacy8"
+                class="accordion-collapse collapse"
+                data-bs-parent="#privacyAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    We may update this Privacy Policy from time to time to
+                    reflect changes in our practices or for other operational,
+                    legal, or regulatory reasons. We will notify you of any
+                    material changes by posting the new Privacy Policy on this
+                    page and updating the "Last Updated" date.
+                  </p>
+                  <p>
+                    We encourage you to review this Privacy Policy periodically
+                    to stay informed about how we protect your information.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Options Section -->
+    <section class="container mb-5">
+      <h2 class="section-title text-center">Contact Us</h2>
+      <p class="text-center text-muted mb-4">
+        Have questions about our Privacy Policy? Get in touch:
+      </p>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="contact-card">
+            <i class="bi bi-envelope-fill"></i>
+            <h4>Email Support</h4>
+            <p class="fw-bold text-primary mb-1">info@itfuturz.com</p>
+            <small class="text-muted">Response time: Within 24 hours</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-card">
+            <i class="bi bi-telephone-fill"></i>
+            <h4>Phone Support</h4>
+            <p class="fw-bold text-primary mb-1">+91 6354390540</p>
+            <small class="text-muted">Available during business hours</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-card">
+            <i class="bi bi-geo-alt-fill"></i>
+            <h4>Company Address</h4>
+            <p class="fw-bold text-primary mb-1" style="font-size: 1rem">
+              ITFuturz<br />
+              310-311, Raghuvir Symphony Shoppers, Althan Canal Road, Opp. Green
+              Victory Society, Apcha Nagar, Surat, Gujarat-395007.
+            </p>
+            <small class="text-muted">Visit us during office hours</small>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-lg-8 mx-auto">
+          <div class="alert alert-primary text-center">
+            <i class="bi bi-shield-check fs-4 me-2"></i>
+            <strong>Your Privacy Matters!</strong> We are committed to
+            protecting your personal information and ensuring transparency in
+            how we handle your data.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <!-- <div class="row">
+                <div class="col-md-6">
+                    <h5>Easy Ticket</h5>
+                    <p class="text-white-50 mt-3">Your trusted event ticketing platform operated by ITFuturz</p>
+                </div>
+            </div>
+            <hr class="border-white-50 my-4"> -->
+        <div class="text-center text-white-50">
+          <p class="mb-0">
+            &copy; 2025 ITFuturz - Easy Ticket. All rights reserved.
+          </p>
+          <p class="mt-2 mb-0">
+            <a href="/privacy-policy.html">Privacy Policy</a> |
+            <a href="/terms-of-service.html">Terms of Service</a> |
+            <a href="/about-us.html">About Us</a> |
+            <a href="/contact-us.html">Contact Us</a> |
+            <a href="/support.html">Support</a> |
+            <a href="/account-delete.html">Delete Account</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Theme Toggle Functionality
+      (function () {
+        function getInitialTheme() {
+          try {
+            const stored = localStorage.getItem("theme-storage");
+            if (stored) {
+              const parsed = JSON.parse(stored);
+              const theme = parsed.state?.theme;
+              if (theme === "dark" || theme === "light") {
+                return theme;
+              }
+            }
+          } catch (e) {
+            console.error("Error reading theme from storage:", e);
+          }
+          return "light";
+        }
+
+        function applyTheme(theme) {
+          const root = document.documentElement;
+          root.classList.remove("dark", "light");
+
+          if (theme === "dark") {
+            root.classList.add("dark");
+            root.style.colorScheme = "dark";
+          } else {
+            root.classList.remove("dark");
+            root.style.colorScheme = "light";
+          }
+
+          const themeIcon = document.getElementById("themeIcon");
+          if (themeIcon) {
+            if (theme === "dark") {
+              themeIcon.innerHTML =
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
+            } else {
+              themeIcon.innerHTML =
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+            }
+          }
+        }
+
+        let currentTheme = getInitialTheme();
+        applyTheme(currentTheme);
+
+        const themeToggle = document.getElementById("themeToggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", function () {
+            currentTheme = currentTheme === "light" ? "dark" : "light";
+            applyTheme(currentTheme);
+
+            try {
+              const themeStorage = {
+                state: { theme: currentTheme },
+                version: 0,
+              };
+              localStorage.setItem(
+                "theme-storage",
+                JSON.stringify(themeStorage),
+              );
+            } catch (e) {
+              console.error("Error saving theme to storage:", e);
+            }
+          });
+        }
+
+        applyTheme(currentTheme);
+      })();
+    </script>
+  </body>
+</html>

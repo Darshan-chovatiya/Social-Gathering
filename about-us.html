@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Easy Ticket</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-color: #eb4e62;
+        --secondary-color: #d93d52;
+        --bg-light: #f8fafc;
+        --bg-section: #f1f5f9;
+      }
+
+      html {
+        color-scheme: light;
+        scroll-behavior: smooth;
+      }
+
+      html.dark {
+        color-scheme: dark;
+      }
+      /* Fix strong text color in dark mode (same as Refund Policy behavior) */
+      html.dark .text-muted strong {
+        color: #f9fafb;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--bg-light);
+        color: #111827;
+        transition:
+          background-color 0.2s ease,
+          color 0.2s ease;
+      }
+
+      html.dark body {
+        background: #111827;
+        color: #f9fafb;
+      }
+
+      /* Fix text readability in dark mode */
+      html.dark .text-muted {
+        color: #d1d5db !important;
+      }
+
+      html.dark .lead {
+        color: #e5e7eb !important;
+      }
+
+      html.dark .alert-primary .text-muted {
+        color: #d1d5db !important;
+      }
+
+      /* Navbar (unchanged) */
+      .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.98) !important;
+        box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+        transition: box-shadow 0.2s;
+      }
+
+      html.dark .navbar {
+        background: rgba(17, 24, 39, 0.98) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+        transition: opacity 0.2s;
+      }
+
+      .navbar-brand:hover {
+        opacity: 0.8;
+      }
+      .logo-icon {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Logo image */
+      .logo-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 0.5rem;
+        display: block;
+      }
+
+      /* Fallback icon */
+      .logo-fallback {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: white;
+        display: none; /* shown only if image fails */
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        background: linear-gradient(
+          135deg,
+          #3b82f6 0%,
+          #8b5cf6 50%,
+          var(--primary-color) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo-icon svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        color: white;
+      }
+
+      .logo-text {
+        display: flex;
+        align-items: baseline;
+        gap: 0.25rem;
+      }
+
+      .logo-text span {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-color);
+      }
+
+      html.dark .logo-text span {
+        color: #f47f9a;
+      }
+
+      .theme-toggle {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        background-color: #f3f4f6;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        color: #374151;
+      }
+
+      html.dark .theme-toggle {
+        background-color: #1f2937;
+        color: #d1d5db;
+      }
+
+      .theme-toggle:hover {
+        background-color: #e5e7eb;
+        transform: scale(1.05);
+      }
+
+      html.dark .theme-toggle:hover {
+        background-color: #374151;
+      }
+
+      .theme-toggle:active {
+        transform: scale(0.95);
+      }
+
+      .theme-toggle svg {
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      /* Hero Section */
+      .hero-section {
+        background:
+          linear-gradient(
+            135deg,
+            rgba(235, 78, 98, 0.92) 0%,
+            rgba(217, 61, 82, 0.92) 100%
+          ),
+          url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80")
+            center/cover no-repeat;
+        color: white;
+        padding: 80px 0 70px 0;
+        margin-bottom: 40px;
+        border-radius: 0 0 32px 32px;
+        box-shadow: 0 8px 32px rgba(235, 78, 98, 0.1);
+        position: relative;
+      }
+
+      .hero-section h1 {
+        font-size: 2.7rem;
+        font-weight: 800;
+        margin-bottom: 15px;
+        letter-spacing: -1px;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-section p {
+        font-size: 1.25rem;
+        opacity: 0.97;
+        font-weight: 400;
+      }
+
+      /* Section backgrounds */
+      section.container {
+        background: var(--bg-section);
+        border-radius: 18px;
+        box-shadow: 0 2px 12px rgba(30, 41, 59, 0.04);
+        padding: 36px 24px;
+        margin-bottom: 40px;
+      }
+
+      html.dark section.container {
+        background: #1f2937;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .section-title {
+        font-size: 2.1rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #1e293b;
+        letter-spacing: -0.5px;
+      }
+
+      html.dark .section-title {
+        color: #f9fafb;
+      }
+
+      /* New card style – matching Refund Policy look */
+      .policy-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        padding: 3rem 2.5rem;
+        margin-bottom: 2.5rem;
+      }
+
+      html.dark .policy-card {
+        background: #1f2937;
+        border-color: #374151;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .policy-card h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        text-align: center;
+        margin-bottom: 1.8rem;
+      }
+
+      html.dark .policy-card h2 {
+        color: #f9fafb;
+      }
+
+      .policy-card p {
+        font-size: 1.15rem;
+        line-height: 1.8;
+        color: #475569;
+        margin-bottom: 1.5rem;
+      }
+
+      html.dark .policy-card p {
+        color: #d1d5db;
+      }
+
+      /* Contact Card (for Why Choose section – unchanged) */
+      .contact-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 24px 20px;
+        text-align: center;
+        transition:
+          box-shadow 0.3s,
+          transform 0.3s,
+          border-color 0.2s;
+        height: 100%;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(30, 41, 59, 0.04);
+      }
+
+      html.dark .contact-card {
+        background: #111827;
+        border-color: #374151;
+      }
+
+      .contact-card:hover {
+        box-shadow: 0 12px 32px rgba(235, 78, 98, 0.1);
+        transform: translateY(-6px) scale(1.02);
+        border-color: var(--primary-color);
+      }
+
+      .contact-card i {
+        font-size: 3.2rem;
+        color: var(--primary-color);
+        margin-bottom: 18px;
+        transition: color 0.2s;
+      }
+
+      html.dark .contact-card i {
+        color: #f47f9a;
+      }
+
+      .contact-card:hover i {
+        color: var(--secondary-color);
+      }
+
+      .contact-card h4 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #1e293b;
+      }
+
+      html.dark .contact-card h4 {
+        color: #f9fafb;
+      }
+
+      /* Alerts */
+      .alert-primary {
+        background: linear-gradient(90deg, #fef2f4 0%, #f0f9ff 100%);
+        border: none;
+        color: var(--primary-700);
+        font-weight: 500;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(235, 78, 98, 0.04);
+      }
+
+      html.dark .alert-primary {
+        background: linear-gradient(
+          90deg,
+          rgba(235, 78, 98, 0.1) 0%,
+          rgba(235, 78, 98, 0.05) 100%
+        );
+        color: #f8b0be;
+      }
+
+      /* Footer – your exact original style */
+      footer {
+        background-color: #1e293b;
+        color: white;
+        padding: 36px 0 24px 0;
+        margin-top: 60px;
+        border-radius: 32px 32px 0 0;
+        box-shadow: 0 -2px 16px rgba(30, 41, 59, 0.08);
+      }
+
+      html.dark footer {
+        background-color: #0f172a;
+      }
+
+      footer a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      footer a:hover {
+        color: #f47f9a;
+        text-decoration: underline;
+      }
+
+      .text-white-50 {
+        color: rgba(255, 255, 255, 0.5) !important;
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
+        .hero-section {
+          padding: 60px 0 40px 0;
+        }
+        section.container {
+          padding: 24px 8px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-section h1 {
+          font-size: 2rem;
+        }
+        .section-title {
+          font-size: 1.3rem;
+        }
+        .contact-card {
+          margin-bottom: 20px;
+          padding: 24px 10px;
+        }
+        section.container {
+          padding: 16px 2px;
+        }
+        .hero-section {
+          padding: 40px 0 24px 0;
+          border-radius: 0 0 18px 18px;
+        }
+        .policy-card {
+          padding: 2.5rem 1.8rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .hero-section {
+          border-radius: 0 0 12px 12px;
+          padding: 28px 0 16px 0;
+        }
+        section.container {
+          border-radius: 8px;
+          margin-bottom: 16px;
+          padding: 6px 0;
+        }
+        .contact-card {
+          padding: 12px 2px;
+        }
+        footer {
+          border-radius: 12px 12px 0 0;
+          padding: 10px 0 4px 0;
+        }
+        .section-title {
+          font-size: 1.1rem;
+        }
+        .hero-section h1 {
+          font-size: 1.2rem;
+        }
+        .hero-section p {
+          font-size: 1rem;
+        }
+        .policy-card h2 {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          <div class="logo-icon">
+            <!-- Logo Image -->
+            <img
+              src="/Logo Icon.png"
+              alt="Easy Ticket Logo"
+              class="logo-image"
+              onerror="
+                this.style.display = 'none';
+                this.nextElementSibling.style.display = 'flex';
+              "
+            />
+
+            <!-- Fallback Icon (shown only if image fails) -->
+            <svg
+              class="logo-fallback"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4v-3a2 2 0 00-2-2H5z"
+              />
+            </svg>
+          </div>
+          <div class="logo-text">
+            <span>Easy</span>
+            <span>Ticket</span>
+          </div>
+        </a>
+
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <svg
+            id="themeIcon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646
+                             9.003 9.003 0 0012 21
+                             a9.003 9.003 0 008.354-5.646z"
+            />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container text-center">
+        <h1>About Easy Ticket</h1>
+        <p>Simplifying event discovery and ticket booking across India</p>
+      </div>
+    </section>
+
+    <!-- Who We Are (Refund Policy style) -->
+    <section class="container mb-5">
+      <div class="text-center mb-4">
+        <h2 class="section-title">Who We Are</h2>
+        <p class="text-muted">
+          Easy Ticket is a fast, secure, and user-friendly online event
+          ticketing platform operated by <strong>ITFuturz</strong>. We help
+          users discover, book, and attend concerts, workshops, parties, sports
+          events, seminars, and cultural programs across India with complete
+          ease.
+        </p>
+      </div>
+    </section>
+
+    <!-- Our Mission (Refund Policy style) -->
+    <section class="container mb-5">
+      <div class="text-center mb-4">
+        <h2 class="section-title">Our Mission</h2>
+        <p class="text-muted">
+          Our mission is to make event participation simple, transparent, and
+          enjoyable. We aim to eliminate long queues, complex booking steps, and
+          hidden charges by providing a seamless digital ticketing experience
+          for both event organizers and attendees.
+        </p>
+      </div>
+    </section>
+
+    <!-- What We Provide -->
+    <section class="container mb-5">
+      <h2 class="section-title text-center mb-5">What We Provide</h2>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4">
+          <div class="contact-card h-100">
+            <i class="bi bi-lock-fill"></i>
+            <h4>Secure Payments</h4>
+            <p class="text-muted">
+              Safe and trusted payment gateways supporting UPI, cards, and net
+              banking.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="contact-card h-100">
+            <i class="bi bi-qr-code"></i>
+            <h4>Digital E-Tickets</h4>
+            <p class="text-muted">
+              Instant QR-code based tickets for fast and contactless event
+              entry.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="contact-card h-100">
+            <i class="bi bi-speedometer2"></i>
+            <h4>Organizer Dashboard</h4>
+            <p class="text-muted">
+              Powerful tools to manage events, track sales, and monitor
+              attendees.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="container mb-5">
+      <h2 class="section-title text-center mb-5">Why Choose Easy Ticket?</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="contact-card">
+            <i class="bi bi-lightning-charge-fill"></i>
+            <h4>Fast & Simple</h4>
+            <p class="text-muted">
+              Book tickets in seconds with a smooth checkout flow
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-card">
+            <i class="bi bi-shield-lock-fill"></i>
+            <h4>Trusted & Secure</h4>
+            <p class="text-muted">
+              Encrypted payments and protected personal data
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="contact-card">
+            <i class="bi bi-people-fill"></i>
+            <h4>For Everyone</h4>
+            <p class="text-muted">
+              Designed for both event attendees and organizers
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="container mb-5 text-center">
+      <div class="alert alert-primary d-inline-block px-5 py-4">
+        <h4 class="mb-3" style="color: var(--primary-color)">
+          Built with Care in Surat, Gujarat
+        </h4>
+        <p class="mb-0 text-muted fs-5">
+          Operated by <strong>ITFuturz</strong> — delivering reliable event
+          ticketing solutions across India.
+        </p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="text-center text-white-50">
+          <p class="mb-0">
+            &copy; 2025 ITFuturz - Easy Ticket. All rights reserved.
+          </p>
+          <p class="mt-2 mb-0">
+            <a href="/privacy-policy.html">Privacy Policy</a> |
+            <a href="/terms-of-service.html">Terms of Service</a> |
+            <a href="/about-us.html">About Us</a> |
+            <a href="/contact-us.html">Contact Us</a> |
+            <a href="/support.html">Support</a> |
+            <a href="/account-delete.html">Delete Account</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Theme Toggle Functionality
+      (function () {
+        function getInitialTheme() {
+          try {
+            const stored = localStorage.getItem("theme-storage");
+            if (stored) {
+              const parsed = JSON.parse(stored);
+              const theme = parsed.state?.theme;
+              if (theme === "dark" || theme === "light") {
+                return theme;
+              }
+            }
+          } catch (e) {
+            console.error("Error reading theme from storage:", e);
+          }
+          return "light";
+        }
+
+        function applyTheme(theme) {
+          const root = document.documentElement;
+          const themeIcon = document.getElementById("themeIcon");
+          root.classList.remove("dark", "light");
+
+          if (theme === "dark") {
+            root.classList.add("dark");
+            root.style.colorScheme = "dark";
+            if (themeIcon) {
+              themeIcon.innerHTML =
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
+            }
+          } else {
+            root.classList.remove("dark");
+            root.style.colorScheme = "light";
+            if (themeIcon) {
+              themeIcon.innerHTML =
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+            }
+          }
+        }
+
+        let currentTheme = getInitialTheme();
+        applyTheme(currentTheme);
+
+        const themeToggle = document.getElementById("themeToggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", function () {
+            currentTheme = currentTheme === "light" ? "dark" : "light";
+            applyTheme(currentTheme);
+
+            try {
+              const themeStorage = {
+                state: { theme: currentTheme },
+                version: 0,
+              };
+              localStorage.setItem(
+                "theme-storage",
+                JSON.stringify(themeStorage),
+              );
+            } catch (e) {
+              console.error("Error saving theme to storage:", e);
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
