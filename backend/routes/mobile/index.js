@@ -41,12 +41,4 @@ router.use('/payments', paymentsRoutes);
 // Affiliate links: /api/mobile/affiliate-links
 router.use('/affiliate-links', affiliateRoutes);
 
-// Farmhouses: /api/mobile/farmhouses
-const farmhouseRoutes = require('./farmhouse');
-router.use('/farmhouses', farmhouseRoutes);
-
-// Banquets: /api/mobile/banquets
-const banquetRoutes = require('./banquet');
-router.use('/banquets', banquetRoutes);
-
 module.exports = router;

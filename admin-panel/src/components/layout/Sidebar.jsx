@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { X, LogOut } from 'lucide-react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
 import ConfirmDialog from '../common/ConfirmDialog'
 import {
@@ -17,12 +17,13 @@ import {
 } from 'lucide-react'
 
 const Sidebar = ({ isOpen, onClose }) => {
+  const navigate = useNavigate()
   const { logout } = useAuthStore()
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
   const handleLogout = () => {
     logout()
-    window.location.href = '/login'
+    navigate('/login', { replace: true })
     if (window.innerWidth < 1024) {
       onClose()
     }

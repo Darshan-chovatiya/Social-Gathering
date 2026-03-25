@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Menu, LogOut, User, Settings, ChevronDown } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
 import ConfirmDialog from '../common/ConfirmDialog'
 
 const Header = ({ onMenuClick }) => {
+  const navigate = useNavigate()
   const { user, logout } = useAuthStore()
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
@@ -11,14 +13,13 @@ const Header = ({ onMenuClick }) => {
 
   const handleLogout = () => {
     logout()
-    window.location.href = '/login'
+    navigate('/login', { replace: true })
     setDropdownOpen(false)
     setShowLogoutConfirm(false)
   }
 
   const handleAccountSettings = () => {
-    // Navigate to settings page (if exists) or show settings modal
-    window.location.href = '/settings'
+    navigate('/settings')
     setDropdownOpen(false)
   }
 

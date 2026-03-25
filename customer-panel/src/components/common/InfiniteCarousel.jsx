@@ -58,10 +58,8 @@ const InfiniteCarousel = ({ items, navigate }) => {
   };
 
   const taglines = {
-    'Event': 'Experience the Magic of Live Performance',
-    'Farmhouse': 'Your Perfect Gateway to Nature and Serenity',
-    'Banquet': 'Exquisite Settings for Your Grandest Celebrations'
-  };
+    Event: 'Experience the Magic of Live Performance',
+  }
 
   return (
     <div className="relative w-full h-[500px] sm:h-[500px] md:h-[500px] lg:h-[550px] xl:h-[670px] overflow-hidden bg-gray-950 group">

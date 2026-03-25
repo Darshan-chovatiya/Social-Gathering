@@ -41,11 +41,6 @@ const mobileRoutes = require('./routes/mobile/index');
 // Notification routes
 const notificationRoutes = require('./routes/notification.routes.js');
 
-// Farmhouse routes
-const farmhouseRoutes = require('./routes/farmhouse.routes');
-// Banquet routes
-const banquetRoutes = require('./routes/banquet.routes');
-
 const app = express();
 
 // Middleware
@@ -95,11 +90,6 @@ app.use('/api/mobile', mobileRoutes);
 
 // Notification Routes
 app.use('/api/notifications', notificationRoutes);
-
-// Farmhouse Routes
-app.use('/api/farmhouses', farmhouseRoutes);
-// Banquet Routes
-app.use('/api/banquets', banquetRoutes);
 
 // Health check
 const { sendSuccess } = require('./utils/response');

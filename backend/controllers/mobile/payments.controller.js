@@ -5,15 +5,12 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
 const Booking = require('../../models/Booking');
-const FarmhouseBooking = require('../../models/FarmhouseBooking');
 const Payment = require('../../models/Payment');
 const Offer = require('../../models/Offer');
 const Event = require('../../models/Event');
-const Farmhouse = require('../../models/Farmhouse');
 const AffiliateLink = require('../../models/AffiliateLink');
 const UsedCoupon = require('../../models/UsedCoupon');
 const { sendSuccess, sendError } = require('../../utils/response');
-const { calculateFarmhousePrice } = require('../../utils/farmhousePricing');
 const config = require('../../config/env');
 const { decrypt } = require('../../utils/encryption.util');
 const CashfreeService = require('../../utils/cashfree.util');
@@ -48,15 +45,7 @@ const createOrder = async (req, res) => {
       let query = Booking.findById(bookingId).populate('eventId');
       if (session) query.session(session);
       booking = await query;
-      let bookingModel = 'Booking';
-
-      // If not found, try FarmhouseBooking
-      if (!booking) {
-        query = FarmhouseBooking.findById(bookingId).populate('farmhouseId');
-        if (session) query.session(session);
-        booking = await query;
-        bookingModel = 'FarmhouseBooking';
-      }
+      const bookingModel = 'Booking';
 
       if (!booking) {
         if (session) {
@@ -81,7 +70,7 @@ const createOrder = async (req, res) => {
         }
         return sendError(res, 'Payment already completed', 400);
       }
-      eventDoc = booking.eventId || booking.farmhouseId;
+      eventDoc = booking.eventId;
       booking.bookingModel = bookingModel;
     } else if (bookingData) {
       if (bookingData.eventId) {
@@ -233,71 +222,12 @@ const createOrder = async (req, res) => {
         booking = newBooking[0];
         booking.bookingModel = 'Booking';
         eventDoc = event;
-      } else if (bookingData.farmhouseId) {
-        const { farmhouseId, checkInDate, checkOutDate, stayType, offerCode } = bookingData;
-        
-        const farmhouseQuery = Farmhouse.findById(farmhouseId);
-        if (session) farmhouseQuery.session(session);
-        const farmhouse = await farmhouseQuery;
-
-        if (!farmhouse || !farmhouse.isActive) {
-          if (session) {
-            await session.abortTransaction();
-            session.endSession();
-          }
-          return sendError(res, 'Farmhouse not found or not available', 404);
+      } else {
+        if (session) {
+          await session.abortTransaction();
+          session.endSession();
         }
-
-        // Check availability
-        const overlappingBookings = await FarmhouseBooking.find({
-          farmhouseId,
-          status: { $in: ['pending', 'confirmed'] },
-          $or: [
-            {
-              checkInDate: { $lt: new Date(checkOutDate) },
-              checkOutDate: { $gt: new Date(checkInDate) }
-            }
-          ]
-        }).session(session);
-
-        if (overlappingBookings.length > 0) {
-          if (session) {
-            await session.abortTransaction();
-            session.endSession();
-          }
-          return sendError(res, 'This farmhouse is already booked for the selected dates.', 400);
-        }
-
-        const start = new Date(checkInDate);
-        const end = new Date(checkOutDate);
-        const { subtotal, depositAmount, rateType, primaryTier } = calculateFarmhousePrice(farmhouse, checkInDate, checkOutDate);
-        let discount = 0;
-        let offerId = null;
-
-        const generatedBookingId = `FH-${Date.now()}${Math.floor(Math.random() * 1000)}`;
-        
-        const newBooking = await FarmhouseBooking.create([{
-          bookingId: generatedBookingId,
-          userId: req.user._id,
-          farmhouseId,
-          checkInDate: start,
-          checkOutDate: end,
-          checkInTime: farmhouse.checkInTime,
-          checkOutTime: farmhouse.checkOutTime,
-          selectedPricing: {
-            tier: primaryTier,
-            rateType: rateType,
-            rate: farmhouse.pricing[primaryTier][rateType]
-          },
-          totalAmount: subtotal,
-          depositAmount,
-          discount,
-          status: 'pending'
-        }], session ? { session } : {});
-
-        booking = newBooking[0];
-        booking.bookingModel = 'FarmhouseBooking';
-        eventDoc = farmhouse;
+        return sendError(res, 'eventId is required in bookingData', 400);
       }
     } else {
       if (session) {
@@ -415,6 +345,7 @@ const createOrder = async (req, res) => {
     if (!payment) {
       const paymentData = {
         bookingId: booking._id,
+        bookingModel: 'Booking',
         userId: req.user._id,
         amount: booking.totalAmount,
         status: 'pending',
@@ -478,9 +409,9 @@ const verifyPayment = async (req, res) => {
       if (!payment) return sendError(res, 'Payment record not found', 404);
 
       booking = await Booking.findById(payment.bookingId).populate('eventId');
-      if (!booking) booking = await FarmhouseBooking.findById(payment.bookingId).populate('farmhouseId');
-      
-      const event = booking?.eventId || booking?.farmhouseId;
+      if (!booking) return sendError(res, 'Booking not found', 404);
+
+      const event = booking?.eventId;
       const paymentConfig = event?.paymentConfig || { gateway: 'razorpay' };
 
       let rzpKeySecret = config.RAZORPAY_KEY_SECRET;
@@ -516,10 +447,9 @@ const verifyPayment = async (req, res) => {
       if (!payment) return sendError(res, 'Payment record not found', 404);
 
       booking = await Booking.findById(payment.bookingId).populate('eventId');
-      if (!booking) booking = await FarmhouseBooking.findById(payment.bookingId).populate('farmhouseId');
       if (!booking) return sendError(res, 'Booking not found', 404);
 
-      const event = booking.eventId || booking.farmhouseId;
+      const event = booking.eventId;
       const paymentConfig = event.paymentConfig || { gateway: 'razorpay' };
       
       let cfAppId, cfSecretKey;
@@ -699,55 +629,41 @@ const storePayment = async (req, res) => {
     let eventId, slotId, tickets, offerCode, affiliateCode;
 
     if (bookingId) {
-      // Flow 1: Update existing booking with payment details
       existingBooking = await Booking.findById(bookingId).session(session);
-      if (!existingBooking) {
-        existingBooking = await FarmhouseBooking.findById(bookingId).session(session);
-      }
-      
+
       if (!existingBooking) {
         await session.abortTransaction();
         session.endSession();
         return sendError(res, 'Booking not found', 404);
       }
 
-      // Verify booking belongs to user
       if (existingBooking.userId.toString() !== req.user._id.toString()) {
         await session.abortTransaction();
         session.endSession();
         return sendError(res, 'Access denied', 403);
       }
 
-      // Verify booking hasn't been paid already
       if (existingBooking.paymentStatus === 'success' || existingBooking.status === 'confirmed') {
         await session.abortTransaction();
         session.endSession();
         return sendError(res, 'Payment already completed for this booking', 400);
       }
 
-      // Get event/farmhouse info from existing booking
       eventId = existingBooking.eventId?._id || existingBooking.eventId;
-      const farmhouseId = existingBooking.farmhouseId?._id || existingBooking.farmhouseId;
-      
-      if (eventId) {
-        slotId = existingBooking.slotId?._id || existingBooking.slotId;
-        tickets = existingBooking.tickets.map(t => ({
-          ticketTypeId: t.ticketTypeId,
-          quantity: t.quantity
-        }));
-      } else if (farmhouseId) {
-        bookingData = {
-          farmhouseId,
-          checkInDate: existingBooking.checkInDate,
-          checkOutDate: existingBooking.checkOutDate,
-          stayType: existingBooking.selectedPricing.rateType
-        };
-      }
-      
+      slotId = existingBooking.slotId?._id || existingBooking.slotId;
+      tickets = (existingBooking.tickets || []).map((t) => ({
+        ticketTypeId: t.ticketTypeId,
+        quantity: t.quantity,
+      }));
+
       offerCode = existingBooking.offerId ? null : null;
       affiliateCode = existingBooking.affiliateLinkId ? null : null;
     } else if (bookingData) {
-      // Flow 2: Create new booking
+      if (!bookingData.eventId) {
+        await session.abortTransaction();
+        session.endSession();
+        return sendError(res, 'eventId is required in bookingData', 400);
+      }
       ({ eventId, slotId, tickets, offerCode, affiliateCode } = bookingData);
     } else {
       await session.abortTransaction();
@@ -755,15 +671,19 @@ const storePayment = async (req, res) => {
       return sendError(res, 'Either bookingId or bookingData is required', 400);
     }
 
-    // Get event/farmhouse - needed for both flows
-    const event = (existingBooking?.farmhouseId || bookingData?.farmhouseId)
-      ? await Farmhouse.findById(existingBooking?.farmhouseId || bookingData?.farmhouseId).session(session)
-      : await Event.findById(eventId).session(session);
+    const event = await Event.findById(eventId).session(session);
 
-    if (!event || !event.isActive || (eventId && event.status !== 'approved')) {
+    if (!event || !event.isActive || event.status !== 'approved') {
       await session.abortTransaction();
       session.endSession();
-      return sendError(res, 'Event/Farmhouse not found or not available', 404);
+      return sendError(res, 'Event not found or not available', 404);
+    }
+
+    const slot = event.slots.id(slotId);
+    if (!slot || !slot.isActive) {
+      await session.abortTransaction();
+      session.endSession();
+      return sendError(res, 'Slot not found or not available', 404);
     }
 
     let createdBooking, totalAmount, subtotal, discount, offerId, affiliateLinkId, bookingTickets;
@@ -777,101 +697,89 @@ const storePayment = async (req, res) => {
       affiliateLinkId = existingBooking.affiliateLinkId;
       bookingTickets = existingBooking.tickets;
     } else {
-      // Flow 2: Create new booking
-      if (bookingData.farmhouseId) {
-        const { subtotal: fhSubtotal, depositAmount, rateType, primaryTier } = calculateFarmhousePrice(event, bookingData.checkInDate, bookingData.checkOutDate);
-        subtotal = fhSubtotal;
-        discount = 0;
-        totalAmount = subtotal;
-        bookingTickets = [];
-      } else {
-        // Validate tickets and calculate subtotal for event
-        subtotal = 0;
-        bookingTickets = [];
+      subtotal = 0;
+      bookingTickets = [];
 
-        for (const ticketReq of tickets) {
-          const ticketType = event.ticketTypes.id(ticketReq.ticketTypeId);
-          if (!ticketType || !ticketType.isActive) {
-            await session.abortTransaction();
-            session.endSession();
-            return sendError(res, `Ticket type ${ticketReq.ticketTypeId} not found`, 400);
-          }
-          const ticketTotalAmount = ticketType.price * ticketReq.quantity;
-          subtotal += ticketTotalAmount;
-          bookingTickets.push({
-            ticketTypeId: ticketType._id,
-            ticketTypeTitle: ticketType.title,
-            quantity: ticketReq.quantity,
-            price: ticketType.price,
-            totalAmount: ticketTotalAmount,
-          });
+      for (const ticketReq of tickets) {
+        const ticketType = event.ticketTypes.id(ticketReq.ticketTypeId);
+        if (!ticketType || !ticketType.isActive) {
+          await session.abortTransaction();
+          session.endSession();
+          return sendError(res, `Ticket type ${ticketReq.ticketTypeId} not found`, 400);
         }
+        const ticketTotalAmount = ticketType.price * ticketReq.quantity;
+        subtotal += ticketTotalAmount;
+        bookingTickets.push({
+          ticketTypeId: ticketType._id,
+          ticketTypeTitle: ticketType.title,
+          quantity: ticketReq.quantity,
+          price: ticketType.price,
+          totalAmount: ticketTotalAmount,
+        });
+      }
 
-        // Apply offer if provided
-        discount = 0;
-        offerId = null;
-        if (offerCode) {
-          const offer = await Offer.findOne({
-            code: offerCode.toUpperCase(),
+      discount = 0;
+      offerId = null;
+      if (offerCode) {
+        const offer = await Offer.findOne({
+          code: offerCode.toUpperCase(),
+          isActive: true,
+          validFrom: { $lte: new Date() },
+          validUntil: { $gte: new Date() },
+          $or: [
+            { eventId: eventId },
+            { categoryId: { $in: event.categories } },
+            { eventId: null, categoryId: null },
+          ],
+        }).session(session);
+
+        if (offer) {
+          const perCustomerLimit = offer.perCustomerLimit || 1;
+          const customerUsageCount = await UsedCoupon.countDocuments({
+            userId: req.user._id,
+            offerId: offer._id,
+          }).session(session);
+          
+          if (!(offer.usageLimit && offer.usedCount >= offer.usageLimit) && 
+              customerUsageCount < perCustomerLimit && 
+              subtotal >= offer.minPurchaseAmount) {
+            if (offer.type === 'flat') {
+              discount = Math.min(offer.value, subtotal);
+            } else if (offer.type === 'percentage') {
+              discount = (subtotal * offer.value) / 100;
+              if (offer.maxDiscount) discount = Math.min(discount, offer.maxDiscount);
+            }
+            offerId = offer._id;
+          }
+        }
+      }
+
+      affiliateLinkId = null;
+      if (affiliateCode && typeof affiliateCode === 'string' && affiliateCode.trim() !== '') {
+        try {
+          const normalizedAffiliateCode = affiliateCode.toUpperCase().trim();
+          const affiliateLink = await AffiliateLink.findOne({
+            affiliateCode: normalizedAffiliateCode,
             isActive: true,
-            validFrom: { $lte: new Date() },
-            validUntil: { $gte: new Date() },
-            $or: [
-              { eventId: eventId },
-              { categoryId: { $in: event.categories } },
-              { eventId: null, categoryId: null },
-            ],
           }).session(session);
 
-          if (offer) {
-            const perCustomerLimit = offer.perCustomerLimit || 1;
-            const customerUsageCount = await UsedCoupon.countDocuments({
-              userId: req.user._id,
-              offerId: offer._id,
-            }).session(session);
-            
-            if (!(offer.usageLimit && offer.usedCount >= offer.usageLimit) && 
-                customerUsageCount < perCustomerLimit && 
-                subtotal >= offer.minPurchaseAmount) {
-              if (offer.type === 'flat') {
-                discount = Math.min(offer.value, subtotal);
-              } else if (offer.type === 'percentage') {
-                discount = (subtotal * offer.value) / 100;
-                if (offer.maxDiscount) discount = Math.min(discount, offer.maxDiscount);
-              }
-              offerId = offer._id;
-            }
-          }
-        }
-
-        // Validate and link affiliate code if provided
-        affiliateLinkId = null;
-        if (affiliateCode && typeof affiliateCode === 'string' && affiliateCode.trim() !== '') {
-          try {
-            const normalizedAffiliateCode = affiliateCode.toUpperCase().trim();
-            const affiliateLink = await AffiliateLink.findOne({
-              affiliateCode: normalizedAffiliateCode,
-              isActive: true,
-            }).session(session);
-
-            if (affiliateLink) {
-              const affiliateEventId = affiliateLink.eventId?._id?.toString() || affiliateLink.eventId?.toString() || affiliateLink.eventId;
-              const bookingEventId = eventId.toString();
-              if (affiliateEventId === bookingEventId) {
-                const referrerUserId = affiliateLink.referrerUserId?.toString() || affiliateLink.referrerUserId?._id?.toString();
-                const bookingUserId = req.user._id.toString();
-                if (referrerUserId !== bookingUserId) {
-                  affiliateLinkId = affiliateLink._id;
-                }
+          if (affiliateLink) {
+            const affiliateEventId = affiliateLink.eventId?._id?.toString() || affiliateLink.eventId?.toString() || affiliateLink.eventId;
+            const bookingEventId = eventId.toString();
+            if (affiliateEventId === bookingEventId) {
+              const referrerUserId = affiliateLink.referrerUserId?.toString() || affiliateLink.referrerUserId?._id?.toString();
+              const bookingUserId = req.user._id.toString();
+              if (referrerUserId !== bookingUserId) {
+                affiliateLinkId = affiliateLink._id;
               }
             }
-          } catch (error) {
-            console.error('Error processing affiliate code in storePayment:', error);
           }
+        } catch (error) {
+          console.error('Error processing affiliate code in storePayment:', error);
         }
-
-        totalAmount = subtotal - discount;
       }
+
+      totalAmount = subtotal - discount;
     }
 
     // Verify payment based on gateway
@@ -920,55 +828,31 @@ const storePayment = async (req, res) => {
     }
 
     if (!existingBooking) {
-      if (bookingData.eventId) {
-        // Reserve tickets and create event booking
-        for (const ticketReq of tickets) {
-          const ticketType = event.ticketTypes.id(ticketReq.ticketTypeId);
-          ticketType.availableQuantity -= ticketReq.quantity;
-        }
-        await event.save({ session });
-        
-        const generatedBookingId = `PRIME${Date.now()}${Math.floor(Math.random() * 1000)}`;
-        const slot = event.slots.id(slotId);
-        const booking = await Booking.create([{
-          bookingId: generatedBookingId,
-          userId: req.user._id,
-          eventId,
-          slotId,
-          slotDate: slot.date,
-          slotStartTime: slot.startTime,
-          slotEndTime: slot.endTime,
-          tickets: bookingTickets,
-          subtotal,
-          discount,
-          offerId,
-          totalAmount,
-          affiliateLinkId,
-          paymentStatus: 'success',
-          status: 'confirmed',
-        }], { session });
-        createdBooking = booking[0];
-      } else {
-        // Create farmhouse booking
-        const generatedBookingId = `FH-${Date.now()}${Math.floor(Math.random() * 1000)}`;
-        const start = new Date(bookingData.checkInDate);
-        const end = new Date(bookingData.checkOutDate);
-        const { depositAmount, rateType, primaryTier } = calculateFarmhousePrice(event, bookingData.checkInDate, bookingData.checkOutDate);
-        const booking = await FarmhouseBooking.create([{
-          bookingId: generatedBookingId,
-          userId: req.user._id,
-          farmhouseId: bookingData.farmhouseId,
-          checkInDate: start,
-          checkOutDate: end,
-          selectedPricing: { tier: primaryTier, rateType, rate: event.pricing[primaryTier][rateType] },
-          totalAmount: subtotal,
-          depositAmount,
-          discount,
-          paymentStatus: 'success',
-          status: 'confirmed',
-        }], { session });
-        createdBooking = booking[0];
+      for (const ticketReq of tickets) {
+        const ticketType = event.ticketTypes.id(ticketReq.ticketTypeId);
+        ticketType.availableQuantity -= ticketReq.quantity;
       }
+      await event.save({ session });
+      
+      const generatedBookingId = `PRIME${Date.now()}${Math.floor(Math.random() * 1000)}`;
+      const booking = await Booking.create([{
+        bookingId: generatedBookingId,
+        userId: req.user._id,
+        eventId,
+        slotId,
+        slotDate: slot.date,
+        slotStartTime: slot.startTime,
+        slotEndTime: slot.endTime,
+        tickets: bookingTickets,
+        subtotal,
+        discount,
+        offerId,
+        totalAmount,
+        affiliateLinkId,
+        paymentStatus: 'success',
+        status: 'confirmed',
+      }], { session });
+      createdBooking = booking[0];
     } else {
       createdBooking.paymentStatus = 'success';
       createdBooking.status = 'confirmed';
@@ -981,6 +865,7 @@ const storePayment = async (req, res) => {
     // Prepare payment record data
     const paymentData = {
       bookingId: createdBooking._id,
+      bookingModel: 'Booking',
       userId: req.user._id,
       amount: createdBooking.totalAmount,
       status: 'success',
@@ -1063,12 +948,7 @@ const storePayment = async (req, res) => {
     await session.commitTransaction();
     session.endSession();
 
-    // Reload booking to get full details for response
-    if (createdBooking.eventId) {
-      await createdBooking.populate('eventId', 'title banners address organizer venues slots ticketTypes');
-    } else if (createdBooking.farmhouseId) {
-      await createdBooking.populate('farmhouseId', 'title banners address pricing checkInTime checkOutTime');
-    }
+    await createdBooking.populate('eventId', 'title banners address organizer venues slots ticketTypes');
     await createdBooking.populate('offerId', 'title type value');
     
     return sendSuccess(res, 'Payment stored successfully', {
@@ -1121,15 +1001,9 @@ const getPaymentByBookingId = async (req, res) => {
     let booking = null;
     if (mongoose.Types.ObjectId.isValid(bookingId)) {
       booking = await Booking.findById(bookingId);
-      if (!booking) {
-        booking = await FarmhouseBooking.findById(bookingId);
-      }
     }
     if (!booking) {
       booking = await Booking.findOne({ bookingId: bookingId });
-    }
-    if (!booking) {
-      booking = await FarmhouseBooking.findOne({ bookingId: bookingId });
     }
     
     if (!booking) {

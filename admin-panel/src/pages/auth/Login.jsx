@@ -23,7 +23,7 @@ const Login = () => {
     try {
       const response = await login(email, password)
       if (response.success) {
-        navigate('/')
+        navigate('/dashboard', { replace: true })
       } else {
         setError(response.message || 'Login failed')
       }

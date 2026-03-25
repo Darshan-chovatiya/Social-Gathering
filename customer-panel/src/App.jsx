@@ -24,12 +24,6 @@ import SponsorDetail from './pages/SponsorDetail'
 import AllSponsors from './pages/AllSponsors'
 import PaymentVerify from './pages/PaymentVerify'
 import Notifications from './pages/Notifications'
-import FarmhouseListing from './pages/FarmhouseListing'
-import FarmhouseDetail from './pages/FarmhouseDetail'
-import FarmhouseBookingSummary from './pages/FarmhouseBookingSummary'
-import FarmhouseBookingConfirmation from './pages/FarmhouseBookingConfirmation'
-import BanquetListing from './pages/BanquetListing'
-import BanquetDetail from './pages/BanquetDetail'
 import Dashboard from './pages/Dashboard'
 import SearchResults from './pages/SearchResults'
 
@@ -162,8 +156,6 @@ function App() {
         <Route path="bookings/:bookingId/confirmation" element={<BookingConfirmation />} />
         <Route path="tickets/:bookingId/download" element={<TicketDownload />} />
         <Route path="payment/verify" element={<PaymentVerify />} />
-        <Route path="farmhouses/:id/booking-summary" element={<FarmhouseBookingSummary />} />
-        <Route path="farmhouses/bookings/:bookingId/confirmation" element={<FarmhouseBookingConfirmation />} />
 
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
@@ -175,10 +167,6 @@ function App() {
           <Route path="events/:eventId/sponsors" element={<AllSponsors />} />
           <Route path="sponsors/:id" element={<SponsorDetail />} />
           <Route path="movies" element={<Movies />} />
-          <Route path="farmhouses" element={<FarmhouseListing />} />
-          <Route path="farmhouses/:id" element={<FarmhouseDetail />} />
-          <Route path="banquets" element={<BanquetListing />} />
-          <Route path="banquets/:id" element={<BanquetDetail />} />
           <Route path="stream" element={<Stream />} />
           <Route path="events" element={<Explore />} />
           <Route path="plays" element={<Plays />} />

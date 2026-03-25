@@ -19,7 +19,6 @@ import {
   Settings as SettingsIcon,
   History,
   Link2,
-  Building2
 } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
 import { useThemeStore } from '../../store/themeStore'
@@ -177,29 +176,6 @@ const Header = () => {
                   Events
                 </NavLink>
 
-                <NavLink
-                  to="/farmhouses"
-                  className={({ isActive }) =>
-                    `px-4 py-2 rounded-md text-sm font-semibold transition-all ${isActive
-                      ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800'
-                    }`
-                  }
-                >
-                  Farmhouses
-                </NavLink>
-
-                <NavLink
-                  to="/banquets"
-                  className={({ isActive }) =>
-                    `px-4 py-2 rounded-md text-sm font-semibold transition-all ${isActive
-                      ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800'
-                    }`
-                  }
-                >
-                  Banquets
-                </NavLink>
               </nav>
 
               {/* Right Side Actions */}
@@ -541,33 +517,6 @@ const Header = () => {
                     <span>Events</span>
                   </NavLink>
 
-                  <NavLink
-                    to="/farmhouses"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={({ isActive }) =>
-                      `flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-semibold transition-all ${isActive
-                        ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/40'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                      }`
-                    }
-                  >
-                    <Home className="w-4 h-4" />
-                    <span>Farmhouses</span>
-                  </NavLink>
-
-                  <NavLink
-                    to="/banquets"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={({ isActive }) =>
-                      `flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-semibold transition-all ${isActive
-                        ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/40'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                      }`
-                    }
-                  >
-                    <Building2 className="w-4 h-4" />
-                    <span>Banquets</span>
-                  </NavLink>
                 </nav>
 
                 {/* Theme Toggle */}

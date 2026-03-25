@@ -33,7 +33,7 @@ const paymentSchema = new mongoose.Schema({
   bookingModel: {
     type: String,
     required: true,
-    enum: ['Booking', 'FarmhouseBooking'],
+    enum: ['Booking'],
     default: 'Booking'
   },
   userId: {

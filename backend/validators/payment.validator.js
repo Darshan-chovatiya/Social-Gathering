@@ -43,8 +43,8 @@ const storePaymentValidation = [
       }
       // If bookingData is provided, validate its required fields
       if (value.bookingData) {
-        if (!value.bookingData.eventId && !value.bookingData.farmhouseId) {
-          throw new Error('Event ID or Farmhouse ID is required in bookingData');
+        if (!value.bookingData.eventId) {
+          throw new Error('Event ID is required in bookingData');
         }
         if (value.bookingData.eventId) {
           if (!value.bookingData.slotId) {

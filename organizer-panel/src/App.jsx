@@ -16,13 +16,6 @@ import Reports from './pages/reports/Reports'
 import Settings from './pages/settings/Settings'
 import AffiliateLinks from './pages/affiliateLinks/AffiliateLinks'
 import Notifications from './pages/notifications/Notifications'
-import Farmhouses from './pages/farmhouses/Farmhouses'
-import FarmhouseForm from './pages/farmhouses/FarmhouseForm'
-import FarmhouseBookings from './pages/farmhouses/FarmhouseBookings'
-import FarmhouseEnquiries from './pages/farmhouses/FarmhouseEnquiries'
-import Banquets from './pages/banquets/Banquets'
-import BanquetForm from './pages/banquets/BanquetForm'
-import BanquetEnquiries from './pages/banquets/BanquetEnquiries'
 
 function App() {
   const { isAuthenticated, checkAuth, isCheckingAuth } = useAuthStore()
@@ -67,15 +60,6 @@ function App() {
           <Route path="sponsors" element={<Sponsors />} />
           <Route path="reports" element={<Reports />} />
           <Route path="settings" element={<Settings />} />
-          <Route path="farmhouses" element={<Farmhouses />} />
-          <Route path="farmhouses/create" element={<FarmhouseForm />} />
-          <Route path="farmhouses/edit/:id" element={<FarmhouseForm />} />
-          <Route path="farmhouse-bookings" element={<FarmhouseBookings />} />
-          <Route path="farmhouse-enquiries" element={<FarmhouseEnquiries />} />
-          <Route path="banquets" element={<Banquets />} />
-          <Route path="banquets/create" element={<BanquetForm />} />
-          <Route path="banquets/edit/:id" element={<BanquetForm />} />
-          <Route path="banquet-enquiries" element={<BanquetEnquiries />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

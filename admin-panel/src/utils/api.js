@@ -67,9 +67,17 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response?.status === 401) {
-      // Unauthorized - clear auth and redirect to login
-      localStorage.removeItem('auth-storage')
-      window.location.href = '/login'
+      // Don't redirect on login endpoint — let the Login component handle the error
+      const isLoginRequest =
+        error.config?.url?.includes('/auth/admin/login') ||
+        error.config?.url?.includes('/auth/organizer/login')
+
+      if (!isLoginRequest) {
+        localStorage.removeItem('auth-storage')
+        // Respect Vite base (e.g. /admin/) and HashRouter
+        const basePath = import.meta.env.BASE_URL || '/admin/'
+        window.location.href = `${basePath}#/login`
+      }
     }
     return Promise.reject(error)
   }

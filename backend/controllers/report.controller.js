@@ -58,57 +58,8 @@ const getEventWiseBookings = async (req, res) => {
       },
     ]);
 
-    // Fetch Farmhouse bookings if organizer or admin
-    let farmhouseBookings = [];
-    const FarmhouseBooking = require('../models/FarmhouseBooking');
-    const fhMatchQuery = { paymentStatus: 'success' };
-
-    if (req.user.role === 'organizer') {
-      const Farmhouse = require('../models/Farmhouse');
-      const organizerFarmhouses = await Farmhouse.find({
-        'organizer.organizerId': req.user._id,
-      }).select('_id');
-      const farmhouseIds = organizerFarmhouses.map(f => f._id);
-      fhMatchQuery.farmhouseId = { $in: farmhouseIds };
-    }
-
-    if (startDate || endDate) {
-      fhMatchQuery.createdAt = {};
-      if (startDate) fhMatchQuery.createdAt.$gte = new Date(startDate);
-      if (endDate) fhMatchQuery.createdAt.$lte = new Date(endDate);
-    }
-
-    farmhouseBookings = await FarmhouseBooking.aggregate([
-      { $match: fhMatchQuery },
-      {
-        $group: {
-          _id: '$farmhouseId',
-          totalBookings: { $sum: 1 },
-          totalRevenue: { $sum: '$totalAmount' },
-        },
-      },
-      {
-        $lookup: {
-          from: 'farmhouses',
-          localField: '_id',
-          foreignField: '_id',
-          as: 'farmhouse',
-        },
-      },
-      { $unwind: '$farmhouse' },
-      {
-        $project: {
-          farmhouseId: '$_id',
-          farmhouseTitle: '$farmhouse.title',
-          totalBookings: 1,
-          totalRevenue: 1,
-        },
-      },
-    ]);
-
     return sendSuccess(res, 'Bookings report fetched successfully', {
       bookings: eventBookings,
-      farmhouseBookings,
     });
   } catch (error) {
     console.error('Error fetching bookings report:', error);
@@ -121,12 +72,10 @@ const getRevenueReport = async (req, res) => {
     const { startDate, endDate } = req.query;
     const matchQuery = { status: 'success' };
 
-    // If organizer, filter by their events and farmhouses
+    // If organizer, filter by their events
     if (req.user.role === 'organizer') {
       const Event = require('../models/Event');
       const Booking = require('../models/Booking');
-      const Farmhouse = require('../models/Farmhouse');
-      const FarmhouseBooking = require('../models/FarmhouseBooking');
 
       const organizerEvents = await Event.find({
         'organizer.organizerId': req.user._id,
@@ -138,17 +87,7 @@ const getRevenueReport = async (req, res) => {
       }).select('_id');
       const bookingIds = organizerBookings.map(b => b._id);
 
-      const organizerFarmhouses = await Farmhouse.find({
-        'organizer.organizerId': req.user._id,
-      }).select('_id');
-      const farmhouseIds = organizerFarmhouses.map(f => f._id);
-
-      const organizerFhBookings = await FarmhouseBooking.find({
-        farmhouseId: { $in: farmhouseIds },
-      }).select('_id');
-      const fhBookingIds = organizerFhBookings.map(b => b._id);
-
-      matchQuery.bookingId = { $in: [...bookingIds, ...fhBookingIds] };
+      matchQuery.bookingId = { $in: bookingIds };
     }
 
     if (startDate || endDate) {

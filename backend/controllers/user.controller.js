@@ -4,8 +4,6 @@ const Event = require('../models/Event');
 const Category = require('../models/Category');
 const Offer = require('../models/Offer');
 const UsedCoupon = require('../models/UsedCoupon');
-const FarmhouseBooking = require('../models/FarmhouseBooking');
-const Farmhouse = require('../models/Farmhouse'); // Also might need Farmhouse for population if not already there
 const bcrypt = require('bcryptjs');
 const { sendSuccess, sendError } = require('../utils/response');
 
@@ -70,21 +68,15 @@ const getBookings = async (req, res) => {
       query.status = status;
     }
 
-    // Fetch both types of bookings
-    const [eventBookings, farmhouseBookings] = await Promise.all([
-      Booking.find(query)
-        .populate('eventId', 'title banners address eventDetailImage eventDetailsImages eventImages')
-        .populate('offerId', 'title type value')
-        .populate('affiliateLinkId', 'affiliateCode referrerUserId eventId')
-        .lean(),
-      FarmhouseBooking.find(query)
-        .populate('farmhouseId', 'title banners address')
-        .lean()
-    ]);
+    const eventBookings = await Booking.find(query)
+      .populate('eventId', 'title banners address eventDetailImage eventDetailsImages eventImages')
+      .populate('offerId', 'title type value')
+      .populate('affiliateLinkId', 'affiliateCode referrerUserId eventId')
+      .lean();
 
-    // Combine and sort by date
-    const allBookings = [...eventBookings, ...farmhouseBookings]
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const allBookings = [...eventBookings].sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
 
     // Handle pagination manually for merged results
     const pageNum = parseInt(page);

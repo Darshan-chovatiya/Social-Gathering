@@ -52,21 +52,6 @@ const Login = () => {
           }
         }
 
-        // Check for saved farmhouse booking data
-        const savedFhBookingData = sessionStorage.getItem('fhBookingData')
-        if (savedBookingPath && savedFhBookingData) {
-          try {
-            const fhBookingData = JSON.parse(savedFhBookingData)
-            navigate(savedBookingPath, {
-              state: fhBookingData,
-              replace: true
-            })
-            return
-          } catch (err) {
-            console.error('Error parsing saved farmhouse booking data:', err)
-          }
-        }
-        
         // Otherwise, redirect to returnUrl or default
         if (returnUrl && returnUrl !== '/') {
           navigate(returnUrl, { replace: true })
@@ -177,21 +162,6 @@ const Login = () => {
             }
           }
 
-          // Check for saved farmhouse booking data
-          const savedFhBookingData = sessionStorage.getItem('fhBookingData')
-          if (savedBookingPath && savedFhBookingData) {
-            try {
-              const fhBookingData = JSON.parse(savedFhBookingData)
-              navigate(savedBookingPath, {
-                state: fhBookingData,
-                replace: true
-              })
-              return
-            } catch (err) {
-              console.error('Error parsing saved farmhouse booking data:', err)
-            }
-          }
-          
           // Otherwise, redirect to returnUrl or default
           if (returnUrl && returnUrl !== '/') {
             navigate(returnUrl, { replace: true })
@@ -263,21 +233,6 @@ const Login = () => {
           }
         }
 
-        // Check for saved farmhouse booking data
-        const savedFhBookingData = sessionStorage.getItem('fhBookingData')
-        if (savedBookingPath && savedFhBookingData) {
-          try {
-            const fhBookingData = JSON.parse(savedFhBookingData)
-            navigate(savedBookingPath, {
-              state: fhBookingData,
-              replace: true
-            })
-            return
-          } catch (err) {
-            console.error('Error parsing saved farmhouse booking data:', err)
-          }
-        }
-        
         // Otherwise, redirect to returnUrl or default
         if (returnUrl && returnUrl !== '/') {
           navigate(returnUrl, { replace: true })

@@ -26,6 +26,8 @@ const BookingHistory = () => {
     fetchBookings()
   }, [])
 
+  const eventBookings = bookings.filter((b) => b.eventId)
+
   const fetchBookings = async () => {
     try {
       setLoading(true)
@@ -51,13 +53,6 @@ const BookingHistory = () => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
     const baseUrl = API_BASE_URL.replace('/api', '')
     return `${baseUrl}${path}`
-  }
-
-  const getFarmhouseImage = (fh) => {
-    if (fh?.banners && fh.banners.length > 0) {
-      return getImageUrl(fh.banners[0])
-    }
-    return null
   }
 
   const formatDate = (date) => {
@@ -355,97 +350,17 @@ const BookingHistory = () => {
 
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">My Bookings</h1>
-          <p className="text-gray-600 dark:text-gray-400">Manage and view all your event and farmhouse bookings</p>
+          <p className="text-gray-600 dark:text-gray-400">Manage and view all your event bookings</p>
         </div>
 
         {loading ? (
           <div className="flex justify-center py-12"><Loading size="lg" /></div>
-        ) : bookings.length === 0 ? (
+        ) : eventBookings.length === 0 ? (
           <EmptyState icon={Ticket} title="No Bookings Yet" message="Start exploring to make your first booking!" />
         ) : (
           <div className="space-y-4">
-            {bookings.map((booking) => (
+            {eventBookings.map((booking) => (
               <div key={booking._id} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
-                {(booking.farmhouseId || booking.farmerhouseId) ? (
-                  /* Farmhouse Booking */
-                  <div className="flex flex-col">
-                    {/* Mobile View */}
-                    <div className="md:hidden">
-                      <div className="p-4 flex gap-4">
-                        <div className="w-20 h-20 shrink-0 bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
-                          <img src={getFarmhouseImage(booking.farmhouseId || booking.farmerhouseId)} alt="farmhouse" className="w-full h-full object-cover" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex justify-between items-start gap-2">
-                            <h3 className="text-sm font-bold text-gray-900 dark:text-white uppercase truncate">{(booking.farmhouseId || booking.farmerhouseId)?.title}</h3>
-                            <span className={`shrink-0 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase ${getStatusColor(booking.status)}`}>{booking.status}</span>
-                          </div>
-                          <p className="text-xs text-secondary-600 font-medium mt-0.5">{(booking.farmhouseId || booking.farmerhouseId)?.ownerName || 'Prime Tickets'}</p>
-                          <div className="flex flex-col gap-0.5 mt-1">
-                            <div className="flex items-center gap-1 text-[11px] text-gray-500">
-                              <MapPin className="w-3 h-3" /> <span>{(booking.farmhouseId || booking.farmerhouseId)?.address?.city}</span>
-                            </div>
-                            <div className="flex items-center gap-1 text-[11px] text-gray-500">
-                              <Calendar className="w-3 h-3" /> <span>{formatDate(booking.checkInDate)} - {formatDate(booking.checkOutDate)}</span>
-                            </div>
-                          </div>
-                          <div className="mt-2 flex items-center justify-between">
-                            <p className="text-sm font-bold text-primary-600">₹{((booking.totalAmount || 0) + (booking.depositAmount || 0))?.toLocaleString()}</p>
-                            <p className="text-[10px] font-bold text-gray-400 uppercase">Regular Stay</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="px-4 py-2 bg-gray-50/50 dark:bg-gray-900/50 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
-                        <div className="flex gap-2">
-                          <button onClick={() => fetchPaymentDetails(booking)} className="p-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xs hover:bg-primary-50 transition-colors">
-                            <CreditCard className="w-3.5 h-3.5 text-gray-500" />
-                          </button>
-                          <NavLink to={`/farmhouses/bookings/${booking.bookingId || booking._id}/confirmation`} className="p-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xs hover:bg-primary-50 transition-colors">
-                            <Eye className="w-3.5 h-3.5 text-gray-500" />
-                          </NavLink>
-                        </div>
-                        <p className="text-[10px] text-gray-400 font-medium">Booking ID: <span className="font-mono uppercase">{booking.bookingId || booking._id}</span></p>
-                      </div>
-                    </div>
-
-                    {/* Desktop View */}
-                    <div className="hidden md:flex items-center p-6 gap-6">
-                      <div className="w-32 h-32 rounded-xl overflow-hidden shrink-0 bg-gray-100">
-                        <img src={getFarmhouseImage(booking.farmhouseId || booking.farmerhouseId)} alt="farmhouse" className="w-full h-full object-cover" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white uppercase truncate">{(booking.farmhouseId || booking.farmerhouseId)?.title}</h3>
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{(booking.farmhouseId || booking.farmerhouseId)?.ownerName || 'Prime Tickets'}</p>
-                        <div className="flex items-center gap-3 mt-2">
-                          <div className="flex items-center gap-1.5 text-sm text-gray-500">
-                            <MapPin className="w-4 h-4" /> <span>{(booking.farmhouseId || booking.farmerhouseId)?.address?.city}</span>
-                          </div>
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${getStatusColor(booking.status)}`}>{booking.status}</span>
-                        </div>
-                        <div className="mt-2 text-xs text-gray-500 space-y-1">
-                          <p>Stay Dates: <span className="text-gray-900 dark:text-gray-200 font-medium">{formatDate(booking.checkInDate)} - {formatDate(booking.checkOutDate)}</span></p>
-                          <p>Booking ID: <span className="text-gray-900 dark:text-gray-200 font-mono uppercase font-medium">{booking.bookingId || booking._id}</span></p>
-                          <p>Booking Date: <span className="text-gray-900 dark:text-gray-200 font-medium">{formatDate(booking.createdAt)}</span></p>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-end gap-3 self-stretch justify-between">
-                        <div className="text-right">
-                          <p className="text-xs text-gray-400 uppercase font-bold tracking-wider">Total Amount</p>
-                          <p className="text-2xl font-bold text-[#ff4d6d]">₹{((booking.totalAmount || 0) + (booking.depositAmount || 0))?.toLocaleString()}</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <button onClick={() => fetchPaymentDetails(booking)} className="p-2 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 transition-colors">
-                            <CreditCard className="w-4 h-4 text-gray-600" />
-                          </button>
-                          <NavLink to={`/farmhouses/bookings/${booking.bookingId || booking._id}/confirmation`} className="p-2 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 transition-colors">
-                            <Eye className="w-4 h-4 text-gray-600" />
-                          </NavLink>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  /* Event Booking */
                   <div className="flex flex-col">
                     {/* Mobile View */}
                     <div className="md:hidden">
@@ -551,7 +466,6 @@ const BookingHistory = () => {
                       </div>
                     </div>
                   </div>
-                )}
               </div>
             ))}
           </div>
@@ -651,26 +565,6 @@ const BookingHistory = () => {
                     <p className="text-sm font-bold text-gray-900 dark:text-white uppercase">{formatDateTime(paymentDetails.createdAt)}</p>
                   </div>
 
-                  {/* Farmhouse Price Breakdown */}
-                  {(selectedBooking?.farmhouseId || selectedBooking?.farmerhouseId) && (
-                    <div className="mt-4 p-5 bg-primary-50/30 dark:bg-primary-900/10 border border-primary-100/50 dark:border-primary-900/20 rounded-2xl">
-                       <h4 className="text-[10px] text-primary-600 dark:text-primary-400 uppercase font-black tracking-widest mb-3">Price Breakdown</h4>
-                       <div className="space-y-2">
-                         <div className="flex justify-between items-center text-xs">
-                           <span className="text-gray-500 font-medium">Accommodation Fare</span>
-                           <span className="font-bold text-gray-900 dark:text-white">₹{selectedBooking.totalAmount?.toLocaleString()}</span>
-                         </div>
-                         <div className="flex justify-between items-center text-xs">
-                           <span className="text-gray-500 font-medium">Security Deposit (Refundable)</span>
-                           <span className="font-bold text-gray-900 dark:text-white">₹{(selectedBooking.depositAmount || 0).toLocaleString()}</span>
-                         </div>
-                         <div className="pt-2 mt-2 border-t border-primary-100 dark:border-primary-900/30 flex justify-between items-center">
-                           <span className="text-xs font-black text-primary-600 uppercase">Total Transaction</span>
-                           <span className="text-base font-black text-primary-600">₹{((selectedBooking.totalAmount || 0) + (selectedBooking.depositAmount || 0)).toLocaleString()}</span>
-                         </div>
-                       </div>
-                    </div>
-                  )}
                 </div>
               ) : (
                 <div className="text-center py-10">

@@ -31,23 +31,12 @@ const PaymentVerify = () => {
           
           // Small delay to show success state
           setTimeout(() => {
-            const confirmedBooking = response.data.result.booking;
-            const confirmedEvent = response.data.result.event || confirmedBooking.eventId;
-            
-            // Check if it's a farmhouse booking
-            const isFarmhouse = confirmedBooking.farmhouseId || response.data.result.payment?.bookingModel === 'FarmhouseBooking';
-            
-            if (isFarmhouse) {
-              navigate(`/farmhouses/bookings/${confirmedBooking._id || confirmedBooking.bookingId}/confirmation`, {
-                state: { booking: confirmedBooking },
-                replace: true
-              });
-            } else {
-              navigate(`/bookings/${confirmedBooking._id || confirmedBooking.bookingId}/confirmation`, {
-                state: { booking: confirmedBooking, event: confirmedEvent },
-                replace: true
-              });
-            }
+            const confirmedBooking = response.data.result.booking
+            const confirmedEvent = response.data.result.event || confirmedBooking.eventId
+            navigate(`/bookings/${confirmedBooking._id || confirmedBooking.bookingId}/confirmation`, {
+              state: { booking: confirmedBooking, event: confirmedEvent },
+              replace: true
+            })
           }, 2000)
         } else {
           setStatus('error')

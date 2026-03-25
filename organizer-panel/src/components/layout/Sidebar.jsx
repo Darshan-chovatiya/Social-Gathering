@@ -12,12 +12,7 @@ import {
   Users,
   Link2,
   ScanLine,
-  Bell,
-  Home,
-  History,
-  Award,
-  MessageSquare,
-  Building2
+  Bell
 } from 'lucide-react'
 import logoIcon from '../../assets/Logo Icon.png'
 
@@ -38,10 +33,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   const navItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { path: '/events', icon: Calendar, label: 'My Events' },
-    { path: '/farmhouses', icon: Home, label: 'My Farmhouses' },
-    { path: '/banquets', icon: Building2, label: 'My Banquets' },
     { path: '/bookings', icon: Users, label: 'Event Bookings' },
-    { path: '/farmhouse-bookings', icon: History, label: 'Farmhouse Bookings' },
     { path: '/scan-tickets', icon: ScanLine, label: 'Scan Tickets' },
     { path: '/notifications', icon: Bell, label: 'Notifications' },
     { path: '/affiliate-links', icon: Link2, label: 'Affiliate Links' },

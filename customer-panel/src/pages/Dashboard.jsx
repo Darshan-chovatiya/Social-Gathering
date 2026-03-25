@@ -1,27 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { 
-  Calendar, 
-  Home as HomeIcon, 
-  Building2, 
-  Search, 
-  TrendingUp, 
-  ChevronRight, 
-  MapPin, 
-  Ticket,
-  ChevronLeft
-} from 'lucide-react'
+import { Search, ChevronRight, Ticket, History } from 'lucide-react'
 import api from '../utils/api'
 import Loading from '../components/common/Loading'
 import EventCard from '../components/common/EventCard'
-import FarmhouseCard from '../components/common/FarmhouseCard'
-import BanquetCard from '../components/common/BanquetCard'
 import InfiniteCarousel from '../components/common/InfiniteCarousel'
 import eventSectionBg from '../assets/h1-bg.webp'
 import heroBgSvg from '../assets/bg1.svg'
 import mainBg from '../assets/main-bg.jpg'
 import logoIcon from '../assets/Logo Icon.png'
-import farmhouseSectionBg from '../assets/f-bg.png'
 
 const OrganizerCard = ({ organizer }) => {
   const [imgError, setImgError] = useState(false)
@@ -73,8 +60,6 @@ const Dashboard = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const [loading, setLoading] = useState(true)
   const [recentEvents, setRecentEvents] = useState([])
-  const [recentFarmhouses, setRecentFarmhouses] = useState([])
-  const [recentBanquets, setRecentBanquets] = useState([])
   const [recentOrganizers, setRecentOrganizers] = useState([])
   const [carouselItems, setCarouselItems] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -89,23 +74,12 @@ const Dashboard = () => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true)
-        const [eventRes, farmhouseRes, banquetRes] = await Promise.all([
-          api.get('/users/events?limit=10&status=approved&populate=organizer'),
-          api.get('/farmhouses/public?limit=10&populate=organizer'),
-          api.get('/banquets/public?limit=10&populate=organizer')
-        ])
-
+        const eventRes = await api.get('/users/events?limit=10&status=approved&populate=organizer')
         const events = eventRes.data.result.events || []
-        const farmhouses = farmhouseRes.data.result.farmhouses || []
-        const banquets = banquetRes.data.result.banquets || []
 
-        setRecentEvents(events) // Use all events for the carousel
-        setRecentFarmhouses(farmhouses.slice(0, 4))
-        setRecentBanquets(banquets.slice(0, 4))
+        setRecentEvents(events)
 
-        // Extract unique organizers
         const orgMap = new Map()
-        
         events.forEach(e => {
           const org = e.organizer?.organizerId || e.organizer
           if (org && (org._id || org.name)) {
@@ -113,30 +87,10 @@ const Dashboard = () => {
             orgMap.set(id, org)
           }
         })
-        
-        farmhouses.forEach(f => {
-          const org = f.organizer?.organizerId || f.organizer
-          if (org && (org._id || org.name)) {
-            const id = org._id || org.name
-            orgMap.set(id, org)
-          }
-        })
-        
-        banquets.forEach(b => {
-          const org = b.organizer?.organizerId || b.organizer
-          if (org && (org._id || org.name)) {
-            const id = org._id || org.name
-            orgMap.set(id, org)
-          }
-        })
-        
         setRecentOrganizers(Array.from(orgMap.values()))
 
-        // Prepare mixed carousel items
         const mixed = []
-        
-        // Take first 3 events with banners
-        events.filter(e => e.banners?.length > 0).slice(0, 3).forEach(e => {
+        events.filter(e => e.banners?.length > 0).forEach(e => {
           mixed.push({
             id: e._id,
             title: e.title,
@@ -146,32 +100,6 @@ const Dashboard = () => {
             link: `/events/${e._id}`
           })
         })
-
-        // Take first 3 farmhouses
-        farmhouses.filter(f => f.banners?.length > 0).slice(0, 3).forEach(f => {
-          mixed.push({
-            id: f._id,
-            title: f.title,
-            banner: f.banners[0],
-            location: f.address?.city || 'Elite Stay',
-            type: 'Farmhouse',
-            link: `/farmhouses/${f._id}`
-          })
-        })
-
-        // Take first 3 banquets
-        banquets.filter(b => b.banners?.length > 0).slice(0, 3).forEach(b => {
-          mixed.push({
-            id: b._id,
-            title: b.title,
-            banner: b.banners[0],
-            location: b.address?.city || 'Premium Venue',
-            type: 'Banquet',
-            link: `/banquets/${b._id}`
-          })
-        })
-
-        // Shuffle slightly or keep alternating
         setCarouselItems(mixed.sort(() => Math.random() - 0.5))
       } catch (error) {
         console.error('Error fetching dashboard data:', error)
@@ -312,8 +240,7 @@ const Dashboard = () => {
           </h1>
           
           <p className="reveal reveal-delay-200 text-base md:text-lg text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto font-medium leading-relaxed">
-            Leading platform to search and book trending events, weekend farmhouses, 
-            and premium banquet halls. All in one place.
+            Leading platform to search and book trending live events. All in one place.
           </p>
 
           <div className="reveal reveal-delay-300 max-w-2xl mx-auto mb-16">
@@ -325,7 +252,7 @@ const Dashboard = () => {
                 <Search className="w-5 h-5 text-primary-600" />
                 <input 
                   type="text" 
-                  placeholder="Search for events, farmhouses..." 
+                  placeholder="Search for events..." 
                   className="w-full bg-transparent border-none outline-none py-3.5 px-3 text-gray-900 dark:text-gray-100 text-base font-bold placeholder:text-gray-300 dark:placeholder:text-gray-600"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -342,8 +269,7 @@ const Dashboard = () => {
             <div className="mt-6 flex flex-wrap justify-center gap-8">
               {[
                 { label: 'Upcoming Events', icon: Ticket, path: '/explore' },
-                { label: 'Featured Stays', icon: HomeIcon, path: '/farmhouses' },
-                { label: 'Luxury Venues', icon: Building2, path: '/banquets' },
+                { label: 'My Bookings', icon: History, path: '/bookings' },
               ].map((item) => (
                 <button
                   key={item.label}
@@ -361,7 +287,7 @@ const Dashboard = () => {
 
       <div className="max-w-7xl mx-auto px-4 -mt-10 relative z-30">
         {/* Categories Grid (FastTicket style cards) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
           {[
             { 
               title: 'Explore Events', 
@@ -372,21 +298,13 @@ const Dashboard = () => {
               color: 'from-emerald-500/90 to-emerald-900/95'
             },
             { 
-              title: 'Luxury Stays', 
-              desc: 'Weekend Escape & Parties',
-              icon: HomeIcon,
-              path: '/farmhouses',
-              img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1932&auto=format&fit=crop',
-              color: 'from-amber-500/90 to-amber-900/95'
-            },
-            { 
-              title: 'Elite Venues', 
-              desc: 'For Grand Celebrations',
-              icon: Building2,
-              path: '/banquets',
-              img: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2048&auto=format&fit=crop',
+              title: 'My Bookings', 
+              desc: 'Tickets & History',
+              icon: History,
+              path: '/bookings',
+              img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop',
               color: 'from-blue-500/90 to-blue-900/95'
-            }
+            },
           ].map((item) => (
             <div 
               key={item.title}
@@ -531,58 +449,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
- 
-      
-
-      {/* Recent Farmhouses Section - Full Width Background */}
-      <section className="relative py-12 md:py-20 mb-16 overflow-hidden bg-primary-50/40 dark:bg-primary-900/10">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 z-0 opacity-100 dark:opacity-20 pointer-events-none">
-          <img 
-            src={farmhouseSectionBg} 
-            alt="" 
-            className="w-full h-full object-contain scale-125 md:scale-100 opacity-60" 
-          />
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center mb-16 reveal">
-            <p className="text-primary-600 dark:text-primary-400 font-bold text-sm uppercase tracking-[0.4em] mb-4 flex items-center justify-center gap-3">
-               <span className="w-8 h-[1px] bg-primary-600/30" />
-               Escape to Nature
-               <span className="w-8 h-[1px] bg-primary-600/30" />
-            </p>
-            
-            <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white uppercase tracking-tighter leading-[1.1] relative inline-block">
-               Explore Amazing
-               <span className="relative inline-block mx-4">
-                 <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-purple-600">Featured</span>
-                 <span className="absolute -top-10 md:-top-14 left-1/2 -translate-x-1/2 text-6xl md:text-9xl font-script text-gray-200/60 dark:text-gray-700/30 -rotate-6 pointer-events-none select-none lowercase tracking-normal">
-                   Stay
-                 </span>
-               </span>
-               <br className="md:hidden" />
-               Farmhouses
-            </h2>
-
-            <div className="mt-8 flex justify-center">
-              <button 
-                onClick={() => navigate('/farmhouses')}
-                className="group flex items-center gap-2 bg-white dark:bg-gray-800 px-6 py-2.5 rounded-full border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all text-primary-600 dark:text-primary-400 font-black uppercase text-[10px] tracking-widest"
-              >
-                Explore Stays <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {recentFarmhouses.map(fh => (
-              <div key={fh._id} className="flex flex-col">
-                <FarmhouseCard farmhouse={fh} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Organizer Listing Carousel Section (Full Width Background) */}
       {recentOrganizers.length > 0 && (
@@ -651,52 +517,6 @@ const Dashboard = () => {
         </section>
       )}
 
-      {/* Recent Banquets Section - Full Width Background */}
-      <section className="relative py-12 md:py-20 mb-16 overflow-hidden  dark:bg-primary-900/10">
-        {/* Background Pattern */}
-        {/* <div className="absolute inset-0 z-0 opacity-20 dark:opacity-10">
-          <img src={heroBgSvg} alt="" className="w-full h-full object-cover scale-150 -rotate-12" />
-        </div> */}
-        
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center mb-16 reveal">
-            <p className="text-primary-600 dark:text-primary-400 font-bold text-sm uppercase tracking-[0.4em] mb-4 flex items-center justify-center gap-3">
-               <span className="w-8 h-[1px] bg-primary-600/30" />
-               Celebrate in Style
-               <span className="w-8 h-[1px] bg-primary-600/30" />
-            </p>
-            
-            <h2 className="text-4xl md:text-6xl font-black text-gray-900 dark:text-white uppercase tracking-tighter leading-[1.1] relative inline-block">
-               Find Your
-               <span className="relative inline-block mx-4">
-                 <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-purple-600">Grand</span>
-                 <span className="absolute -top-10 md:-top-14 left-1/2 -translate-x-1/2 text-6xl md:text-9xl font-script text-gray-200/60 dark:text-gray-700/30 -rotate-6 pointer-events-none select-none lowercase tracking-normal">
-                   Royal
-                 </span>
-               </span>
-               <br className="md:hidden" />
-               Venues
-            </h2>
-
-            <div className="mt-8 flex justify-center">
-              <button 
-                onClick={() => navigate('/banquets')}
-                className="group flex items-center gap-2 bg-white dark:bg-gray-800 px-6 py-2.5 rounded-full border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md transition-all text-primary-600 dark:text-primary-400 font-black uppercase text-[10px] tracking-widest"
-              >
-                Browse Halls <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {recentBanquets.map(bq => (
-              <div key={bq._id} className="flex flex-col">
-                <BanquetCard banquet={bq} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <div className="max-w-7xl mx-auto px-4 relative z-30">
 
         {/* Call to Action Section (Professional touch) */}
@@ -710,7 +530,7 @@ const Dashboard = () => {
           <div className="relative z-10 reveal">
             <h2 className="text-3xl md:text-5xl font-black text-white mb-6">Experience the Best Easy Tickets Booking System</h2>
             <p className="reveal reveal-delay-200 text-lg text-primary-100 mb-10 max-w-2xl mx-auto font-medium">
-              Join thousands of users who trust us for their entertainment and venue booking needs. Fast, secure, and hassle-free.
+              Join thousands of users who trust us for their entertainment booking needs. Fast, secure, and hassle-free.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <button 
