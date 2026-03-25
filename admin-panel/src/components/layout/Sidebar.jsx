@@ -14,12 +14,15 @@ import {
   BarChart3,
   Settings,
   UserCheck,
+  Mic2,
 } from 'lucide-react'
+import logoIcon from '../../assets/Logo Icon.png'
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate()
   const { logout } = useAuthStore()
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
+  const [logoError, setLogoError] = useState(false)
 
   const handleLogout = () => {
     logout()
@@ -37,6 +40,7 @@ const Sidebar = ({ isOpen, onClose }) => {
     { path: '/events/pending', icon: Clock, label: 'Pending Events' },
     { path: '/categories', icon: Tag, label: 'Categories' },
     { path: '/offers', icon: Ticket, label: 'Offers' },
+    { path: '/artist-inquiries', icon: Mic2, label: 'Artist Inquiries' },
     { path: '/sponsors', icon: Award, label: 'Sponsors' },
     { path: '/reports', icon: BarChart3, label: 'Reports' },
   ]
@@ -44,13 +48,28 @@ const Sidebar = ({ isOpen, onClose }) => {
   return (
     <>
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-gray-900 to-gray-900 border-r border-gray-800/50 flex flex-col transform transition-transform duration-300 ease-in-out shadow-xl lg:shadow-none ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        className={`fixed lg:static inset-y-0 left-0 z-50 bg-gradient-to-b from-gray-900 to-gray-900 border-r border-gray-800/50 flex flex-col transform transition-transform duration-300 ease-in-out shadow-xl lg:shadow-none ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
           }`}
       >
         <div className="h-16 px-4 sm:px-6 border-b border-gray-800/50 flex items-center justify-between bg-gray-900/50 backdrop-blur-sm">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-primary-500/30">
-              <Ticket className="w-5 h-5 text-gray-900" />
+            <div
+              className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg ${
+                logoError
+                  ? 'bg-gradient-to-br from-primary-500 to-primary-600 shadow-primary-500/30'
+                  : 'overflow-hidden'
+              }`}
+            >
+              {logoError ? (
+                <Ticket className="w-5 h-5 text-gray-900" />
+              ) : (
+                <img
+                  src={logoIcon}
+                  alt="Social Gathering Logo"
+                  className="w-full h-full object-contain"
+                  onError={() => setLogoError(true)}
+                />
+              )}
             </div>
             <div className='align-middle'>
               <div className="text-lg sm:text-xl font-bold text-white font-sans" style={{ lineHeight: '20px' }}>

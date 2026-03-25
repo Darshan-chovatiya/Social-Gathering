@@ -44,7 +44,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   return (
     <>
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-gray-900 to-gray-900 border-r border-gray-800/50 flex flex-col transform transition-transform duration-300 ease-in-out shadow-xl lg:shadow-none ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+        className={`fixed lg:static inset-y-0 left-0 z-50 bg-gradient-to-b from-gray-900 to-gray-900 border-r border-gray-800/50 flex flex-col transform transition-transform duration-300 ease-in-out shadow-xl lg:shadow-none ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
           }`}
       >
         <div className="h-16 px-4 sm:px-6 border-b border-gray-800/50 flex items-center justify-between bg-gray-900/50 backdrop-blur-sm">

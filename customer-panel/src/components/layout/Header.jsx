@@ -150,36 +150,35 @@ const Header = () => {
                 </div>
               </NavLink>
 
-              {/* Center Navigation - Integrated into Top Row */}
-              <nav className="hidden md:flex items-center justify-center flex-1 gap-2">
-                <NavLink
-                  to="/dashboard"
-                  className={({ isActive }) =>
-                    `px-4 py-2 rounded-md text-sm font-semibold transition-all ${isActive
-                      ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800'
-                    }`
-                  }
-                >
-                  Home
-                </NavLink>
-
-                <NavLink
-                  to="/events"
-                  className={({ isActive }) =>
-                    `px-4 py-2 rounded-md text-sm font-semibold transition-all ${isActive
-                      ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800'
-                    }`
-                  }
-                >
-                  Events
-                </NavLink>
-
-              </nav>
-
               {/* Right Side Actions */}
               <div className="flex items-center gap-2 flex-shrink-0">
+                {/* Desktop/Tablet Navigation - Right aligned with actions */}
+                <nav className="hidden md:flex items-center gap-2 mr-1">
+                  <NavLink
+                    to="/dashboard"
+                    className={({ isActive }) =>
+                      `px-4 py-2 rounded-md text-sm font-semibold transition-all ${isActive
+                        ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                      }`
+                    }
+                  >
+                    Home
+                  </NavLink>
+
+                  <NavLink
+                    to="/events"
+                    className={({ isActive }) =>
+                      `px-4 py-2 rounded-md text-sm font-semibold transition-all ${isActive
+                        ? 'text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/20'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-50 dark:hover:bg-gray-800'
+                      }`
+                    }
+                  >
+                    Events
+                  </NavLink>
+                </nav>
+
                 {/* Location Selector - Desktop - BookMyShow Style */}
                 {SHOW_SEARCH_AND_LOCATION && (
                   <div className="hidden md:block relative" ref={locationRef}>
@@ -214,14 +213,14 @@ const Header = () => {
                   </div>
                 )}
 
-                {/* Theme Toggle Button - Hidden on mobile when logged in, visible on desktop */}
-                <button
+                {/* Theme Toggle Button - Keep in header only for mobile */}
+                {/* <button
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
                     toggleTheme()
                   }}
-                  className={`p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:scale-105 active:scale-95 ${isAuthenticated ? 'hidden md:block' : ''}`}
+                  className="p-2 rounded-lg md:hidden bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 transition-all duration-200 hover:scale-105 active:scale-95"
                   aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
                   type="button"
                   title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
@@ -231,7 +230,7 @@ const Header = () => {
                   ) : (
                     <Sun className="w-5 h-5" />
                   )}
-                </button>
+                </button> */}
 
                 {/* Notifications */}
                 {isAuthenticated && <NotificationTray />}
@@ -607,6 +606,25 @@ const Header = () => {
           </div>
         )}
       </header>
+
+      {/* Fixed Theme Toggle - Desktop/Tablet only */}
+      <button
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          toggleTheme()
+        }}
+        className="hidden md:flex fixed bottom-6 right-6 z-[70] p-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 hover:scale-105 active:scale-95"
+        aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+        type="button"
+        title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+      >
+        {theme === 'light' ? (
+          <Moon className="w-5 h-5" />
+        ) : (
+          <Sun className="w-5 h-5" />
+        )}
+      </button>
 
       {/* Logout Confirmation Dialog */}
       <ConfirmDialog

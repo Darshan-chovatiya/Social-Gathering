@@ -5,6 +5,9 @@
 const express = require('express');
 const router = express.Router();
 const asyncHandler = require('../../utils/asyncHandler');
+const validate = require('../../middleware/validate');
+const { createArtistInquiryValidation } = require('../../validators/artistInquiry.validator');
+const { createArtistInquiry } = require('../../controllers/artistInquiry.controller');
 const {
   getAllEvents,
   getFeaturedEvents,
@@ -29,5 +32,8 @@ router.get('/offers/event/:eventId', asyncHandler(getEventOffers));
 
 // ---- Affiliate (validate code) ----
 router.get('/affiliate/:code', asyncHandler(getAffiliateLinkByCode));
+
+// ---- Artist inquiry (public form submit) ----
+router.post('/artist-inquiries', createArtistInquiryValidation, validate, asyncHandler(createArtistInquiry));
 
 module.exports = router;

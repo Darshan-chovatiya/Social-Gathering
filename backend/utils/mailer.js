@@ -224,8 +224,8 @@ class Mailer {
       html: htmlContent,
       attachments: [
         {
-          filename: 'easy-ticket-logo.png',
-          path: path.join(__dirname, '../assets/images/easy-ticket-logo.png'),
+          filename: 'social-gathering-logo.png',
+          path: path.join(__dirname, '../assets/images/social-gathering-logo.png'),
           cid: 'logo' // same cid value as in the html img src
         }
       ]

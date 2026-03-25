@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { Search, ChevronRight, Ticket, History } from 'lucide-react'
 import api from '../utils/api'
 import Loading from '../components/common/Loading'
+import DownloadAppSection from '../components/common/DownloadAppSection'
+import ArtistInquirySection from '../components/common/ArtistInquirySection'
 import EventCard from '../components/common/EventCard'
 import InfiniteCarousel from '../components/common/InfiniteCarousel'
 import eventSectionBg from '../assets/h1-bg.webp'
@@ -517,6 +519,8 @@ const Dashboard = () => {
         </section>
       )}
 
+      <ArtistInquirySection />
+
       <div className="max-w-7xl mx-auto px-4 relative z-30">
 
         {/* Call to Action Section (Professional touch) */}
@@ -549,6 +553,8 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      <DownloadAppSection />
     </div>
   )
 }

@@ -15,6 +15,7 @@ import Offers from './pages/offers/Offers'
 import Sponsors from './pages/sponsors/Sponsors'
 import Reports from './pages/reports/Reports'
 import Settings from './pages/settings/Settings'
+import ArtistInquiries from './pages/artist-inquiries/ArtistInquiries'
 
 function App() {
   const { isAuthenticated, checkAuth, isCheckingAuth } = useAuthStore()
@@ -54,6 +55,7 @@ function App() {
         <Route path="events/pending" element={<PendingEvents />} />
         <Route path="categories" element={<Categories />} />
         <Route path="offers" element={<Offers />} />
+        <Route path="artist-inquiries" element={<ArtistInquiries />} />
         <Route path="sponsors" element={<Sponsors />} />
         <Route path="reports" element={<Reports />} />
         <Route path="settings" element={<Settings />} />

@@ -47,6 +47,17 @@ const {
 } = require('../../controllers/offer.controller');
 const { createOfferValidation } = require('../../validators/offer.validator');
 const {
+  createArtistInquiryValidation,
+  updateArtistInquiryValidation,
+} = require('../../validators/artistInquiry.validator');
+const {
+  getAllArtistInquiriesAdmin,
+  getArtistInquiryByIdAdmin,
+  createArtistInquiryAdmin,
+  updateArtistInquiryAdmin,
+  deleteArtistInquiryAdmin,
+} = require('../../controllers/artistInquiry.admin.controller');
+const {
   getAllSponsors,
   getSponsorById,
   createSponsor,
@@ -254,6 +265,13 @@ router.get('/offers', asyncHandler(getAllOffers));
 router.post('/offers', createOfferValidation, validate, asyncHandler(createOffer));
 router.put('/offers/:id', asyncHandler(updateOffer));
 router.delete('/offers/:id', asyncHandler(deleteOffer));
+
+// Artist Inquiry Management Routes
+router.get('/artist-inquiries', asyncHandler(getAllArtistInquiriesAdmin));
+router.get('/artist-inquiries/:id', asyncHandler(getArtistInquiryByIdAdmin));
+router.post('/artist-inquiries', createArtistInquiryValidation, validate, asyncHandler(createArtistInquiryAdmin));
+router.put('/artist-inquiries/:id', updateArtistInquiryValidation, validate, asyncHandler(updateArtistInquiryAdmin));
+router.delete('/artist-inquiries/:id', asyncHandler(deleteArtistInquiryAdmin));
 
 // Sponsor Management Routes
 // Ensure uploads directory exists for sponsors

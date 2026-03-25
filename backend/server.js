@@ -17,6 +17,7 @@ const publicEventRoutes = require('./routes/public/events');
 const publicCategoryRoutes = require('./routes/public/categories');
 const publicOfferRoutes = require('./routes/public/offers');
 const publicBookingRoutes = require('./routes/public/booking');
+const publicArtistInquiryRoutes = require('./routes/public/artist-inquiry');
 
 // User routes
 const userRoutes = require('./routes/users/index');
@@ -69,6 +70,7 @@ app.use('/api/events', publicEventRoutes);
 app.use('/api/categories', publicCategoryRoutes);
 app.use('/api/offers', publicOfferRoutes);
 app.use('/api/bookings', publicBookingRoutes);
+app.use('/api/artist-inquiries', publicArtistInquiryRoutes);
 app.use('/api/affiliate', affiliateRoutes);
 
 // User Routes (Authentication required)
