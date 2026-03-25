@@ -129,7 +129,7 @@ const Header = () => {
             <div className="flex items-center justify-between h-16 gap-4">
               {/* Logo */}
               <NavLink to="/" className="flex items-center gap-3 flex-shrink-0 group">
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 ${logoError ? 'bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700' : 'overflow-hidden'}`}>
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 ${logoError ? 'bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700' : 'overflow-hidden'}`}>
                   {logoError ? (
                     <Ticket className="w-6 h-6 text-white" />
                   ) : (
