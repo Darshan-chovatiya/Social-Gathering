@@ -56,7 +56,7 @@ const createAffiliateLink = async (req, res) => {
       const existingEventId = existingLink.eventId._id || existingLink.eventId;
       return sendSuccess(res, 'Affiliate link already exists for this customer and event', {
         affiliateLink: existingLink,
-        affiliateUrl: `${process.env.FRONTEND_URL || 'https://socialgathering.in'}/#/events/${existingEventId}?ref=${existingLink.affiliateCode}`,
+        affiliateUrl: `${process.env.FRONTEND_URL || 'https://socialgathering.itfuturz.in'}/#/events/${existingEventId}?ref=${existingLink.affiliateCode}`,
       });
     }
 
@@ -88,7 +88,7 @@ const createAffiliateLink = async (req, res) => {
       });
       await affiliateLink.save();
 
-      const affiliateUrl = `${process.env.FRONTEND_URL || 'https://socialgathering.in'}/#/events/${eventId}?ref=${affiliateLink.affiliateCode}`;
+      const affiliateUrl = `${process.env.FRONTEND_URL || 'https://socialgathering.itfuturz.in'}/#/events/${eventId}?ref=${affiliateLink.affiliateCode}`;
 
       return sendSuccess(res, 'Affiliate link created successfully', {
         affiliateLink,
@@ -109,7 +109,7 @@ const createAffiliateLink = async (req, res) => {
           const existingEventId = existingLink.eventId._id || existingLink.eventId;
           return sendSuccess(res, 'Affiliate link already exists for this customer and event', {
             affiliateLink: existingLink,
-            affiliateUrl: `${process.env.FRONTEND_URL || 'https://socialgathering.in'}/#/events/${existingEventId}?ref=${existingLink.affiliateCode}`,
+            affiliateUrl: `${process.env.FRONTEND_URL || 'https://socialgathering.itfuturz.in'}/#/events/${existingEventId}?ref=${existingLink.affiliateCode}`,
           });
         }
       }
@@ -194,7 +194,7 @@ const getAffiliateLinkDetails = async (req, res) => {
     const totalRevenue = referrals.reduce((sum, booking) => sum + (booking.totalAmount || 0), 0);
 
     const eventIdForUrl = affiliateLink.eventId._id || affiliateLink.eventId;
-    const affiliateUrl = `${process.env.FRONTEND_URL || 'https://socialgathering.in'}/#/events/${eventIdForUrl}?ref=${affiliateLink.affiliateCode}`;
+    const affiliateUrl = `${process.env.FRONTEND_URL || 'https://socialgathering.itfuturz.in'}/#/events/${eventIdForUrl}?ref=${affiliateLink.affiliateCode}`;
 
     return sendSuccess(res, 'Affiliate link details fetched successfully', {
       affiliateLink: {
@@ -342,7 +342,7 @@ const checkAffiliateLinkExists = async (req, res) => {
     const totalRevenue = referrals.reduce((sum, booking) => sum + (booking.totalAmount || 0), 0);
 
     const eventIdForUrl = affiliateLink.eventId._id || affiliateLink.eventId;
-    const affiliateUrl = `${process.env.FRONTEND_URL || 'https://socialgathering.in'}/#/events/${eventIdForUrl}?ref=${affiliateLink.affiliateCode}`;
+    const affiliateUrl = `${process.env.FRONTEND_URL || 'https://socialgathering.itfuturz.in'}/#/events/${eventIdForUrl}?ref=${affiliateLink.affiliateCode}`;
 
     return sendSuccess(res, 'Affiliate link exists', {
       exists: true,
@@ -384,7 +384,7 @@ const getMyAffiliateLinks = async (req, res) => {
         const totalRevenue = referrals.reduce((sum, booking) => sum + (booking.totalAmount || 0), 0);
 
         const eventIdForUrl = link.eventId._id || link.eventId;
-        const affiliateUrl = `${process.env.FRONTEND_URL || 'https://socialgathering.in'}/#/events/${eventIdForUrl}?ref=${link.affiliateCode}`;
+        const affiliateUrl = `${process.env.FRONTEND_URL || 'https://socialgathering.itfuturz.in'}/#/events/${eventIdForUrl}?ref=${link.affiliateCode}`;
 
         return {
           ...link.toObject(),

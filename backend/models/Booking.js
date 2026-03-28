@@ -139,7 +139,7 @@ bookingSchema.pre('save', async function() {
   // Generate QR code for new bookings with success payment status, or when payment status changes to success
   if ((this.isNew && this.paymentStatus === 'success') || (this.isModified('paymentStatus') && this.paymentStatus === 'success' && !this.qrCode)) {
     try {
-      const baseUrl = process.env.FRONTEND_URL || 'https://socialgathering.in';
+      const baseUrl = process.env.FRONTEND_URL || 'https://socialgathering.itfuturz.in';
       const qrDataUrl = `${baseUrl}/tickets/${this.bookingId}/download`;
       this.qrCode = await QRCode.toDataURL(qrDataUrl);
     } catch (error) {

@@ -25,7 +25,7 @@ const Footer = () => {
           {/* Policy Links */}
           <div className="flex flex-wrap justify-center gap-4 text-center">
             <a
-              href="https://socialgathering.in/privacy-policy.html"
+              href="https://socialgathering.itfuturz.in/privacy-policy.html"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
@@ -33,7 +33,7 @@ const Footer = () => {
               Privacy Policy
             </a>
             <a
-              href="https://socialgathering.in/terms-of-service.html"
+              href="https://socialgathering.itfuturz.in/terms-of-service.html"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
@@ -41,7 +41,7 @@ const Footer = () => {
               Terms of Service
             </a>
             <a
-              href="https://socialgathering.in/refund_policy.html"
+              href="https://socialgathering.itfuturz.in/refund_policy.html"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
@@ -70,7 +70,7 @@ const Footer = () => {
 
             <div className="flex items-center gap-6">
               <a
-                href="https://socialgathering.in/privacy-policy.html"
+                href="https://socialgathering.itfuturz.in/privacy-policy.html"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
@@ -78,7 +78,7 @@ const Footer = () => {
                 Privacy Policy
               </a>
               <a
-                href="https://socialgathering.in/terms-of-service.html"
+                href="https://socialgathering.itfuturz.in/terms-of-service.html"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
@@ -86,7 +86,7 @@ const Footer = () => {
                 Terms of Service
               </a>
               <a
-                href="https://socialgathering.in/refund_policy.html"
+                href="https://socialgathering.itfuturz.in/refund_policy.html"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-primary-600 dark:hover:text-primary-400 transition-colors"

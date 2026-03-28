@@ -97,24 +97,36 @@ const BannerSlider = () => {
   }
 
   return (
-    <div className="relative w-full h-64 md:h-80 lg:h-96 rounded-lg overflow-hidden shadow-lg mb-6 group">
+    <div className="relative w-full h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 dark:ring-white/10 mb-6 group bg-gray-900">
       {/* Banner Images */}
       <div className="relative w-full h-full">
         {banners.map((banner, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-500 ${
+            className={`absolute inset-0 transition-opacity duration-700 ${
               index === currentIndex ? 'opacity-100' : 'opacity-0'
             }`}
           >
             {!imageErrors[index] ? (
-              <img
-                src={getImageUrl(banner.url)}
-                alt={banner.eventTitle || `Banner ${index + 1}`}
-                className="w-full h-full object-cover cursor-pointer"
+              <button
+                type="button"
+                className="absolute inset-0 w-full h-full cursor-pointer bg-black"
                 onClick={() => handleBannerClick(banner.eventId)}
-                onError={() => setImageErrors(prev => ({ ...prev, [index]: true }))}
-              />
+                aria-label={banner.eventTitle ? `Open ${banner.eventTitle}` : `Open banner ${index + 1}`}
+              >
+                <img
+                  src={getImageUrl(banner.url)}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover object-center scale-105 blur-xl opacity-45"
+                />
+                <img
+                  src={getImageUrl(banner.url)}
+                  alt={banner.eventTitle || `Banner ${index + 1}`}
+                  className="relative z-10 w-full h-full object-contain object-center p-2 md:p-3 transition-transform duration-500 ease-out group-hover:scale-[1.01]"
+                  onError={() => setImageErrors(prev => ({ ...prev, [index]: true }))}
+                />
+              </button>
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-800/20 cursor-pointer" onClick={() => handleBannerClick(banner.eventId)}>
                 <div className="text-center">
@@ -123,14 +135,15 @@ const BannerSlider = () => {
                 </div>
               </div>
             )}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-black/35 via-transparent to-black/15" />
             {/* Overlay with event title */}
             {banner.eventTitle && (
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 md:p-6">
-                <h3 className="text-white text-lg md:text-2xl font-bold mb-1">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-4 md:p-6">
+                <h3 className="text-white text-lg md:text-2xl font-semibold tracking-tight mb-1">
                   {banner.eventTitle}
                 </h3>
                 {banner.address?.city && (
-                  <p className="text-white/90 text-sm md:text-base">
+                  <p className="text-white/90 text-sm md:text-base font-medium">
                     {banner.address.city}, {banner.address.state}
                   </p>
                 )}
@@ -145,14 +158,14 @@ const BannerSlider = () => {
         <>
           <button
             onClick={goToPrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
+            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-900/80 hover:bg-white dark:hover:bg-gray-900 text-gray-900 dark:text-gray-100 p-2.5 rounded-full shadow-lg ring-1 ring-black/5 dark:ring-white/10 transition-all opacity-0 group-hover:opacity-100"
             aria-label="Previous banner"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <button
             onClick={goToNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded-full shadow-lg transition-all opacity-0 group-hover:opacity-100"
+            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-gray-900/80 hover:bg-white dark:hover:bg-gray-900 text-gray-900 dark:text-gray-100 p-2.5 rounded-full shadow-lg ring-1 ring-black/5 dark:ring-white/10 transition-all opacity-0 group-hover:opacity-100"
             aria-label="Next banner"
           >
             <ChevronRight className="w-6 h-6" />
@@ -162,14 +175,14 @@ const BannerSlider = () => {
 
       {/* Dots Indicator */}
       {banners.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 bg-black/25 backdrop-blur-sm rounded-full px-3 py-1.5">
           {banners.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
               className={`h-2 rounded-full transition-all ${
                 index === currentIndex
-                  ? 'w-8 bg-white'
+                  ? 'w-7 bg-white'
                   : 'w-2 bg-white/50 hover:bg-white/75'
               }`}
               aria-label={`Go to slide ${index + 1}`}

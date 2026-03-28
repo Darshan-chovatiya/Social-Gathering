@@ -212,7 +212,7 @@ const getBookingById = async (req, res) => {
     }
 
     if (booking.paymentStatus === 'success' && booking.status === 'confirmed' && !booking.qrCode) {
-      const baseUrl = config.FRONTEND_URL || 'https://socialgathering.in';
+      const baseUrl = config.FRONTEND_URL || 'https://socialgathering.itfuturz.in';
       const qrDataUrl = `${baseUrl}/tickets/${booking.bookingId}/download`;
       booking.qrCode = await QRCode.toDataURL(qrDataUrl);
       await booking.save();
