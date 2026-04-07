@@ -4,6 +4,7 @@ const OtpService = require('../utils/sendOTP');
 const generateToken = require('../utils/generateToken');
 const { sendSuccess, sendError } = require('../utils/response');
 const { OAuth2Client } = require('google-auth-library');
+const { normalizeEmail } = require('../../utils/normalizeEmail');
 
 // Initialize OTP service
 const otpService = new OtpService();
@@ -50,21 +51,22 @@ const verifyOTP = async (req, res) => {
 
     // Find or create user
     let user = await User.findOne({ mobile });
+    const nextEmail = normalizeEmail(email);
 
     if (!user) {
-      // Create new user
-      user = await User.create({
+      const payload = {
         mobile,
         name: name || '',
-        email: email || '',
         isMobileVerified: true,
-      });
+      };
+      if (nextEmail) payload.email = nextEmail;
+      user = await User.create(payload);
     } else {
       // Update existing user
-    user.isMobileVerified = true;
-    if (name) user.name = name;
-    if (email) user.email = email;
-    await user.save();
+      user.isMobileVerified = true;
+      if (name) user.name = name;
+      if (nextEmail !== undefined) user.email = nextEmail;
+      await user.save();
     }
 
     // Generate token

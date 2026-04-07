@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     sparse: true,
     unique: true,
+    // Never persist "" — unique index would treat many "" as duplicates (E11000)
+    set(v) {
+      if (v == null) return undefined;
+      const t = String(v).trim();
+      return t === '' ? undefined : t;
+    },
   },
   password: {
     type: String,
