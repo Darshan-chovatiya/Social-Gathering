@@ -6,6 +6,7 @@ const { sendSuccess, sendError } = require('../utils/response');
 const { OAuth2Client } = require('google-auth-library');
 const config = require('../config/env');
 const { normalizeEmail } = require('../utils/normalizeEmail');
+const { decrypt } = require('../utils/encryption.util');
 
 // Initialize OTP service
 const otpService = new OtpService();
@@ -89,6 +90,22 @@ const verifyOTP = async (req, res) => {
         email: user.email,
         role: user.role,
         isMobileVerified: user.isMobileVerified,
+        paymentConfig: user.role === 'organizer' && user.paymentConfig ? {
+          gateway: user.paymentConfig.gateway,
+          razorpay: {
+            keyId: user.paymentConfig.razorpay?.keyId || '',
+            keySecret: user.paymentConfig.razorpay?.keySecret ? decrypt(user.paymentConfig.razorpay.keySecret) : '',
+          },
+          cashfree: {
+            appId: user.paymentConfig.cashfree?.appId || '',
+            secretKey: user.paymentConfig.cashfree?.secretKey ? decrypt(user.paymentConfig.cashfree.secretKey) : '',
+          },
+          ccavenue: {
+            merchantId: user.paymentConfig.ccavenue?.merchantId || '',
+            accessCode: user.paymentConfig.ccavenue?.accessCode || '',
+            workingKey: user.paymentConfig.ccavenue?.workingKey ? decrypt(user.paymentConfig.ccavenue.workingKey) : '',
+          }
+        } : undefined,
       },
     });
   } catch (error) {
@@ -197,6 +214,22 @@ const organizerLogin = async (req, res) => {
         role: user.role,
         isMobileVerified: user.isMobileVerified,
         profilePicture: user.profilePicture,
+        paymentConfig: user.role === 'organizer' && user.paymentConfig ? {
+          gateway: user.paymentConfig.gateway,
+          razorpay: {
+            keyId: user.paymentConfig.razorpay?.keyId || '',
+            keySecret: user.paymentConfig.razorpay?.keySecret ? decrypt(user.paymentConfig.razorpay.keySecret) : '',
+          },
+          cashfree: {
+            appId: user.paymentConfig.cashfree?.appId || '',
+            secretKey: user.paymentConfig.cashfree?.secretKey ? decrypt(user.paymentConfig.cashfree.secretKey) : '',
+          },
+          ccavenue: {
+            merchantId: user.paymentConfig.ccavenue?.merchantId || '',
+            accessCode: user.paymentConfig.ccavenue?.accessCode || '',
+            workingKey: user.paymentConfig.ccavenue?.workingKey ? decrypt(user.paymentConfig.ccavenue.workingKey) : '',
+          }
+        } : undefined,
       },
     });
   } catch (error) {
@@ -295,6 +328,22 @@ const getCurrentUser = async (req, res) => {
         role: req.user.role,
         isMobileVerified: req.user.isMobileVerified,
         profilePicture: req.user.profilePicture,
+        paymentConfig: req.user.role === 'organizer' && req.user.paymentConfig ? {
+          gateway: req.user.paymentConfig.gateway,
+          razorpay: {
+            keyId: req.user.paymentConfig.razorpay?.keyId || '',
+            keySecret: req.user.paymentConfig.razorpay?.keySecret ? decrypt(req.user.paymentConfig.razorpay.keySecret) : '',
+          },
+          cashfree: {
+            appId: req.user.paymentConfig.cashfree?.appId || '',
+            secretKey: req.user.paymentConfig.cashfree?.secretKey ? decrypt(req.user.paymentConfig.cashfree.secretKey) : '',
+          },
+          ccavenue: {
+            merchantId: req.user.paymentConfig.ccavenue?.merchantId || '',
+            accessCode: req.user.paymentConfig.ccavenue?.accessCode || '',
+            workingKey: req.user.paymentConfig.ccavenue?.workingKey ? decrypt(req.user.paymentConfig.ccavenue.workingKey) : '',
+          }
+        } : undefined,
       },
     });
   } catch (error) {

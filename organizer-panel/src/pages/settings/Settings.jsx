@@ -3,7 +3,7 @@ import api from '../../utils/api'
 import { useAuthStore } from '../../store/authStore'
 import { useToast } from '../../components/common/ToastContainer'
 import Loading from '../../components/common/Loading'
-import { Settings as SettingsIcon, User, Mail, Phone, Save, Lock, Eye, EyeOff, X, Image as ImageIcon, Pencil } from 'lucide-react'
+import { Settings as SettingsIcon, User, Mail, Phone, Save, Lock, Eye, EyeOff, X, Image as ImageIcon, Pencil, CreditCard } from 'lucide-react'
 
 const Settings = () => {
   const { user, setAuth } = useAuthStore()
@@ -29,6 +29,22 @@ const Settings = () => {
     new: false,
     confirm: false,
   })
+  const [paymentConfig, setPaymentConfig] = useState({
+    gateway: 'razorpay',
+    razorpay: {
+      keyId: '',
+      keySecret: '',
+    },
+    cashfree: {
+      appId: '',
+      secretKey: '',
+    },
+    ccavenue: {
+      merchantId: '',
+      accessCode: '',
+      workingKey: '',
+    }
+  })
   const [activeTab, setActiveTab] = useState('profile')
 
   useEffect(() => {
@@ -44,6 +60,26 @@ const Settings = () => {
         const apiBase = baseURL.replace('/api', '')
         setProfilePicturePreview(`${apiBase}${user.profilePicture}`)
         setProfilePictureError(false)
+      }
+      
+      // Set existing payment config
+      if (user.paymentConfig) {
+        setPaymentConfig({
+          gateway: user.paymentConfig.gateway || 'razorpay',
+          razorpay: {
+            keyId: user.paymentConfig.razorpay?.keyId || '',
+            keySecret: user.paymentConfig.razorpay?.keySecret || '',
+          },
+          cashfree: {
+            appId: user.paymentConfig.cashfree?.appId || '',
+            secretKey: user.paymentConfig.cashfree?.secretKey || '',
+          },
+          ccavenue: {
+            merchantId: user.paymentConfig.ccavenue?.merchantId || '',
+            accessCode: user.paymentConfig.ccavenue?.accessCode || '',
+            workingKey: user.paymentConfig.ccavenue?.workingKey || '',
+          }
+        })
       }
     }
   }, [user])
@@ -100,6 +136,9 @@ const Settings = () => {
       if (profilePicture) {
         formDataToSend.append('profilePicture', profilePicture)
       }
+
+      // Add payment config
+      formDataToSend.append('paymentConfig', JSON.stringify(paymentConfig))
 
       const response = await api.put('/users/profile', formDataToSend, {
         headers: {
@@ -185,10 +224,10 @@ const Settings = () => {
         <div className="flex border-b border-gray-200">
           <button
             onClick={() => setActiveTab('profile')}
-            className={`flex-1 px-6 py-4 text-sm font-semibold transition-colors border-b-2 ${
+            className={`px-8 py-4 text-sm font-bold transition-all border-b-2 ${
               activeTab === 'profile'
-                ? 'border-primary-600 text-primary-600 bg-primary-50/50'
-                : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                ? 'border-primary-600 text-primary-600 bg-primary-50'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >
             <div className="flex items-center justify-center gap-2">
@@ -198,15 +237,28 @@ const Settings = () => {
           </button>
           <button
             onClick={() => setActiveTab('password')}
-            className={`flex-1 px-6 py-4 text-sm font-semibold transition-colors border-b-2 ${
+            className={`px-8 py-4 text-sm font-bold transition-all border-b-2 ${
               activeTab === 'password'
-                ? 'border-primary-600 text-primary-600 bg-primary-50/50'
-                : 'border-transparent text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                ? 'border-primary-600 text-primary-600 bg-primary-50'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
             }`}
           >
             <div className="flex items-center justify-center gap-2">
               <Lock className="w-4 h-4" />
               Change Password
+            </div>
+          </button>
+          <button
+            onClick={() => setActiveTab('payment')}
+            className={`px-8 py-4 text-sm font-bold transition-all border-b-2 ${
+              activeTab === 'payment'
+                ? 'border-primary-600 text-primary-600 bg-primary-50'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            <div className="flex items-center justify-center gap-2">
+              <CreditCard className="w-4 h-4" />
+              Payment Settings
             </div>
           </button>
         </div>
@@ -419,6 +471,184 @@ const Settings = () => {
                   >
                     <Save className="w-4 h-4" />
                     {savingPassword ? 'Changing...' : 'Change Password'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* Payment Settings Tab */}
+          {activeTab === 'payment' && (
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="bg-primary-50 p-3 rounded-xl">
+                  <CreditCard className="w-6 h-6 text-primary-600" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-gray-900">Default Payment Configuration</h2>
+                  <p className="text-xs text-gray-500">Set your default payment credentials for all events</p>
+                </div>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                  <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Gateway Selection</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {['razorpay', 'cashfree', 'ccavenue'].map((gw) => (
+                      <label 
+                        key={gw}
+                        className={`flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                          paymentConfig.gateway === gw 
+                            ? 'border-primary-600 bg-white ring-4 ring-primary-50' 
+                            : 'border-gray-200 bg-white hover:border-gray-300'
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <input
+                            type="radio"
+                            name="gateway"
+                            value={gw}
+                            checked={paymentConfig.gateway === gw}
+                            onChange={(e) => setPaymentConfig({ ...paymentConfig, gateway: e.target.value })}
+                            className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-gray-300"
+                          />
+                          <span className="text-sm font-bold text-gray-900 capitalize">{gw}</span>
+                        </div>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {paymentConfig.gateway === 'razorpay' && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                      <img src="https://razorpay.com/favicon.png" alt="" className="w-4 h-4" />
+                      Razorpay Credentials
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 mb-1">Key ID</label>
+                        <input
+                          type="text"
+                          value={paymentConfig.razorpay.keyId}
+                          onChange={(e) => setPaymentConfig({
+                            ...paymentConfig,
+                            razorpay: { ...paymentConfig.razorpay, keyId: e.target.value }
+                          })}
+                          placeholder="rzp_test_..."
+                          className="input-field"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 mb-1">Key Secret</label>
+                        <input
+                          type="password"
+                          value={paymentConfig.razorpay.keySecret}
+                          onChange={(e) => setPaymentConfig({
+                            ...paymentConfig,
+                            razorpay: { ...paymentConfig.razorpay, keySecret: e.target.value }
+                          })}
+                          placeholder="••••••••••••"
+                          className="input-field"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {paymentConfig.gateway === 'cashfree' && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                      Cashfree Credentials
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 mb-1">App ID</label>
+                        <input
+                          type="text"
+                          value={paymentConfig.cashfree.appId}
+                          onChange={(e) => setPaymentConfig({
+                            ...paymentConfig,
+                            cashfree: { ...paymentConfig.cashfree, appId: e.target.value }
+                          })}
+                          placeholder="App ID"
+                          className="input-field"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 mb-1">Secret Key</label>
+                        <input
+                          type="password"
+                          value={paymentConfig.cashfree.secretKey}
+                          onChange={(e) => setPaymentConfig({
+                            ...paymentConfig,
+                            cashfree: { ...paymentConfig.cashfree, secretKey: e.target.value }
+                          })}
+                          placeholder="••••••••••••"
+                          className="input-field"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {paymentConfig.gateway === 'ccavenue' && (
+                  <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                    <h3 className="text-sm font-bold text-gray-900 flex items-center gap-2">
+                      CCAvenue Credentials
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 mb-1">Merchant ID</label>
+                        <input
+                          type="text"
+                          value={paymentConfig.ccavenue.merchantId}
+                          onChange={(e) => setPaymentConfig({
+                            ...paymentConfig,
+                            ccavenue: { ...paymentConfig.ccavenue, merchantId: e.target.value }
+                          })}
+                          placeholder="Merchant ID"
+                          className="input-field"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 mb-1">Access Code</label>
+                        <input
+                          type="text"
+                          value={paymentConfig.ccavenue.accessCode}
+                          onChange={(e) => setPaymentConfig({
+                            ...paymentConfig,
+                            ccavenue: { ...paymentConfig.ccavenue, accessCode: e.target.value }
+                          })}
+                          placeholder="Access Code"
+                          className="input-field"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-gray-700 mb-1">Working Key</label>
+                        <input
+                          type="password"
+                          value={paymentConfig.ccavenue.workingKey}
+                          onChange={(e) => setPaymentConfig({
+                            ...paymentConfig,
+                            ccavenue: { ...paymentConfig.ccavenue, workingKey: e.target.value }
+                          })}
+                          placeholder="••••••••••••"
+                          className="input-field"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex justify-end pt-4 border-t border-gray-100">
+                  <button
+                    type="submit"
+                    disabled={saving}
+                    className="btn-primary inline-flex items-center gap-2"
+                  >
+                    <Save className="w-4 h-4" />
+                    {saving ? 'Saving...' : 'Save Default Payment Config'}
                   </button>
                 </div>
               </form>

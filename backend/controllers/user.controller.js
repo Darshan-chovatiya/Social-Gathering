@@ -6,20 +6,50 @@ const Offer = require('../models/Offer');
 const UsedCoupon = require('../models/UsedCoupon');
 const bcrypt = require('bcryptjs');
 const { sendSuccess, sendError } = require('../utils/response');
+const { encrypt, decrypt } = require('../utils/encryption.util');
 
 const getProfile = async (req, res) => {
   try {
+    const userObj = {
+      id: req.user._id,
+      name: req.user.name,
+      mobile: req.user.mobile,
+      email: req.user.email,
+      role: req.user.role,
+      isMobileVerified: req.user.isMobileVerified,
+      profilePicture: req.user.profilePicture,
+      createdAt: req.user.createdAt,
+    };
+
+    // If organizer, include decrypted paymentConfig
+    if (req.user.role === 'organizer' && req.user.paymentConfig) {
+      const config = req.user.paymentConfig;
+      const decryptedConfig = { ...config };
+      
+      if (config.razorpay) {
+        decryptedConfig.razorpay = {
+          keyId: decrypt(config.razorpay.keyId),
+          keySecret: decrypt(config.razorpay.keySecret)
+        };
+      }
+      if (config.cashfree) {
+        decryptedConfig.cashfree = {
+          appId: decrypt(config.cashfree.appId),
+          secretKey: decrypt(config.cashfree.secretKey)
+        };
+      }
+      if (config.ccavenue) {
+        decryptedConfig.ccavenue = {
+          merchantId: decrypt(config.ccavenue.merchantId),
+          accessCode: decrypt(config.ccavenue.accessCode),
+          workingKey: decrypt(config.ccavenue.workingKey)
+        };
+      }
+      userObj.paymentConfig = decryptedConfig;
+    }
+
     return sendSuccess(res, 'Profile fetched successfully', {
-      user: {
-        id: req.user._id,
-        name: req.user.name,
-        mobile: req.user.mobile,
-        email: req.user.email,
-        role: req.user.role,
-        isMobileVerified: req.user.isMobileVerified,
-        profilePicture: req.user.profilePicture,
-        createdAt: req.user.createdAt,
-      },
+      user: userObj,
     });
   } catch (error) {
     console.error('Error fetching profile:', error);
@@ -29,11 +59,48 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, paymentConfig } = req.body;
     const user = await User.findById(req.user._id);
 
     if (name) user.name = name;
     if (email) user.email = email;
+
+    // Handle paymentConfig for organizers
+    if (paymentConfig && user.role === 'organizer') {
+      let config = paymentConfig;
+      if (typeof config === 'string') {
+        try {
+          config = JSON.parse(config);
+        } catch (e) {
+          console.error('Error parsing paymentConfig:', e);
+        }
+      }
+
+      if (typeof config === 'object') {
+        const encryptedConfig = { ...config };
+        
+        if (config.razorpay) {
+          encryptedConfig.razorpay = {
+            keyId: encrypt(config.razorpay.keyId),
+            keySecret: encrypt(config.razorpay.keySecret)
+          };
+        }
+        if (config.cashfree) {
+          encryptedConfig.cashfree = {
+            appId: encrypt(config.cashfree.appId),
+            secretKey: encrypt(config.cashfree.secretKey)
+          };
+        }
+        if (config.ccavenue) {
+          encryptedConfig.ccavenue = {
+            merchantId: encrypt(config.ccavenue.merchantId),
+            accessCode: encrypt(config.ccavenue.accessCode),
+            workingKey: encrypt(config.ccavenue.workingKey)
+          };
+        }
+        user.paymentConfig = encryptedConfig;
+      }
+    }
 
     // Handle profile picture upload
     if (req.file) {

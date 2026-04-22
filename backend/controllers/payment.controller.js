@@ -7,6 +7,7 @@ const Offer = require('../models/Offer');
 const Event = require('../models/Event');
 const AffiliateLink = require('../models/AffiliateLink');
 const UsedCoupon = require('../models/UsedCoupon');
+const User = require('../models/User');
 const { sendSuccess, sendError } = require('../utils/response');
 const config = require('../config/env');
 const { decrypt } = require('../utils/encryption.util');
@@ -267,13 +268,44 @@ const createOrder = async (req, res) => {
       return sendError(res, 'Event details could not be resolved', 400);
     }
 
-    const paymentConfig = eventDoc.paymentConfig || { gateway: 'razorpay' };
+    let paymentConfig = eventDoc.paymentConfig || { gateway: 'razorpay' };
+    
+    // If event doesn't have specific config for the gateway, check organizer's default config
+    const eventGateway = paymentConfig.gateway || 'razorpay';
+    let hasEventConfig = false;
+    
+    if (eventGateway === 'razorpay' && paymentConfig.razorpay?.keyId) hasEventConfig = true;
+    if (eventGateway === 'cashfree' && paymentConfig.cashfree?.appId) hasEventConfig = true;
+    if (eventGateway === 'ccavenue' && paymentConfig.ccavenue?.merchantId) hasEventConfig = true;
+
+    if (!hasEventConfig) {
+      // Fetch organizer's default payment config
+      const organizerId = eventDoc.organizer?.organizerId;
+      if (organizerId) {
+        const organizer = await User.findById(organizerId).select('paymentConfig');
+        if (organizer && organizer.paymentConfig) {
+          // If organizer has a config, use it as fallback
+          const orgConfig = organizer.paymentConfig;
+          const orgGateway = orgConfig.gateway || 'razorpay';
+          
+          let hasOrgConfig = false;
+          if (orgGateway === 'razorpay' && orgConfig.razorpay?.keyId) hasOrgConfig = true;
+          if (orgGateway === 'cashfree' && orgConfig.cashfree?.appId) hasOrgConfig = true;
+          if (orgGateway === 'ccavenue' && orgConfig.ccavenue?.merchantId) hasOrgConfig = true;
+
+          if (hasOrgConfig) {
+            paymentConfig = orgConfig;
+          }
+        }
+      }
+    }
+
     const gateway = paymentConfig.gateway || 'razorpay';
     
     let orderDetails = {};
 
     if (gateway === 'razorpay') {
-      // Razorpay flow (either event-specific or global)
+      // Razorpay flow (either event-specific, organizer-specific, or global)
       let rzpKeyId, rzpKeySecret;
       
       if (paymentConfig.razorpay && paymentConfig.razorpay.keyId) {
@@ -339,6 +371,31 @@ const createOrder = async (req, res) => {
         currency: cfOrder.order_currency,
         gateway: 'cashfree'
       };
+    } else if (gateway === 'ccavenue') {
+      if (!paymentConfig.ccavenue || !paymentConfig.ccavenue.merchantId || !paymentConfig.ccavenue.accessCode || !paymentConfig.ccavenue.workingKey) {
+        throw new Error('CCAvenue credentials are missing for this event');
+      }
+      
+      const merchantId = decrypt(paymentConfig.ccavenue.merchantId);
+      const accessCode = decrypt(paymentConfig.ccavenue.accessCode);
+      const workingKey = decrypt(paymentConfig.ccavenue.workingKey);
+      
+      const ccService = new CCAvenueService({ merchantId, accessCode, workingKey });
+      const ccOrder = await ccService.createOrder({
+        orderId: `order_${booking.bookingId}_${Date.now()}`,
+        amount: totalPayableAmount,
+        currency: 'INR',
+        redirectUrl: `${config.APP_URL}/api/users/payments/ccavenue-callback`,
+        cancelUrl: `${config.APP_URL}/api/users/payments/ccavenue-callback`,
+      });
+
+      orderDetails = {
+        id: ccOrder.orderId,
+        encRequest: ccOrder.encRequest,
+        accessCode: accessCode,
+        url: ccService.getGatewayUrl(),
+        gateway: 'ccavenue'
+      };
     }
 
     // Update payment record or create one
@@ -359,6 +416,7 @@ const createOrder = async (req, res) => {
       
       if (gateway === 'razorpay') paymentData.razorpayOrderId = orderDetails.id;
       if (gateway === 'cashfree') paymentData.cashfreeOrderId = orderDetails.id;
+      if (gateway === 'ccavenue') paymentData.ccavenueOrderId = orderDetails.id;
       
       const newPayment = await Payment.create([paymentData], session ? { session } : {});
       payment = newPayment[0];
@@ -367,6 +425,7 @@ const createOrder = async (req, res) => {
       payment.amount = totalPayableAmount;
       if (gateway === 'razorpay') payment.razorpayOrderId = orderDetails.id;
       if (gateway === 'cashfree') payment.cashfreeOrderId = orderDetails.id;
+      if (gateway === 'ccavenue') payment.ccavenueOrderId = orderDetails.id;
       await payment.save(session ? { session } : {});
     }
 
@@ -419,9 +478,32 @@ const verifyPayment = async (req, res) => {
 
       booking = await Booking.findById(payment.bookingId).populate('eventId');
       const event = booking?.eventId;
-      const paymentConfig = event?.paymentConfig || { gateway: 'razorpay' };
+      let paymentConfig = event?.paymentConfig || { gateway: 'razorpay' };
 
-      // Use event-level Razorpay secret when present, else global (same as createOrder/storePayment)
+      // Check if we should use organizer's config fallback
+      const currentGateway = paymentConfig.gateway || 'razorpay';
+      let hasEventConfig = false;
+      if (currentGateway === 'razorpay' && paymentConfig.razorpay?.keyId) hasEventConfig = true;
+      if (currentGateway === 'cashfree' && paymentConfig.cashfree?.appId) hasEventConfig = true;
+      if (currentGateway === 'ccavenue' && paymentConfig.ccavenue?.merchantId) hasEventConfig = true;
+      
+      if (!hasEventConfig && event?.organizer?.organizerId) {
+        const organizer = await User.findById(event.organizer.organizerId).select('paymentConfig');
+        if (organizer && organizer.paymentConfig) {
+          const orgConfig = organizer.paymentConfig;
+          const orgGateway = orgConfig.gateway || 'razorpay';
+          let hasOrgConfig = false;
+          if (orgGateway === 'razorpay' && orgConfig.razorpay?.keyId) hasOrgConfig = true;
+          if (orgGateway === 'cashfree' && orgConfig.cashfree?.appId) hasOrgConfig = true;
+          if (orgGateway === 'ccavenue' && orgConfig.ccavenue?.merchantId) hasOrgConfig = true;
+          
+          if (hasOrgConfig) {
+            paymentConfig = orgConfig;
+          }
+        }
+      }
+
+      // Use event/organizer-level Razorpay secret when present, else global
       let rzpKeySecret = config.RAZORPAY_KEY_SECRET;
       if (paymentConfig.razorpay && paymentConfig.razorpay.keySecret) {
         rzpKeySecret = decrypt(paymentConfig.razorpay.keySecret);
@@ -482,8 +564,27 @@ const verifyPayment = async (req, res) => {
       }
 
       const event = booking.eventId;
-      const paymentConfig = event.paymentConfig || { gateway: 'razorpay' };
+      let paymentConfig = event.paymentConfig || { gateway: 'razorpay' };
       
+      // Check if we should use organizer's config fallback
+      const currentGateway = paymentConfig.gateway || 'razorpay';
+      let hasEventConfig = false;
+      if (currentGateway === 'cashfree' && paymentConfig.cashfree?.appId) hasEventConfig = true;
+      
+      if (!hasEventConfig && event?.organizer?.organizerId) {
+        const organizer = await User.findById(event.organizer.organizerId).select('paymentConfig');
+        if (organizer && organizer.paymentConfig) {
+          const orgConfig = organizer.paymentConfig;
+          const orgGateway = orgConfig.gateway || 'razorpay';
+          let hasOrgConfig = false;
+          if (orgGateway === 'cashfree' && orgConfig.cashfree?.appId) hasOrgConfig = true;
+          
+          if (hasOrgConfig) {
+            paymentConfig = orgConfig;
+          }
+        }
+      }
+
       let cfAppId, cfSecretKey;
       if (paymentConfig.cashfree && paymentConfig.cashfree.appId && paymentConfig.cashfree.secretKey) {
         cfAppId = decrypt(paymentConfig.cashfree.appId);

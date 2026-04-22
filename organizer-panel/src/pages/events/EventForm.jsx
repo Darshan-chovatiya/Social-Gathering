@@ -394,20 +394,14 @@ const EventForm = () => {
             [gateway]: { ...(prev.paymentConfig?.[gateway] || {}), [field]: value }
           }
         }))
-        // Inline validation for payment fields (clear error when valid)
+        // Inline validation for payment fields - now optional (only clear errors if user starts typing)
         if (gateway === 'razorpay') {
-          if (field === 'keyId') value?.trim() ? delete newErrors.paymentRazorpayKeyId : (newErrors.paymentRazorpayKeyId = 'Key ID is required')
-          if (field === 'keySecret') value?.trim() ? delete newErrors.paymentRazorpayKeySecret : (newErrors.paymentRazorpayKeySecret = 'Key Secret is required')
+          if (field === 'keyId') delete newErrors.paymentRazorpayKeyId
+          if (field === 'keySecret') delete newErrors.paymentRazorpayKeySecret
         } else if (gateway === 'cashfree') {
-          if (field === 'appId') value?.trim() ? delete newErrors.paymentCashfreeAppId : (newErrors.paymentCashfreeAppId = 'App ID is required')
-          if (field === 'secretKey') value?.trim() ? delete newErrors.paymentCashfreeSecretKey : (newErrors.paymentCashfreeSecretKey = 'Secret Key is required')
-        } /* CCAvenue commented out
-        else if (gateway === 'ccavenue') {
-          if (field === 'merchantId') value?.trim() ? delete newErrors.paymentCcavenueMerchantId : (newErrors.paymentCcavenueMerchantId = 'Merchant ID is required')
-          if (field === 'accessCode') value?.trim() ? delete newErrors.paymentCcavenueAccessCode : (newErrors.paymentCcavenueAccessCode = 'Access Code is required')
-          if (field === 'workingKey') value?.trim() ? delete newErrors.paymentCcavenueWorkingKey : (newErrors.paymentCcavenueWorkingKey = 'Working Key is required')
+          if (field === 'appId') delete newErrors.paymentCashfreeAppId
+          if (field === 'secretKey') delete newErrors.paymentCashfreeSecretKey
         }
-        */
       }
     } else {
       setFormData(prev => ({ ...prev, [name]: value }))
@@ -843,7 +837,7 @@ const EventForm = () => {
       newErrors.eventDetailImage = 'Event detail image is required'
     }
     
-    setErrors(prev => ({ ...prev, ...newErrors }))
+    setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
@@ -866,7 +860,7 @@ const EventForm = () => {
       })
     }
     
-    setErrors(prev => ({ ...prev, ...newErrors }))
+    setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
@@ -898,7 +892,7 @@ const EventForm = () => {
       })
     }
     
-    setErrors(prev => ({ ...prev, ...newErrors }))
+    setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
@@ -919,7 +913,7 @@ const EventForm = () => {
     
     // No need to validate sponsor form since it's now in a modal
     
-    setErrors(prev => ({ ...prev, ...newErrors }))
+    setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
@@ -933,29 +927,16 @@ const EventForm = () => {
 
     let isValid = true
 
-    if (!gateway || !gateways.includes(gateway)) {
-      newErrors.paymentGateway = 'Please select one payment gateway'
+    // Gateway selection is now optional; falls back to organizer default or system global
+    if (gateway && !gateways.includes(gateway)) {
+      newErrors.paymentGateway = 'Invalid payment gateway selected'
       isValid = false
     }
 
     if (gateway === 'razorpay') {
-      if (!formData.paymentConfig?.razorpay?.keyId?.trim()) {
-        newErrors.paymentRazorpayKeyId = 'Key ID is required'
-        isValid = false
-      }
-      if (!formData.paymentConfig?.razorpay?.keySecret?.trim()) {
-        newErrors.paymentRazorpayKeySecret = 'Key Secret is required'
-        isValid = false
-      }
+      // Optional: fallback to organizer profile if empty
     } else if (gateway === 'cashfree') {
-      if (!formData.paymentConfig?.cashfree?.appId?.trim()) {
-        newErrors.paymentCashfreeAppId = 'App ID is required'
-        isValid = false
-      }
-      if (!formData.paymentConfig?.cashfree?.secretKey?.trim()) {
-        newErrors.paymentCashfreeSecretKey = 'Secret Key is required'
-        isValid = false
-      }
+      // Optional: fallback to organizer profile if empty
     }
     /* CCAvenue commented out
     } else if (gateway === 'ccavenue') {
@@ -974,7 +955,7 @@ const EventForm = () => {
     }
     */
 
-    setErrors(prev => ({ ...prev, ...newErrors }))
+    setErrors(newErrors)
     return isValid
   }
 
@@ -1278,20 +1259,13 @@ const EventForm = () => {
     }
     // No need to validate sponsor form since it's now in a modal
     
-    // Check payment config (require one gateway and its fields)
+    // Check payment config (optional)
     let paymentValid = true
     const gw = formData.paymentConfig?.gateway
-    if (!gw || !['razorpay', 'cashfree' /* , 'ccavenue' */].includes(gw)) {
+    if (gw && !['razorpay', 'cashfree' /* , 'ccavenue' */].includes(gw)) {
       paymentValid = false
-    } else if (gw === 'razorpay') {
-      if (!formData.paymentConfig?.razorpay?.keyId?.trim() || !formData.paymentConfig?.razorpay?.keySecret?.trim()) paymentValid = false
-    } else if (gw === 'cashfree') {
-      if (!formData.paymentConfig?.cashfree?.appId?.trim() || !formData.paymentConfig?.cashfree?.secretKey?.trim()) paymentValid = false
-    } /* CCAvenue commented out
-    else if (gw === 'ccavenue') {
-      if (!formData.paymentConfig?.ccavenue?.merchantId?.trim() || !formData.paymentConfig?.ccavenue?.accessCode?.trim() || !formData.paymentConfig?.ccavenue?.workingKey?.trim()) paymentValid = false
     }
-    */
+    // Specific fields are now optional due to fallback logic
     
     return basicValid && slotsValid && ticketsValid && sponsorsValid && paymentValid
   }
@@ -2304,12 +2278,17 @@ const EventForm = () => {
           {activeTab === 'payment' && (
             <div className="space-y-6 pb-6">
               <h3 className="text-lg font-semibold text-gray-900">Payment Gateway Configuration</h3>
-              <p className="text-sm text-gray-500">Select one payment gateway and provide the required credentials for this event.</p>
+              <p className="text-sm text-gray-500">
+                Provide the required credentials for this event. 
+                <span className="block mt-1 font-medium text-primary-600 italic">
+                  Note: If left blank, your default payment configuration from your profile settings will be used.
+                </span>
+              </p>
               
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Select Payment Gateway <span className="text-red-500">*</span>
+                    Select Payment Gateway
                   </label>
                   <div className="grid grid-cols-3 gap-4">
                     {/* CCAvenue commented out: add 'ccavenue' to array to enable */}
@@ -2341,10 +2320,10 @@ const EventForm = () => {
 
                 {formData.paymentConfig?.gateway === 'razorpay' && (
                   <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
-                    <h4 className="font-medium text-gray-900 border-b pb-2">Razorpay Credentials <span className="text-red-500">*</span></h4>
+                    <h4 className="font-medium text-gray-900 border-b pb-2">Razorpay Credentials (Optional)</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Key ID <span className="text-red-500">*</span></label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Key ID</label>
                         <input
                           type="text"
                           name="paymentConfig.razorpay.keyId"
@@ -2358,7 +2337,7 @@ const EventForm = () => {
                         )}
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Key Secret <span className="text-red-500">*</span></label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Key Secret</label>
                         <input
                           type="password"
                           name="paymentConfig.razorpay.keySecret"
@@ -2377,10 +2356,10 @@ const EventForm = () => {
 
                 {formData.paymentConfig?.gateway === 'cashfree' && (
                   <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-4">
-                    <h4 className="font-medium text-gray-900 border-b pb-2">Cashfree Credentials <span className="text-red-500">*</span></h4>
+                    <h4 className="font-medium text-gray-900 border-b pb-2">Cashfree Credentials (Optional)</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">App ID <span className="text-red-500">*</span></label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">App ID</label>
                         <input
                           type="text"
                           name="paymentConfig.cashfree.appId"
@@ -2393,7 +2372,7 @@ const EventForm = () => {
                         )}
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Secret Key <span className="text-red-500">*</span></label>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Secret Key</label>
                         <input
                           type="password"
                           name="paymentConfig.cashfree.secretKey"

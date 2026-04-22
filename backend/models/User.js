@@ -58,6 +58,26 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  paymentConfig: {
+    gateway: { 
+      type: String, 
+      enum: ['razorpay', 'cashfree', 'ccavenue'], 
+      default: 'razorpay' 
+    },
+    razorpay: {
+      keyId: { type: String },
+      keySecret: { type: String }
+    },
+    cashfree: {
+      appId: { type: String },
+      secretKey: { type: String }
+    },
+    ccavenue: {
+      merchantId: { type: String },
+      accessCode: { type: String },
+      workingKey: { type: String }
+    }
+  },
   createdAt: {
     type: Date,
     default: Date.now,
