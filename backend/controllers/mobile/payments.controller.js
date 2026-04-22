@@ -404,11 +404,11 @@ const createOrder = async (req, res) => {
     }
 
     return sendSuccess(res, 'Payment order created successfully', {
-      gateway,
+      gateway: currentGateway,
       orderData: orderDetails,
       paymentId: payment._id,
       bookingId: booking._id,
-      keyId: gateway === 'razorpay' ? orderDetails.key : null,
+      keyId: currentGateway === 'razorpay' ? orderDetails.key : null,
       isTestMode: config.PAYMENT_MODE === 'sandbox'
     });
   } catch (error) {
