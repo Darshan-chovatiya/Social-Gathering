@@ -309,8 +309,8 @@ const createOrder = async (req, res) => {
       let rzpKeyId, rzpKeySecret;
       
       if (paymentConfig.razorpay && paymentConfig.razorpay.keyId) {
-        rzpKeyId = decrypt(paymentConfig.razorpay.keyId);
-        rzpKeySecret = decrypt(paymentConfig.razorpay.keySecret);
+        rzpKeyId = paymentConfig.razorpay.keyId;
+        rzpKeySecret = paymentConfig.razorpay.keySecret;
       } else {
         rzpKeyId = config.RAZORPAY_KEY_ID;
         rzpKeySecret = config.RAZORPAY_KEY_SECRET;
@@ -352,8 +352,8 @@ const createOrder = async (req, res) => {
         throw new Error('Cashfree credentials are missing for this event');
       }
       
-      const cfAppId = decrypt(paymentConfig.cashfree.appId);
-      const cfSecretKey = decrypt(paymentConfig.cashfree.secretKey);
+      const cfAppId = paymentConfig.cashfree.appId;
+      const cfSecretKey = paymentConfig.cashfree.secretKey;
       
       const cfService = new CashfreeService({ appId: cfAppId, secretKey: cfSecretKey });
       const cfOrder = await cfService.createOrder({
@@ -376,9 +376,9 @@ const createOrder = async (req, res) => {
         throw new Error('CCAvenue credentials are missing for this event');
       }
       
-      const merchantId = decrypt(paymentConfig.ccavenue.merchantId);
-      const accessCode = decrypt(paymentConfig.ccavenue.accessCode);
-      const workingKey = decrypt(paymentConfig.ccavenue.workingKey);
+      const merchantId = paymentConfig.ccavenue.merchantId;
+      const accessCode = paymentConfig.ccavenue.accessCode;
+      const workingKey = paymentConfig.ccavenue.workingKey;
       
       const ccService = new CCAvenueService({ merchantId, accessCode, workingKey });
       const ccOrder = await ccService.createOrder({

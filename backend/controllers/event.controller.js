@@ -135,24 +135,8 @@ const getEventById = async (req, res) => {
       }
     }
 
-    // Decrypt payment config for organizer/admin
-    if (event.paymentConfig && (req.user?.role === 'admin' || req.user?.role === 'organizer')) {
-      const config = event.paymentConfig;
-      if (config.razorpay) {
-        if (config.razorpay.keyId) config.razorpay.keyId = decrypt(config.razorpay.keyId);
-        if (config.razorpay.keySecret) config.razorpay.keySecret = decrypt(config.razorpay.keySecret);
-      }
-      if (config.cashfree) {
-        if (config.cashfree.appId) config.cashfree.appId = decrypt(config.cashfree.appId);
-        if (config.cashfree.secretKey) config.cashfree.secretKey = decrypt(config.cashfree.secretKey);
-      }
-      if (config.ccavenue) {
-        if (config.ccavenue.merchantId) config.ccavenue.merchantId = decrypt(config.ccavenue.merchantId);
-        if (config.ccavenue.accessCode) config.ccavenue.accessCode = decrypt(config.ccavenue.accessCode);
-        if (config.ccavenue.workingKey) config.ccavenue.workingKey = decrypt(config.ccavenue.workingKey);
-      }
-    }
-
+    // No decryption needed as per user request to store raw credentials
+    
     return sendSuccess(res, 'Event fetched successfully', { event });
   } catch (error) {
     console.error('Error fetching event:', error);
@@ -187,23 +171,7 @@ const createEvent = async (req, res) => {
       eventData.paymentConfig = JSON.parse(eventData.paymentConfig);
     }
 
-    // Encrypt payment config sensitive fields
-    if (eventData.paymentConfig) {
-      const config = eventData.paymentConfig;
-      if (config.razorpay) {
-        if (config.razorpay.keyId) config.razorpay.keyId = encrypt(config.razorpay.keyId);
-        if (config.razorpay.keySecret) config.razorpay.keySecret = encrypt(config.razorpay.keySecret);
-      }
-      if (config.cashfree) {
-        if (config.cashfree.appId) config.cashfree.appId = encrypt(config.cashfree.appId);
-        if (config.cashfree.secretKey) config.cashfree.secretKey = encrypt(config.cashfree.secretKey);
-      }
-      if (config.ccavenue) {
-        if (config.ccavenue.merchantId) config.ccavenue.merchantId = encrypt(config.ccavenue.merchantId);
-        if (config.ccavenue.accessCode) config.ccavenue.accessCode = encrypt(config.ccavenue.accessCode);
-        if (config.ccavenue.workingKey) config.ccavenue.workingKey = encrypt(config.ccavenue.workingKey);
-      }
-    }
+    // No encryption needed as per user request to store raw credentials
 
     // Handle file uploads - banners, eventImages, and eventDetailImage
     const banners = req.files?.banners ? req.files.banners.map(file => `/uploads/events/${file.filename}`) : [];
@@ -276,23 +244,7 @@ const updateEvent = async (req, res) => {
       eventData.paymentConfig = JSON.parse(eventData.paymentConfig);
     }
 
-    // Encrypt payment config sensitive fields
-    if (eventData.paymentConfig) {
-      const config = eventData.paymentConfig;
-      if (config.razorpay) {
-        if (config.razorpay.keyId) config.razorpay.keyId = encrypt(config.razorpay.keyId);
-        if (config.razorpay.keySecret) config.razorpay.keySecret = encrypt(config.razorpay.keySecret);
-      }
-      if (config.cashfree) {
-        if (config.cashfree.appId) config.cashfree.appId = encrypt(config.cashfree.appId);
-        if (config.cashfree.secretKey) config.cashfree.secretKey = encrypt(config.cashfree.secretKey);
-      }
-      if (config.ccavenue) {
-        if (config.ccavenue.merchantId) config.ccavenue.merchantId = encrypt(config.ccavenue.merchantId);
-        if (config.ccavenue.accessCode) config.ccavenue.accessCode = encrypt(config.ccavenue.accessCode);
-        if (config.ccavenue.workingKey) config.ccavenue.workingKey = encrypt(config.ccavenue.workingKey);
-      }
-    }
+    // No encryption needed as per user request to store raw credentials
     if (eventData.slots && typeof eventData.slots === 'string') {
       eventData.slots = JSON.parse(eventData.slots);
     }

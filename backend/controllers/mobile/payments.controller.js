@@ -273,8 +273,8 @@ const createOrder = async (req, res) => {
       let rzpKeyId, rzpKeySecret;
       
       if (paymentConfig.razorpay && paymentConfig.razorpay.keyId) {
-        rzpKeyId = decrypt(paymentConfig.razorpay.keyId);
-        rzpKeySecret = decrypt(paymentConfig.razorpay.keySecret);
+        rzpKeyId = paymentConfig.razorpay.keyId;
+        rzpKeySecret = paymentConfig.razorpay.keySecret;
       } else {
         rzpKeyId = config.RAZORPAY_KEY_ID;
         rzpKeySecret = config.RAZORPAY_KEY_SECRET;
@@ -316,8 +316,8 @@ const createOrder = async (req, res) => {
         throw new Error('Cashfree credentials are missing for this event');
       }
       
-      const cfAppId = decrypt(paymentConfig.cashfree.appId);
-      const cfSecretKey = decrypt(paymentConfig.cashfree.secretKey);
+      const cfAppId = paymentConfig.cashfree.appId;
+      const cfSecretKey = paymentConfig.cashfree.secretKey;
       
       const cfService = new CashfreeService({ appId: cfAppId, secretKey: cfSecretKey });
       const cfOrder = await cfService.createOrder({
@@ -415,11 +415,11 @@ const verifyPayment = async (req, res) => {
       const paymentConfig = event?.paymentConfig || { gateway: 'razorpay' };
 
       let rzpKeySecret = config.RAZORPAY_KEY_SECRET;
-      if (paymentConfig.razorpay && paymentConfig.razorpay.keySecret) rzpKeySecret = decrypt(paymentConfig.razorpay.keySecret);
+      if (paymentConfig.razorpay && paymentConfig.razorpay.keySecret) rzpKeySecret = paymentConfig.razorpay.keySecret;
       
       let rzpInstance = razorpay;
       if (paymentConfig.razorpay && paymentConfig.razorpay.keyId && rzpKeySecret) {
-        const rzpKeyId = decrypt(paymentConfig.razorpay.keyId);
+        const rzpKeyId = paymentConfig.razorpay.keyId;
         rzpInstance = new Razorpay({ key_id: rzpKeyId, key_secret: rzpKeySecret });
       }
 
@@ -454,8 +454,8 @@ const verifyPayment = async (req, res) => {
       
       let cfAppId, cfSecretKey;
       if (paymentConfig.cashfree && paymentConfig.cashfree.appId && paymentConfig.cashfree.secretKey) {
-        cfAppId = decrypt(paymentConfig.cashfree.appId);
-        cfSecretKey = decrypt(paymentConfig.cashfree.secretKey);
+        cfAppId = paymentConfig.cashfree.appId;
+        cfSecretKey = paymentConfig.cashfree.secretKey;
       } else {
         cfAppId = config.CASHFREE_APP_ID;
         cfSecretKey = config.CASHFREE_SECRET_KEY;
@@ -798,7 +798,7 @@ const storePayment = async (req, res) => {
       const paymentConfig = event.paymentConfig || { gateway: 'razorpay' };
       let rzpKeySecret = config.RAZORPAY_KEY_SECRET;
       if (paymentConfig.razorpay && paymentConfig.razorpay.keySecret) {
-        rzpKeySecret = decrypt(paymentConfig.razorpay.keySecret);
+        rzpKeySecret = paymentConfig.razorpay.keySecret;
       }
 
       if (razorpay_order_id && razorpay_order_id.startsWith('order_dummy_')) {
@@ -809,8 +809,8 @@ const storePayment = async (req, res) => {
         isPaymentVerified = generatedSignature === razorpay_signature;
       }
     } else if (gateway === 'cashfree') {
-      const cfAppId = decrypt(event.paymentConfig.cashfree.appId);
-      const cfSecretKey = decrypt(event.paymentConfig.cashfree.secretKey);
+      const cfAppId = event.paymentConfig.cashfree.appId;
+      const cfSecretKey = event.paymentConfig.cashfree.secretKey;
       const cfService = new CashfreeService({ appId: cfAppId, secretKey: cfSecretKey });
       try {
         const cfOrder = await cfService.verifyPayment(cf_order_id);

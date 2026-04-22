@@ -94,16 +94,16 @@ const verifyOTP = async (req, res) => {
           gateway: user.paymentConfig.gateway,
           razorpay: {
             keyId: user.paymentConfig.razorpay?.keyId || '',
-            keySecret: user.paymentConfig.razorpay?.keySecret ? decrypt(user.paymentConfig.razorpay.keySecret) : '',
+            keySecret: user.paymentConfig.razorpay?.keySecret || '',
           },
           cashfree: {
             appId: user.paymentConfig.cashfree?.appId || '',
-            secretKey: user.paymentConfig.cashfree?.secretKey ? decrypt(user.paymentConfig.cashfree.secretKey) : '',
+            secretKey: user.paymentConfig.cashfree?.secretKey || '',
           },
           ccavenue: {
             merchantId: user.paymentConfig.ccavenue?.merchantId || '',
             accessCode: user.paymentConfig.ccavenue?.accessCode || '',
-            workingKey: user.paymentConfig.ccavenue?.workingKey ? decrypt(user.paymentConfig.ccavenue.workingKey) : '',
+            workingKey: user.paymentConfig.ccavenue?.workingKey || '',
           }
         } : undefined,
       },
@@ -218,16 +218,16 @@ const organizerLogin = async (req, res) => {
           gateway: user.paymentConfig.gateway,
           razorpay: {
             keyId: user.paymentConfig.razorpay?.keyId || '',
-            keySecret: user.paymentConfig.razorpay?.keySecret ? decrypt(user.paymentConfig.razorpay.keySecret) : '',
+            keySecret: user.paymentConfig.razorpay?.keySecret || '',
           },
           cashfree: {
             appId: user.paymentConfig.cashfree?.appId || '',
-            secretKey: user.paymentConfig.cashfree?.secretKey ? decrypt(user.paymentConfig.cashfree.secretKey) : '',
+            secretKey: user.paymentConfig.cashfree?.secretKey || '',
           },
           ccavenue: {
             merchantId: user.paymentConfig.ccavenue?.merchantId || '',
             accessCode: user.paymentConfig.ccavenue?.accessCode || '',
-            workingKey: user.paymentConfig.ccavenue?.workingKey ? decrypt(user.paymentConfig.ccavenue.workingKey) : '',
+            workingKey: user.paymentConfig.ccavenue?.workingKey || '',
           }
         } : undefined,
       },
@@ -309,6 +309,22 @@ const googleSignIn = async (req, res) => {
         email: user.email,
         role: user.role,
         isMobileVerified: user.isMobileVerified,
+        paymentConfig: user.role === 'organizer' && user.paymentConfig ? {
+          gateway: user.paymentConfig.gateway,
+          razorpay: {
+            keyId: user.paymentConfig.razorpay?.keyId || '',
+            keySecret: user.paymentConfig.razorpay?.keySecret || '',
+          },
+          cashfree: {
+            appId: user.paymentConfig.cashfree?.appId || '',
+            secretKey: user.paymentConfig.cashfree?.secretKey || '',
+          },
+          ccavenue: {
+            merchantId: user.paymentConfig.ccavenue?.merchantId || '',
+            accessCode: user.paymentConfig.ccavenue?.accessCode || '',
+            workingKey: user.paymentConfig.ccavenue?.workingKey || '',
+          }
+        } : undefined,
       },
     });
   } catch (error) {
@@ -332,16 +348,16 @@ const getCurrentUser = async (req, res) => {
           gateway: req.user.paymentConfig.gateway,
           razorpay: {
             keyId: req.user.paymentConfig.razorpay?.keyId || '',
-            keySecret: req.user.paymentConfig.razorpay?.keySecret ? decrypt(req.user.paymentConfig.razorpay.keySecret) : '',
+            keySecret: req.user.paymentConfig.razorpay?.keySecret || '',
           },
           cashfree: {
             appId: req.user.paymentConfig.cashfree?.appId || '',
-            secretKey: req.user.paymentConfig.cashfree?.secretKey ? decrypt(req.user.paymentConfig.cashfree.secretKey) : '',
+            secretKey: req.user.paymentConfig.cashfree?.secretKey || '',
           },
           ccavenue: {
             merchantId: req.user.paymentConfig.ccavenue?.merchantId || '',
             accessCode: req.user.paymentConfig.ccavenue?.accessCode || '',
-            workingKey: req.user.paymentConfig.ccavenue?.workingKey ? decrypt(req.user.paymentConfig.ccavenue.workingKey) : '',
+            workingKey: req.user.paymentConfig.ccavenue?.workingKey || '',
           }
         } : undefined,
       },

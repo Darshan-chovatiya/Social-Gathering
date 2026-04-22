@@ -21,31 +21,9 @@ const getProfile = async (req, res) => {
       createdAt: req.user.createdAt,
     };
 
-    // If organizer, include decrypted paymentConfig
+    // If organizer, include paymentConfig
     if (req.user.role === 'organizer' && req.user.paymentConfig) {
-      const config = req.user.paymentConfig;
-      const decryptedConfig = { ...config };
-      
-      if (config.razorpay) {
-        decryptedConfig.razorpay = {
-          keyId: decrypt(config.razorpay.keyId),
-          keySecret: decrypt(config.razorpay.keySecret)
-        };
-      }
-      if (config.cashfree) {
-        decryptedConfig.cashfree = {
-          appId: decrypt(config.cashfree.appId),
-          secretKey: decrypt(config.cashfree.secretKey)
-        };
-      }
-      if (config.ccavenue) {
-        decryptedConfig.ccavenue = {
-          merchantId: decrypt(config.ccavenue.merchantId),
-          accessCode: decrypt(config.ccavenue.accessCode),
-          workingKey: decrypt(config.ccavenue.workingKey)
-        };
-      }
-      userObj.paymentConfig = decryptedConfig;
+      userObj.paymentConfig = req.user.paymentConfig;
     }
 
     return sendSuccess(res, 'Profile fetched successfully', {
@@ -77,28 +55,7 @@ const updateProfile = async (req, res) => {
       }
 
       if (typeof config === 'object') {
-        const encryptedConfig = { ...config };
-        
-        if (config.razorpay) {
-          encryptedConfig.razorpay = {
-            keyId: encrypt(config.razorpay.keyId),
-            keySecret: encrypt(config.razorpay.keySecret)
-          };
-        }
-        if (config.cashfree) {
-          encryptedConfig.cashfree = {
-            appId: encrypt(config.cashfree.appId),
-            secretKey: encrypt(config.cashfree.secretKey)
-          };
-        }
-        if (config.ccavenue) {
-          encryptedConfig.ccavenue = {
-            merchantId: encrypt(config.ccavenue.merchantId),
-            accessCode: encrypt(config.ccavenue.accessCode),
-            workingKey: encrypt(config.ccavenue.workingKey)
-          };
-        }
-        user.paymentConfig = encryptedConfig;
+        user.paymentConfig = config;
       }
     }
 

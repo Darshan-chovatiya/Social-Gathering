@@ -47,8 +47,11 @@ const decrypt = (text) => {
     
     return decrypted.toString();
   } catch (error) {
-    console.error('Decryption failed:', error);
-    return null;
+    // If decryption fails, it could be due to a key mismatch or corrupted data.
+    // We return the raw text so the UI can at least show something (even if encrypted)
+    // allowing the user to overwrite it with correct data.
+    console.error(`Decryption failed for data starting with "${text.substring(0, 8)}...":`, error.message);
+    return text;
   }
 };
 
