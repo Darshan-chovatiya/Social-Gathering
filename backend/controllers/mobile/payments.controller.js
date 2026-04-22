@@ -16,6 +16,40 @@ const { decrypt } = require('../../utils/encryption.util');
 const CashfreeService = require('../../utils/cashfree.util');
 const CCAvenueService = require('../../utils/ccavenue.util');
 
+// Helper to resolve payment configuration hierarchically: Event > Organizer > Global
+const resolvePaymentConfig = async (eventDoc) => {
+  let paymentConfig = eventDoc.paymentConfig || { gateway: 'razorpay' };
+  let hasEventConfig = false;
+  const gateway = paymentConfig.gateway || 'razorpay';
+  
+  if (gateway === 'razorpay' && paymentConfig.razorpay?.keyId) hasEventConfig = true;
+  if (gateway === 'cashfree' && paymentConfig.cashfree?.appId) hasEventConfig = true;
+  if (gateway === 'ccavenue' && paymentConfig.ccavenue?.merchantId) hasEventConfig = true;
+
+  if (!hasEventConfig) {
+    // Fetch organizer's default payment config
+    const organizerId = eventDoc.organizer?.organizerId;
+    if (organizerId) {
+      const User = require('../../models/User'); 
+      const organizer = await User.findById(organizerId).select('paymentConfig');
+      if (organizer && organizer.paymentConfig) {
+        const orgConfig = organizer.paymentConfig;
+        const orgGateway = orgConfig.gateway || 'razorpay';
+        
+        let hasOrgConfig = false;
+        if (orgGateway === 'razorpay' && orgConfig.razorpay?.keyId) hasOrgConfig = true;
+        if (orgGateway === 'cashfree' && orgConfig.cashfree?.appId) hasOrgConfig = true;
+        if (orgGateway === 'ccavenue' && orgConfig.ccavenue?.merchantId) hasOrgConfig = true;
+
+        if (hasOrgConfig) {
+          paymentConfig = orgConfig;
+        }
+      }
+    }
+  }
+  return paymentConfig;
+};
+
 // Initialize Razorpay (only if keys are configured)
 let razorpay = null;
 if (config.RAZORPAY_KEY_ID && config.RAZORPAY_KEY_SECRET) {
@@ -263,12 +297,12 @@ const createOrder = async (req, res) => {
       return sendError(res, 'Event details could not be resolved', 400);
     }
 
-    const paymentConfig = eventDoc.paymentConfig || { gateway: 'razorpay' };
-    const gateway = paymentConfig.gateway || 'razorpay';
+    const paymentConfig = await resolvePaymentConfig(eventDoc);
+    const currentGateway = paymentConfig.gateway || 'razorpay';
     
     let orderDetails = {};
 
-    if (gateway === 'razorpay') {
+    if (currentGateway === 'razorpay') {
       // Razorpay flow (either event-specific or global)
       let rzpKeyId, rzpKeySecret;
       
@@ -311,7 +345,7 @@ const createOrder = async (req, res) => {
           gateway: 'razorpay'
         };
       }
-    } else if (gateway === 'cashfree') {
+    } else if (currentGateway === 'cashfree') {
       if (!paymentConfig.cashfree || !paymentConfig.cashfree.appId || !paymentConfig.cashfree.secretKey) {
         throw new Error('Cashfree credentials are missing for this event');
       }
@@ -349,18 +383,18 @@ const createOrder = async (req, res) => {
         userId: req.user._id,
         amount: booking.totalAmount,
         status: 'pending',
-        gateway: gateway
+        gateway: currentGateway
       };
       
-      if (gateway === 'razorpay') paymentData.razorpayOrderId = orderDetails.id;
-      if (gateway === 'cashfree') paymentData.cashfreeOrderId = orderDetails.id;
+      if (currentGateway === 'razorpay') paymentData.razorpayOrderId = orderDetails.id;
+      if (currentGateway === 'cashfree') paymentData.cashfreeOrderId = orderDetails.id;
       
       const newPayment = await Payment.create([paymentData], session ? { session } : {});
       payment = newPayment[0];
     } else {
-      payment.gateway = gateway;
-      if (gateway === 'razorpay') payment.razorpayOrderId = orderDetails.id;
-      if (gateway === 'cashfree') payment.cashfreeOrderId = orderDetails.id;
+      payment.gateway = currentGateway;
+      if (currentGateway === 'razorpay') payment.razorpayOrderId = orderDetails.id;
+      if (currentGateway === 'cashfree') payment.cashfreeOrderId = orderDetails.id;
       await payment.save(session ? { session } : {});
     }
 
@@ -412,7 +446,7 @@ const verifyPayment = async (req, res) => {
       if (!booking) return sendError(res, 'Booking not found', 404);
 
       const event = booking?.eventId;
-      const paymentConfig = event?.paymentConfig || { gateway: 'razorpay' };
+      const paymentConfig = await resolvePaymentConfig(event);
 
       let rzpKeySecret = config.RAZORPAY_KEY_SECRET;
       if (paymentConfig.razorpay && paymentConfig.razorpay.keySecret) rzpKeySecret = paymentConfig.razorpay.keySecret;
@@ -450,7 +484,7 @@ const verifyPayment = async (req, res) => {
       if (!booking) return sendError(res, 'Booking not found', 404);
 
       const event = booking.eventId;
-      const paymentConfig = event.paymentConfig || { gateway: 'razorpay' };
+      const paymentConfig = await resolvePaymentConfig(event);
       
       let cfAppId, cfSecretKey;
       if (paymentConfig.cashfree && paymentConfig.cashfree.appId && paymentConfig.cashfree.secretKey) {
@@ -795,7 +829,7 @@ const storePayment = async (req, res) => {
       isPaymentVerified = true;
       finalGateway = 'free';
     } else if (gateway === 'razorpay') {
-      const paymentConfig = event.paymentConfig || { gateway: 'razorpay' };
+      const paymentConfig = await resolvePaymentConfig(event);
       let rzpKeySecret = config.RAZORPAY_KEY_SECRET;
       if (paymentConfig.razorpay && paymentConfig.razorpay.keySecret) {
         rzpKeySecret = paymentConfig.razorpay.keySecret;
@@ -809,8 +843,9 @@ const storePayment = async (req, res) => {
         isPaymentVerified = generatedSignature === razorpay_signature;
       }
     } else if (gateway === 'cashfree') {
-      const cfAppId = event.paymentConfig.cashfree.appId;
-      const cfSecretKey = event.paymentConfig.cashfree.secretKey;
+      const paymentConfig = await resolvePaymentConfig(event);
+      const cfAppId = paymentConfig.cashfree.appId;
+      const cfSecretKey = paymentConfig.cashfree.secretKey;
       const cfService = new CashfreeService({ appId: cfAppId, secretKey: cfSecretKey });
       try {
         const cfOrder = await cfService.verifyPayment(cf_order_id);
