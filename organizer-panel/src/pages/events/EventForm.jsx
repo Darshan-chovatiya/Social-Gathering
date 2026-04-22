@@ -376,10 +376,15 @@ const EventForm = () => {
       const field = parts[2]
       
       if (parts.length === 2) {
-        // Just setting gateway
+        // Just setting gateway - reset others as per user request
         setFormData(prev => ({
           ...prev,
-          paymentConfig: { ...(prev.paymentConfig || {}), gateway: value }
+          paymentConfig: { 
+            gateway: value,
+            razorpay: { keyId: '', keySecret: '' },
+            cashfree: { appId: '', secretKey: '' },
+            ccavenue: { merchantId: '', accessCode: '', workingKey: '' }
+          }
         }))
         // Clear gateway error when user selects one
         if (value && ['razorpay', 'cashfree' /* , 'ccavenue' */].includes(value)) {
@@ -1108,8 +1113,13 @@ const EventForm = () => {
       submitData.append('termsAndConditions', formData.termsAndConditions)
       if (formData.notes) submitData.append('notes', formData.notes)
       
-      // Payment Config
-      submitData.append('paymentConfig', JSON.stringify(formData.paymentConfig))
+      // Payment Config - only send the selected gateway's config
+      const selectedGateway = formData.paymentConfig?.gateway || 'razorpay'
+      const paymentConfigToSend = {
+        gateway: selectedGateway,
+        [selectedGateway]: formData.paymentConfig?.[selectedGateway] || {}
+      }
+      submitData.append('paymentConfig', JSON.stringify(paymentConfigToSend))
       
       // Slots - format properly for backend
       submitData.append('slots', JSON.stringify(formData.slots.map(slot => ({

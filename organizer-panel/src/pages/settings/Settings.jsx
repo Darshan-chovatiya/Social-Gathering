@@ -137,8 +137,12 @@ const Settings = () => {
         formDataToSend.append('profilePicture', profilePicture)
       }
 
-      // Add payment config
-      formDataToSend.append('paymentConfig', JSON.stringify(paymentConfig))
+      // Add payment config - only send the selected gateway's config
+      const paymentConfigToSend = {
+        gateway: paymentConfig.gateway,
+        [paymentConfig.gateway]: paymentConfig[paymentConfig.gateway]
+      }
+      formDataToSend.append('paymentConfig', JSON.stringify(paymentConfigToSend))
 
       const response = await api.put('/users/profile', formDataToSend, {
         headers: {
@@ -509,7 +513,12 @@ const Settings = () => {
                             name="gateway"
                             value={gw}
                             checked={paymentConfig.gateway === gw}
-                            onChange={(e) => setPaymentConfig({ ...paymentConfig, gateway: e.target.value })}
+                            onChange={(e) => setPaymentConfig({ 
+                              gateway: e.target.value,
+                              razorpay: { keyId: '', keySecret: '' },
+                              cashfree: { appId: '', secretKey: '' },
+                              ccavenue: { merchantId: '', accessCode: '', workingKey: '' }
+                            })}
                             className="w-4 h-4 text-primary-600 focus:ring-primary-500 border-gray-300"
                           />
                           <span className="text-sm font-bold text-gray-900 capitalize">{gw}</span>
